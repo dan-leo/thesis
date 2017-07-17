@@ -1,2 +1,5 @@
 .latex/.images
+
 *.pyc
+main.pdf
+*/build

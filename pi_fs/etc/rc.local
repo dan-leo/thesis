@@ -18,6 +18,8 @@ if [ "$_IP" ]; then
 fi
 
 sudo /home/pi/re_wlan.sh &
+echo "Starting MAVproxy."
+mavproxy.py --out DESKTOP-ROD693A:14550 --master localhost:14550 --out localhost:14850 &
 
 exit 0
 

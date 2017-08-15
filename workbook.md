@@ -37,6 +37,8 @@ Channel 5 = I5 + I6
 #############################################
 Saturday 15-7-2017  Flight attempt
 
+Channel 2 (Elevation) inverted.
+
 Added extra power module for redundancy.
 
 Growing wobble of death. Investigated the timing of the ESCs. There is a slight delay, about 10ms, between two motors when running the motor test {16% throttle, x seconds}. I thought this must be an issue, but this is just due to timing constraints (I assume) when it comes to the real-time kernel in the raspberry pi, before it sends the commands to each motor via the 32-bit external co-processor / microcontroller.
@@ -123,5 +125,79 @@ Discovered that CAM_FEEDBACK messages are related to the camera trigger by liste
 #############################################
 Monday 31-7-2017
 
-Windy day. Need to take photos using camera trigger.
+Windy day. Need to take photos using camera trigger. Successfully wrote code to trigger camera from mavlink messages. Photos were taken at the end of the day (6pm), and were lower quality due to ISO etc.
+
+#############################################
+Wednesday 2-8-2017
+
+Photos taken yet again at the end of the day in the front yard. Linking to gps data not always accurate.
+
+#############################################
+Thursday 3-8-2017
+
+Met with Corné, I set myself a goal of having IR photos from the air for next week's meeting.
+
+Camera triggered upon mavlink message.
+
+#############################################
+Friday 4-8-2017
+
+Photos taken on De Hoop field. Most of the photos were in the dark, yet the first few were not bad. Sunlight really makes a difference.
+
+#############################################
+Saturday 5-8-2017
+
+Test flight in Cape Town.
+
+#############################################
+Sunday 6-8-2017
+
+In process of writing UDP linkup code.
+
+#############################################
+Monday 7-8-2017
+
+Unjumbled file names. Wait for connection from ardupilot / mavproxy. Mavlink restarts on IP changes. Screen daemon startup processes. Released uneccessary resources, show missed shots.
+
+Implemented bash script allowing infrared photos to be taken simultaneously (via wifi -- temporary). Bash script is `nodal`, meaning that more cameras can easily be added, but for now it doesn't seem necessary.
+
+#############################################
+Tuesday 9-8-2017
+
+Time from ardupilot trigger via mavlink message. Notes: seems useful, but epoch time zeroed if internet not available upon boot. Solution: real-time-clock, synchronised via ethernet. 
+
+#############################################
+Wednesday 9-8-2017
+
+Networking via ethernet. Faster trigger time. Notes: the `CAMERA_FEEDBACK` messages actually come through twice, with a 50ms difference. Instead of using time, a % 2 operation ensures no shots are missed. The problem is that since the camera captures are blocking, the message queue is blocked as well. If the `mission` requires too many shots, the shots will be out of sync. Solution, run the capture command in a thread, event based with a callback, and also implement a control system to pause at the requested position if the callback is taking too long. THe other solution can possibly be more overlap between shots.
+
+Was going to take dual shots, but by the time I was ready to, there was cloud cover, which seemed to mess with the gps in the sense that it was badly offset by a few thousand kilometers. Also, in the spur of the moment, I had left the power supply for the `INFRAPI` back home.
+
+Finally received the 433 MHz linkup again. Works sucessfully so far. Haven't yet range tested it. Camera platform not final, just testing, nevertheless, it is misaligned in orientation.
+
+#############################################
+Thursday 10-8-2017
+
+Met with Corné, nearly had IR photos at the ready. Weather was poor at the time. This time I planned to have IR shots at the ready by next meeting.
+
+#############################################
+Friday 11-8-2017
+
+Bad weather for IR shots (too cloudy).
+
+#############################################
+Saturday 12-8-2017
+
+Took test photos out of a window, during moments of slight sunrays between the clouds. Aligned dual photos by means of a SIFT, and landscape !!!!!!! algorithm. Note: sunlight greatly improves quality of photos. However, horizontal photos are not necessarily ideal for scientific analysis, especially due to shadows.
+
+#############################################
+Sunday 13-8-2017
+
+Took dual infra-red photos, triggered from handheld transceiver. Unfortunately, the subsequent triggers are not synchronised, therefore they went out of phase. Processed useable NDVI photos.
+
+#############################################
+Monday 14-8-2017
+
+Spent the whole day fiddling with UDP, TCP solutions to essentially create a double-barrow shotgun which waits for both cameras to be ready before taking a simultaneous shot. The shots may be 20ms out, but it is sufficiently small to be satisfactorily aligned.
+
 

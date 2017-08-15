@@ -8,6 +8,9 @@ On the Raspberry Pi you need to install samba and winbind
 $ sudo apt-get install samba
 $ sudo apt-get install winbind
 
+# to read windows hostname
+$ sudo apt-get install libnss-winbind
+
 Edit /etc/nsswitch.conf to enable wins
 change 'hosts: files dns' TO 'hosts: files wins dns'
 
@@ -61,8 +64,8 @@ sudo service smbd restart
 Dronekit setup
 ###############################################################
 
-pip install dronekit
-pip install dronekit-sitl
+sudo pip install dronekit
+sudo pip install dronekit-sitl
 
 
 ###############################################################
@@ -73,11 +76,22 @@ pip install MAVProxy
 
 # in /etc/rc.local
 echo "Starting MAVproxy."
-mavproxy.py --out DESKTOP-ROD693A:14550 --master localhost:14550 --out localhost:14850 &
+mavproxy.py --out ROD693A:14550 --master localhost:14550 --out localhost:14850 &
+
+###############################################################
+PiCamera
+###############################################################
+sudo apt-get install python-picamera
+
+###############################################################
+ssh-key
+###############################################################
+ssh-keygen -t rsa -C pi@navio
+ssh-keygen -t rsa -C pi@infrapi
 
 
 
+sudo apt-get install screen
 
 
-
-git remote set-url origin --push --add https://daniel_robinson@bitbucket.org/falkonapps/blue-image-processing.git
+git remote set-url origin --push --add https://daniel_leonard_robinson@github.com/daniel-leonard-robinson/thesis-image-processing.git

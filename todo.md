@@ -2,7 +2,6 @@ synchronise time between cameras
 synchronise system time
 audio feedback when taking photo to handheld transceiver
 link photos to gps coordinates
-trigger consequent photos simultaneously
 correlate gps position with gps data more accurately
 pause when taking photo
 rebuild source code for arducopter, mission planner, ImageJ
@@ -13,6 +12,10 @@ remove shadows, if possible
 investigate why gps spotty
 make space on external harddrive for images
 transfer images over ethernet
+ntp client server http://raspberrypi.tomasgreno.cz/ntp-client-and-server.html
+DONE -> use IntelliJ idea
+DONE -> trigger consequent photos simultaneously
+DONE -> lower cpu usage of mavproxy.py
 DONE -> reconnect to GCS https://unix.stackexchange.com/questions/128439/good-detailed-explanation-of-etc-network-interfaces-syntax
 DONE -> trigger camera from handheld transceiver
 DONE -> ssh-keys

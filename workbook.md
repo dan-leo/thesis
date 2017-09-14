@@ -188,7 +188,7 @@ Bad weather for IR shots (too cloudy).
 #############################################
 Saturday 12-8-2017
 
-Took test photos out of a window, during moments of slight sunrays between the clouds. Aligned dual photos by means of a SIFT, and landscape !!!!!!! algorithm. Note: sunlight greatly improves quality of photos. However, horizontal photos are not necessarily ideal for scientific analysis, especially due to shadows.
+Took test photos out of a window, during moments of slight sunrays between the clouds. Aligned dual photos by means of a SIFT, and landmark correspondences algorithm. Note: sunlight greatly improves quality of photos. However, horizontal photos are not necessarily ideal for scientific analysis, especially due to shadows.
 
 #############################################
 Sunday 13-8-2017
@@ -201,3 +201,13 @@ Monday 14-8-2017
 Spent the whole day fiddling with UDP, TCP solutions to essentially create a double-barrow shotgun which waits for both cameras to be ready before taking a simultaneous shot. The shots may be 20ms out, but it is sufficiently small to be satisfactorily aligned.
 
 
+*lapse*
+
+
+Thursday 7-9-2017
+
+Discovered aerobotics. Will be handy.
+
+Thursday 15-9-2017
+
+Finally replaced faulty 433 MHz transceiver. Technician was poor and had sent to me three faulty ones previosly, so I went there to sort it out.

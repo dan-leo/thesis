@@ -88,18 +88,131 @@ In order to be deemed successful the project needs to satisfy the following:
 
 There's currently a water shortage crisis in South Africa, and in other parts of the world, potentially due to global warming. One of the sectors that it affects is agriculture. Farmers may be using less water on their crops, or load sharing. There's also the case of human error, where incorrect amounts of water or fertilizer (for example) is used. Lastly, plant disease is also a problem.\\
 
-To mitigate such problems, farmers would physically observe or sample their produce from the ground. It can be a time consuming task, and if sensor data is used, a mass of hand-held readings can prove complex. Perhaps a simpler, large-scale method of observing such changes can be used.
+\noindent
+To mitigate such problems, farmers would physically observe or sample their produce from the ground. It can be a time consuming task, and if sensor data is used, a mass of hand-held readings can prove complex. Perhaps a simpler, large-scale method of observing such changes can be used.\\
+
+\noindent
+For some things in the world, to process large amounts of data, it is typically more efficient to use digital equipment than human brain-power. To observe an area in the digital world, one can observe signals from the electromagnetic spectrum.\\
+
+\noindent
+Although there exists suitable equipment today, it remains yet inaccessible due to the complexity and relatively high cost of equipment. Perhaps there can be designed a method to bridge this gap.
+
+\subsection{How}
+
+To monitor large areas in a short period of time, one needs height. Height can be achieved by the modern invention of flight. In more practical terms, we can use vehicles such as hot air balloons, airstats, planes, helicopters and the like.\\
+
+\noindent
+We can classify these vehicles into manned and unmanned aerial vehicles. Unmanned vehicles have significantly less safety precautions and regulations, cost less, and are less subject to wear and tear, meaning more flights.\\\\
+
+\noindent
+We also need to save and process the imagery. Digital equipment utilizing the relevant technologies will suffice. Combining such camera equipment and UAVs, we need a vehicle that will meet the objective.
+
+\subsubsection{Comparison between different types of UAVs}
+
+\begin{itemize}
+    \item \textbf{Plane}\\
+    Planes are fast, and perhaps too fast. Of course one will be able to optimise the resolution vs speed, but it's not hte best
+    \item \textbf{Drone}
+    Drones on the other hand are inexpensive, and can take accurate high resolution images, with less risk to the camera equipment than a plan.
+\end{itemize}
 
 \section{Setup}
 
 \subsection{Raspberry Pi}
+
+Two Raspberry Pis.
+
 \subsection{Building Drone}
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.1]{images/drone-build-frame.jpg}
-\caption{F450 frame
-}% Reproduced from \cite{gopher}}
+\caption{F450 frame.}
+% Reproduced from \cite{gopher}}
+\label{fig:frame}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.1]{images/drone-build-motors.jpg}
+\caption{Adding the 920kv motors.}
+\label{fig:frame}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.1]{images/drone-build-esc-3phaseunconnected.jpg}
+\caption{Added ESCs. 3-phase power leads unconnected}
+\label{fig:frame}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.1]{images/drone-build-esc-3phaseconnected.jpg}
+\caption{The leads are easy to plug/unplug, so that when motor direction is determined, two phase leads can easily be swapped.}
+\label{fig:frame}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.1]{images/drone-build-3dcase.jpg}
+\caption{3D printed case for Raspberry Pi and Navio.}
+\label{fig:frame}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.1]{images/drone-build-3dcase-pi.jpg}
+\caption{Putting the Pi in the case.}
+\label{fig:frame}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.1]{images/drone-build-3dcase-pi-navio.jpg}
+\caption{Fitting the Navio2 flight controller on top.}
+\label{fig:frame}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.1]{images/drone-build-3dcase-gps.jpg}
+\caption{Connecting the Ublox Neo-7 GPS antenna.}
+\label{fig:frame}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.1]{images/drone-build-3dplatform.jpg}
+\caption{Stabilising platform. Includes rubber vibration damper balls}
+\label{fig:frame}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.1]{images/drone-build-feet.jpg}
+\caption{Added feet for platform.}
+\label{fig:frame}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.1]{images/drone-build-damper-balls.jpg}
+\caption{Damper balls for platform.}
+\label{fig:frame}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.1]{images/drone-build-case-ondrone.jpg}
+\caption{Attached 3D printed case and platform to drone.}
+\label{fig:frame}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.1]{images/drone-build-433.jpg}
+\caption{Added 433MHz telemtery to drone.}
 \label{fig:frame}
 \end{figure}
 
@@ -202,7 +315,7 @@ To mitigate such problems, farmers would physically observe or sample their prod
 
 \newpage
 \bibliographystyle{plain}
-% \bibliographystyle{alpha}
+%\bibliographystyle{alpha}
 \bibliography{references}
 
 \end{document}

@@ -89,7 +89,21 @@ ssh-key
 ssh-keygen -t rsa -C pi@navio
 ssh-keygen -t rsa -C pi@infrapi
 
+###############################################################
+twisted.internet
+###############################################################
+pip install twisted
 
+
+###############################################################
+mavlink-router
+###############################################################
+sudo apt-get install dh-autoreconf
+https://github.com/01org/mavlink-router
+
+
+
+http://raspberrypi.tomasgreno.cz/ntp-client-and-server.html
 
 sudo apt-get install screen
 

@@ -203,11 +203,71 @@ Spent the whole day fiddling with UDP, TCP solutions to essentially create a dou
 
 *lapse*
 
-
+#############################################
 Thursday 7-9-2017
 
 Discovered aerobotics. Will be handy.
 
+#############################################
 Thursday 15-9-2017
 
 Finally replaced faulty 433 MHz transceiver. Technician was poor and had sent to me three faulty ones previosly, so I went there to sort it out.
+
+#############################################
+Monday 18-9-2017
+
+Flew another few sorties with 4 new batteries. 
+Have a dual battery setup where the one battery powers the on-board electronics, 
+and can remain on while the flight battery is replaced. Saves some setup time.
+
+The focus between the cameras differ and need calibration.
+
+#############################################
+Tuesday 19-9-2017
+
+Met with Chris Antonisson of Geoflight, and plan to fly together on friday. He has a calibration plate, besides a Parrot Sequioa, Matrice drone, Phantom etc.
+
+#############################################
+Wednesday 20-9-2017
+
+Calibration of focus for stereo camera setup using image feedback and a 2m ruler.
+
+#############################################
+Thursday 21-9-2017
+
+Built a stable platform for the stereo cameras to minimize any movement.
+
+#############################################
+Friday 22-9-2017
+
+Attempt to align cameras using video feedback. Fiddled with focus.
+
+#############################################
+Saturday 23-9-2017
+
+OpenCV. Attempt to install OpenCV for eclipse.
+
+#############################################
+Sunday 24-9-2017
+
+Eclipse route failed. Flight test. Due to short time, IR images were not captured. Attempt at stereorectification.
+
+#############################################
+Monday 25-9-2017
+
+Write report.
+
+#############################################
+Tuesday 26-9-2017
+
+Preparation for NDVI calibration.
+
+#############################################
+Wednesday 27-9-2017
+
+NDVI calibration plate.
+
+#############################################
+Thursday 28-9-2017
+
+Hand in chapter to Corne + meeting.

@@ -1,0 +1,41 @@
+
+
+flip switch on handheld transceiver
+	CAMERA_MODE enabled
+client1 sends `CAMERA_MODE enabled`
+	client2 receives it
+	#server asks both clients if they're alive
+	#clients reply yes
+
+#server says trigger now
+#clients reply triggering (this is to listen for a `finished`)
+wait
+clients reply finished
+
+server says trigger now
+clients reply triggering (this is to listen for a `finished`)
+wait
+clients reply finished
+
+flip switch off handheld transceiver
+	CAMERA_MODE disabled
+client1 sends `CAMERA_MODE disabled`
+	client2 receives it
+	server asks both clients if they're alive
+	clients reply yes
+
+
+
+
+has the second client just connected?
+    yes, send it a trigger as well
+    no, but it is still there
+are both clients ready?
+    yes, send a trigger to both
+    no, wait for the clients to be ready
+is the first client ready?
+    is there a second client connected?
+        yes, trigger both
+        no, just trigger the first
+when are they done taking a photo?
+    `FINISHED_nn` received

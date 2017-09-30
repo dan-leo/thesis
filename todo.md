@@ -10,7 +10,7 @@ filter specific log messages
 auto-tune
 remove shadows, if possible
 investigate why gps spotty
-make space on external harddrive for images
+DONE -> make space on external harddrive for images
 transfer images over ethernet
 ntp client server http://raspberrypi.tomasgreno.cz/ntp-client-and-server.html
 DONE -> use IntelliJ idea

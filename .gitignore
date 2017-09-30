@@ -3,3 +3,6 @@
 *.pyc
 main.pdf
 */build
+.sloeber/.metadata
+*/*/Release
+*/RemoteSystemsTempFiles

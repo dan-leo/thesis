@@ -6,22 +6,30 @@ import dill
 from tqdm import tqdm
 import os
 
-##img_type = 'ir'
-img_type = 'rgb'
+img_type = 'ir'
+##img_type = 'rgb'
+##img_type = 'example'
 
-savefile = img_type + '_matrices.pkl'
-root_path = 'C:/Users/d7rob/thesis/chess/master_set/'
+_x = 15
+_y = 15
+
+savefile = img_type + '_matrices_13_print.pkl'
+##root_path = 'C:/Users/d7rob/thesis/chess/master_set/'
+root_path = 'C:/Users/d7rob/thesis/chess/13_print/ir_ready/'
+##root_path = 'chess/'
 ##images = glob.glob('chess/*.jpg')
 ##images = glob.glob('L:/Backups/thesis/chess/rgb/compressed/picked/*.jpg')
 ##images = glob.glob('C:/Users/d7rob/thesis/chess/master_set/rgb_7x6/*.jpg')
-images = glob.glob(root_path + img_type + '_7x6/*.jpg')
+##images = glob.glob(root_path + img_type + '_7x6/*.jpg')
+##images = glob.glob(root_path + img_type + '_15x15/*.jpg')
+images = glob.glob(root_path + '/*.jpg')
 
 ##gray = 0
 # termination criteria
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
-objp = np.zeros((6*7,3), np.float32)
-objp[:,:2] = np.mgrid[0:7,0:6].T.reshape(-1,2)
+objp = np.zeros((_y*_x,3), np.float32)
+objp[:,:2] = np.mgrid[0:_x,0:_y].T.reshape(-1,2)
 # Arrays to store object points and image points from all the images.
 objpoints = [] # 3d point in real world space
 imgpoints = [] # 2d points in image plane.
@@ -31,15 +39,15 @@ for fname in tqdm(images):
     img = cv2.imread(fname)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # Find the chess board corners
-    ret, corners = cv2.findChessboardCorners(gray, (7,6), None)
+    ret, corners = cv2.findChessboardCorners(gray, (_x,_y), None)
     # If found, add object points, image points (after refining them)
     if ret == True:
         objpoints.append(objp)
         corners2=cv2.cornerSubPix(gray,corners, (11,11), (-1,-1), criteria)
         imgpoints.append(corners)
         # Draw and display the corners
-        cv2.drawChessboardCorners(img, (7,6), corners2, ret)
-        draw_path = root_path + img_type + '_7x6_drawn/' + os.path.basename(fname)[:-4] + '_drawn.jpg'
+        cv2.drawChessboardCorners(img, (_x,_y), corners2, ret)
+        draw_path = root_path + img_type + '_'+str(_x)+'x'+str(_y)+'_drawn/' + os.path.basename(fname)[:-4] + '_drawn.jpg'
         print draw_path
         cv2.imwrite(draw_path, img)
 ##        cv2.imshow('img', img)

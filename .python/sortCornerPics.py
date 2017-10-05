@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 ##images = glob.glob('L:/Backups/thesis/chess/rgb/compressed2/picked/*.jpg')
-root_dir = 'C:/Users/d7rob/thesis/chess/10/4'
+root_dir = 'C:/Users/d7rob/thesis/chess/13_print/compressed/picked'
 images = glob.glob(root_dir + '/*.jpg')
 print images
 
@@ -27,11 +27,12 @@ for fname in images:
             cv2.CALIB_CB_FAST_CHECK
 ##    flags = cv2.CALIB_CB_FAST_CHECK
     ##flags = None
-    ret, corners = cv2.findChessboardCorners(gray, (7,6), flags)
+    # 7, 6
+    ret, corners = cv2.findChessboardCorners(gray, (15,15), flags)
 
     print np.shape(corners), ret
 
     if ret == True:
-        cv2.imwrite((str(fname[:-4]) + '_has_7x6_corners.jpg'), img)
+        cv2.imwrite((str(fname[:-4]) + '_has_15x15_corners.jpg'), img)
     
 

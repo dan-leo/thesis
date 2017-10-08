@@ -52,15 +52,27 @@ Signature: \underline{ }\underline{ }\underline{ } Date: \underline{ }\underline
 
 \section*{Abstract}
 
-A drone was built to capture images useful to agriculture.
+This report presents the design and analysis necessary for an autonomous system to acquire beneficial agricultural data within a desired environment. Various implementations are compared, before a novel design is presented. An aerial drone is designed and built using predominantly local supplies. Images are acquired and processed.
 
 \section*{Uitreksel}
 
-'n Drone was vir agrikultuur gebou.
+\section*{Acknowledgements}
+
+I would like to thank the following people for their support:
+\begin{itemize}
+    \item Louw Hopley, for giving birth to the idea.
+    \item Alan Knott-Craig, for introducing me to Chris Antoniesson, for we went on a flight test together which returned very useful data.
+    \item My family, who have been amused and for their unwavering love and support.
+    \item Dr C van Daalen, for his guidance and support throughout the course of this project.
+\end{itemize}
+
 
 \tableofcontents
 \listoffigures
 \listoftables
+\section*{List of Symbols}
+\section*{List of Abbreviations}
+\section*{Matrix Notation}
 
 \newpage
 
@@ -69,8 +81,6 @@ A drone was built to capture images useful to agriculture.
 %\end{abstract}
 
 \section{Introduction}
-
-\subsection{Why}
 
 There's currently a water shortage crisis in South Africa, and in other parts of the world, potentially due to global warming. One of the sectors that it affects is agriculture. Farmers may be using less water on their crops, or load sharing. There's also the case of human error, where incorrect amounts of water or fertilizer (for example) is used. Lastly, plant disease is also a problem.\\
 
@@ -83,38 +93,25 @@ For some things in the world, to process large amounts of data, it is typically 
 \noindent
 Although there exists suitable equipment today, it remains yet inaccessible due to the complexity and relatively high cost of equipment. Perhaps there can be designed a method to bridge this gap.
 
-\subsection{How}
+\subsection{Purpose of the project}
+
+The project is conducted to investigate the core elements required to map vegetation via infrared analysis techniques, which can determine the impact of human and environmental factors such as diseases, erosion, not enough fertiliser and water shortage.\\
+
+\noindent
+In order to be deemed successful the project needs to investigate observable parameter(s) beneficial to agriculture within large areas.
+
+\subsection{Problem Statement}
 
 To monitor large areas in a short period of time, one needs height. Height can be achieved by the modern invention of flight. In more practical terms, we can use vehicles such as hot air balloons, airstats, planes, helicopters and the like.\\
 
 \noindent
-We can classify these vehicles into manned and unmanned aerial vehicles. Unmanned vehicles have significantly less safety precautions and regulations, cost less, and are less subject to wear and tear, meaning more flights.\\\\
+We can classify these vehicles into manned and unmanned aerial vehicles. Unmanned vehicles have significantly less safety precautions and regulations, cost less, and are less subject to wear and tear, meaning more flights.\\
 
 \noindent
 We also need to save and process the imagery. Digital equipment utilizing the relevant technologies will suffice. Combining such camera equipment and UAVs, we need a vehicle that will meet the objective.
 
-\subsubsection{Comparison between different types of UAVs}
-
-\begin{itemize}
-    \item \textbf{Plane}\\
-    Planes are fast, and perhaps too fast. Of course one will be able to optimise the resolution vs speed, but it's not hte best
-    \item \textbf{Drone}
-    Drones on the other hand are inexpensive, and can take accurate high resolution images, with less risk to the camera equipment than a plan.
-\end{itemize}
-
-\section{Project Overview}
-
-In this section the project objectives and requirements are specified.
-
-\subsection{Project Objectives}
-In order to be deemed successful the project needs to satisfy the following:
-
-\begin{itemize}
-    \item Investigate observable parameter(s) beneficial to agriculture within large areas
-\end{itemize}
-
-\subsection{Means}
-
+\noindent
+\subsubsection{In brief}
 \begin{itemize}
     \item Develop an observation platform to map areas from height (NADIR)
     \item Determine observation equipment
@@ -122,13 +119,77 @@ In order to be deemed successful the project needs to satisfy the following:
     \item Develop control tests to verify / prove conclusions
 \end{itemize}
 
-\section{Setup}
+\noindent
+The implementation of autonomous systems can be costly. 
 
-\subsection{Raspberry Pi}
+\subsubsection{Comparison between different types of UAVs}
 
-Two Raspberry Pis.
+\begin{itemize}
+    \item \textbf{Plane}\\
+    Planes are fast, and perhaps too fast. Of course one will be able to optimise the resolution vs speed, but it's not the best
+    \item \textbf{Drone}\\
+    Drones on the other hand are inexpensive, and can take accurate high resolution images, with less risk to the camera equipment than a plan.
+\end{itemize}
 
-\subsection{Building Drone}
+A drone is designed and built to demonstrate proof of concept of a more cost effective model.\\
+
+\noindent
+The project will consist of the following steps:
+\begin{itemize}
+    \item \textbf{Drone design and construction}
+    \item \textbf{Image Acquisition}
+    \item \textbf{Image Processing}
+    \item \textbf{System Integration}
+\end{itemize}
+
+\noindent
+Various drones, cameras, filters and processing techniques will be presented, as well as optimal choices depending on available resources.
+Once the drone is built, focus will be put onto image acquisition and calibration. Thereafter, imagery will be processed for NDVI values.
+
+\subsection{Assumptions}
+
+Various assumptions are made in order to realise the solution of the problem. Besides assumptions regarding the environment in which the system will operate, it will also provide a starting basis for design synthesis.
+
+\begin{itemize}
+    \item Predominantly farming sector
+    \item NDVI values will vary according to the age of a plant
+    \item Sunlight, or clouds will affect the values
+    \item Cameras should be easy to calibrate
+\end{itemize}
+
+\subsection{Implementation process}
+
+A basic overview of the system is illustrated in Figure \ref{fig:overview}. It should be noted that the drone design, build, image acquisition and processing are more complicated than shown in the diagram. These processes will be expanded on and explained in the relevant chapters.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{images/thesis_overview.png}
+\caption{Block diagram overview}
+\label{fig:overview}
+\end{figure}
+
+
+\section{System Architecture}
+
+\subsection{Hardware Architecture}
+\subsubsection{Raspberry Pi}
+
+Real-time kernel. CSI port.
+
+\subsubsection{Navio2}
+
+Extension.
+
+\subsection{Software Architecture}
+\subsubsection{Raspberry Pi}
+
+Linux.
+
+\subsubsection{Navio2}
+
+Direct access.
+
+\section{Drone Design and Construction}
 
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}
@@ -301,6 +362,15 @@ One the other hand, each electronic speed controller (ESC) gets a signal wire an
 
 \noindent
 The propellers have a pitch of 4.5', which is basically a measure of the 'bite', or distance it travels through the air on one revolution.
+
+\section{Image Acquisition}
+\section{Image Processing}
+\section{System Integration and Testing}
+
+quick discussion, issues
+
+testing, + results, + analysis
+
 
 
 % In order for the data to be transmitted successfully, it needs to be in a format acceptable by the GCS. The data will be stored in a JSON packet created using a C++ library\cite{ajson}.

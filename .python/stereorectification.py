@@ -1,39 +1,45 @@
 import numpy as np
 import dill
 
-##savefile = 'ir_matrices2.pkl'
-##savefile = 'rgb_matrices.pkl'
+class Matrices:
+    def __init__(self, total_error, ret, mtx, dist, rvecs, tvecs, imgpoints, objpoints, gray):
+        self.total_error = total_error
+        self.ret = ret
+        self.mtx = mtx
+        self.dist = dist
+        self.rvecs = rvecs
+        self.tvecs = tvecs
+        self.imgpoints = imgpoints
+        self.objpoints = objpoints
+        self.gray = gray
+
+    def print_values(self):
+        print 'total_error:\t\t' + str(self.total_error)
+        print 'ret:\t\t\t' + str(self.ret)
+        print 'mtx.shape:\t\t' + str(self.mtx.shape)
+        print 'dist.shape:\t\t' + str(self.dist.shape)
+        print 'rvecs.shape:\t\t' + str(np.shape(self.rvecs))
+        print 'tvecs.shape:\t\t' + str(np.shape(self.tvecs))
+        print 'objpoints.shape:\t' + str(np.shape(self.objpoints))
+        print 'np.shape(imgpoints):\t' + str(np.shape(self.imgpoints))
+        print 'resolution:\t\t' + str(self.gray.shape[::-1])
+##        print 'imgpoints2.shape:\t' + str(np.shape(imgpoints2))
+
+savefile = 'rgb_matrices.pkl'
+dill.load_session(savefile)
+rgb_mat = Matrices(total_error, ret, mtx, dist, rvecs, tvecs, imgpoints, objpoints, gray)
+rgb_mat.print_values()
+
+savefile = 'ir_matrices.pkl'
+dill.load_session(savefile)
+ir_mat = Matrices(total_error, ret, mtx, dist, rvecs, tvecs, imgpoints, objpoints, gray)
+ir_mat.print_values()
+
 ##savefile = 'example_matrices.pkl'
 ##savefile = '_matrices_12_ESS.pkl'
 ##savefile = 'rgb_matrices_13_print.pkl'
-savefile = 'ir_matrices_13_print.pkl'
-dill.load_session(savefile)
-
-
-##import _ir_matrices as cal
-##import _rgb_matrices as cal
-
-##print 'cal.total_error:\t' + str(cal.total_error)
-##print 'cal.ret:\t\t' + str(cal.ret)
-##print 'cal.mtx.shape:\t\t' + str(cal.mtx.shape)
-##print 'cal.dist.shape:\t\t' + str(cal.dist.shape)
-##print 'cal.rvecs.shape:\t' + str(cal.rvecs.shape)
-##print 'cal.tvecs.shape:\t' + str(cal.tvecs.shape)
-##print 'cal.objpoints.shape:\t' + str(cal.objpoints.shape)
-##print 'np.shape(cal.imgpoints):' + str(np.shape(cal.imgpoints))
-##print 'cal.resolution:\t\t' + str(cal.resolution)
-##print 'cal.imgpoints2.shape:\t' + str(cal.imgpoints2.shape)
-
-print 'total_error:\t\t' + str(total_error)
-print 'ret:\t\t\t' + str(ret)
-print 'mtx.shape:\t\t' + str(mtx.shape)
-print 'dist.shape:\t\t' + str(dist.shape)
-print 'rvecs.shape:\t\t' + str(np.shape(rvecs))
-print 'tvecs.shape:\t\t' + str(np.shape(tvecs))
-print 'objpoints.shape:\t' + str(np.shape(objpoints))
-print 'np.shape(imgpoints):\t' + str(np.shape(imgpoints))
-print 'resolution:\t\t' + str(gray.shape[::-1])
-print 'imgpoints2.shape:\t' + str(np.shape(imgpoints2))
+##savefile = 'ir_matrices_13_print.pkl'
+##dill.load_session(savefile)
 
 ##img_path = 'C:/Users/d7rob/thesis/chess/master_set/rgb_7x6/'
 ##fname = 'img_2017-09-30_17-37-27.000_rgb_1_has_7x6_corners.jpg'
@@ -54,21 +60,21 @@ h, w = img.shape[:2]
 newcameramtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w,h), 1, (w,h))
 print newcameramtx, roi
 
-### undistort
-##mapx, mapy = cv2.initUndistortRectifyMap(mtx, dist, None, newcameramtx, (w,h), 5)
-##print mapx.shape, mapy.shape
-##dst = cv2.remap(img, mapx, mapy, cv2.INTER_LINEAR)
+# undistort
+mapx, mapy = cv2.initUndistortRectifyMap(mtx, dist, None, newcameramtx, (w,h), cv2.CV_32FC1) # 5
+print mapx.shape, mapy.shape
+dst = cv2.remap(img, mapx, mapy, cv2.INTER_LINEAR)
 ### crop the image
 ####x, y, w, h = roi
 ####dst = dst[y:y+h, x:x+w]
 ####img = cv2.imwrite('chess/left12_undistorted.jpg', dst)
 
-# undistort
-dst = cv2.undistort(img, mtx, dist, None, newcameramtx)
-# crop the image
-##x, y, w, h = roi
-##dst = dst[y:y+h, x:x+w]
-####cv2.imwrite('calibresult.png', dst)
+### undistort
+##dst = cv2.undistort(img, mtx, dist, None, newcameramtx)
+### crop the image
+####x, y, w, h = roi
+####dst = dst[y:y+h, x:x+w]
+######cv2.imwrite('calibresult.png', dst)
 k_crop = 1
 ##dst2 = cv2.getRectSubPix(dst, ((int)(k_crop*h), (int)(k_crop*w)), (0, 0))
 ##dst2 = cv2.getRectSubPix(dst, (w, h), (1, 1))
@@ -77,4 +83,4 @@ print dst2.shape
 
 undistorted_path = img_path + fname[:-4] + '_undistorted.jpg'
 print undistorted_path
-cv2.imwrite(undistorted_path, dst2)
+##cv2.imwrite(undistorted_path, dst2)

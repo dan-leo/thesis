@@ -39,12 +39,17 @@ for fname in tqdm(images):
     img = cv2.imread(fname)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # Find the chess board corners
-    ret, corners = cv2.findChessboardCorners(gray, (_x,_y), None)
+    
+    flags = cv2.CALIB_CB_ADAPTIVE_THRESH + \
+            cv2.CALIB_CB_NORMALIZE_IMAGE + \
+            cv2.CALIB_CB_FILTER_QUADS + \
+            cv2.CALIB_CB_FAST_CHECK
+    ret, corners = cv2.findChessboardCorners(gray, (_x,_y), flags)
     # If found, add object points, image points (after refining them)
     if ret == True:
         objpoints.append(objp)
         corners2=cv2.cornerSubPix(gray,corners, (11,11), (-1,-1), criteria)
-        imgpoints.append(corners)
+        imgpoints.append(corners2)
         # Draw and display the corners
         cv2.drawChessboardCorners(img, (_x,_y), corners2, ret)
         draw_path = root_path + img_type + '_'+str(_x)+'x'+str(_y)+'_drawn/' + os.path.basename(fname)[:-4] + '_drawn.jpg'

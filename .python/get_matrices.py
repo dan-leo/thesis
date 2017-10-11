@@ -6,16 +6,16 @@ import dill
 from tqdm import tqdm
 import os
 
-img_type = 'ir'
-##img_type = 'rgb'
+##img_type = 'ir'
+img_type = 'rgb'
 ##img_type = 'example'
 
 _x = 15
 _y = 15
 
-savefile = img_type + '_matrices_13_print.pkl'
+savefile = img_type + '_matrices_15_dual.pkl'
 ##root_path = 'C:/Users/d7rob/thesis/chess/master_set/'
-root_path = 'C:/Users/d7rob/thesis/chess/13_print/ir_ready/'
+root_path = 'C:/Users/d7rob/thesis/chess/15_dual_ethernet/rgb/'
 ##root_path = 'chess/'
 ##images = glob.glob('chess/*.jpg')
 ##images = glob.glob('L:/Backups/thesis/chess/rgb/compressed/picked/*.jpg')
@@ -52,7 +52,7 @@ for fname in tqdm(images):
         imgpoints.append(corners2)
         # Draw and display the corners
         cv2.drawChessboardCorners(img, (_x,_y), corners2, ret)
-        draw_path = root_path + img_type + '_'+str(_x)+'x'+str(_y)+'_drawn/' + os.path.basename(fname)[:-4] + '_drawn.jpg'
+        draw_path = root_path + os.path.basename(fname)[:-4] + '_'+str(_x)+'x'+str(_y)+'_drawn.jpg'
         print draw_path
         cv2.imwrite(draw_path, img)
 ##        cv2.imshow('img', img)
@@ -67,7 +67,7 @@ print ret, mtx, dist, rvecs, tvecs
 ##newcameramtx, roi=cv2.getOptimalNewCameraMatrix(mtx, dist, (w,h), 1, (w,h))
 
 mean_error = 0
-for i in tqdm(xrange(len(objpoints))):
+for i in xrange(len(objpoints)):
     imgpoints2, _ = cv2.projectPoints(objpoints[i], rvecs[i], tvecs[i], mtx, dist)
     error = cv2.norm(imgpoints[i], imgpoints2, cv2.NORM_L2)/len(imgpoints2)
     mean_error += error

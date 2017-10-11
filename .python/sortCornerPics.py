@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 ##images = glob.glob('L:/Backups/thesis/chess/rgb/compressed2/picked/*.jpg')
-root_dir = 'C:/Users/d7rob/thesis/chess/13_print/compressed/picked'
+root_dir = 'C:/Users/d7rob/thesis/chess/15_dual_ethernet/compressed'
 images = glob.glob(root_dir + '/*.jpg')
 print images
 

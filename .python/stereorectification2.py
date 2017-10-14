@@ -1,5 +1,14 @@
 import numpy as np
-import dill
+import dill, glob, tqdm
+
+root_dir = 'C:/Users/d7rob/thesis/distorted'
+root_dir = 'L:/Backups/thesis/longridge'
+
+_rgb_name = "/rgb"
+_ir_name = "/ir"
+rgb_images = glob.glob(root_dir + _rgb_name + '/*.jpg')
+ir_images = glob.glob(root_dir + _ir_name + '/*.jpg')
+zipped_images = zip(rgb_images, ir_images)
 
 ##print ": " + str()
 def pp(val):
@@ -82,11 +91,7 @@ flags = cv2.CALIB_FIX_ASPECT_RATIO + \
                     cv2.CALIB_RATIONAL_MODEL + \
                     cv2.CALIB_FIX_K3 + cv2.CALIB_FIX_K4 + cv2.CALIB_FIX_K5
 
-##                    cv2.CALIB_USE_INTRINSIC_GUESS + \
-##flags = None
-
 criteria = (cv2.TERM_CRITERIA_COUNT + cv2.TERM_CRITERIA_EPS, 100, 0.00001)
-##criteria = None
 
 initCameraMatrix1 = cv2.initCameraMatrix2D(rgb.objpoints, rgb.imgpoints, rgb.resolution, 0);
 initCameraMatrix2 = cv2.initCameraMatrix2D(ir.objpoints, ir.imgpoints, ir.resolution, 0);
@@ -122,64 +127,45 @@ print "validPixROI1: " + str(validPixROI1)
 print "validPixROI2: " + str(validPixROI2)
 print ''
 
-# undistort
+# pre-compute undistortion matrices
 rgb_mapx, rgb_mapy = cv2.initUndistortRectifyMap(cameraMatrix1, distCoeffs1, R1, P1, rgb.resolution, cv2.CV_32FC1) # 5
-##rgb_mapx, rgb_mapy = cv2.initUndistortRectifyMap(rgb.mtx, rgb.dist, R1, P1, rgb.resolution, cv2.CV_32FC1) # 5
-print "rgb_mapx.shape: " + str(rgb_mapx.shape)
-print "rgb_mapy.shape: " + str(rgb_mapy.shape)
-##rgb_path = 'C:/Users/d7rob/thesis/chess/master_set/rgb_7x6/img_2017-09-30_17-37-27.000_rgb_1_has_7x6_corners.jpg'
-##rgb_path = 'C:/Users/d7rob/thesis/chess/master_set/rgb_7x6/img_2017-09-30_18-17-40.000_rgb_31_has_7x6_corners.jpg'
-##rgb_path = 'C:/Users/d7rob/thesis/chess/20170923_174647.jpg'
-##rgb_path = 'C:/Users/d7rob/thesis/chess/img1_2017-09-27_12-45-41.000_4.jpg'
-rgb_path = 'C:/Users/d7rob/thesis/chess/rgb.jpg'
-rgb_img = cv2.imread(rgb_path)
-dst = cv2.remap(rgb_img, rgb_mapx, rgb_mapy, cv2.INTER_LINEAR)
-k_crop = 1
-h, w = rgb_img.shape[:2]
-##dst2 = dst[(int)(h*(1-k_crop)):(int)(h*k_crop), (int)(w*(1-k_crop)):(int)(w*k_crop)]
-##print "dst2.shape: " + str(dst2.shape)
-rgb_undistort_path = rgb_path[:-4] + '_stereo_undistorted_1_15_light_rect.jpg'
-print "rgb_undistort_path: " + str(rgb_undistort_path)
-##cv2.rectangle(dst, validPixROI1[:2], validPixROI1[2:],(0, 0, 255),30)
-dst = dst[validPixROI1[1]:validPixROI1[3], validPixROI1[0]:validPixROI1[2]]
-cv2.imwrite(rgb_undistort_path, dst)
-
 ir_mapx, ir_mapy = cv2.initUndistortRectifyMap(cameraMatrix2, distCoeffs2, R2, P2, ir.resolution, cv2.CV_32FC1) # 5
-##ir_mapx, ir_mapy = cv2.initUndistortRectifyMap(ir.mtx, ir.dist, R2, P2, ir.resolution, cv2.CV_32FC1) # 5
-print "ir_mapx.shape: " + str(ir_mapx.shape)
-print "ir_mapy.shape: " + str(ir_mapy.shape)
-##ir_path = 'C:/Users/d7rob/thesis/chess/master_set/ir_7x6/img_2017-09-30_18-17-40.000_ir_34_has_7x6_corners.jpg'
-##ir_path = 'C:/Users/d7rob/thesis/chess/20170923_174647.jpg'
-##ir_path = 'C:/Users/d7rob/thesis/chess/img1_2017-09-27_12-45-41.000_4.jpg'
-ir_path = 'C:/Users/d7rob/thesis/chess/ir.jpg'
-ir_img = cv2.imread(ir_path)
-dst = cv2.remap(ir_img, ir_mapx, ir_mapy, cv2.INTER_LINEAR)
-##k_crop = 1
-##h, w = rgb_img.shape[:2]
-##dst2 = dst[(int)(h*(1-k_crop)):(int)(h*k_crop), (int)(w*(1-k_crop)):(int)(w*k_crop)]
-##print "dst2.shape: " + str(dst2.shape)
-ir_undistort_path = ir_path[:-4] + '_stereo_undistorted_2_15_light_rect.jpg'
-print "ir_undistort_path: " + str(ir_undistort_path)
-##cv2.rectangle(dst, validPixROI2[:2], validPixROI2[2:],(0, 0, 255),30)
-dst = dst[validPixROI2[1]:validPixROI2[3], validPixROI2[0]:validPixROI2[2]]
-cv2.imwrite(ir_undistort_path, dst)
 
-# mono output
-newcameramtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w,h), 1, (w,h))
-print "newcameramtx: " + str(newcameramtx)
-print "roi: " + str(roi)
+# batch undistortion
 
-# undistort
-_mapx, _mapy = cv2.initUndistortRectifyMap(mtx, dist, None, newcameramtx, (w,h), cv2.CV_32FC1) # 5
-print "_mapx.shape: " + str(_mapx.shape)
-print "_mapy.shape: " + str(_mapy.shape)
-_path = rgb_path
-_img = cv2.imread(_path)
-_dst = cv2.remap(_img, _mapx, _mapy, cv2.INTER_LINEAR)
+for rgb_path, ir_path in tqdm(zipped_images):
+    print ''
+    rgb_img = cv2.imread(rgb_path)
+    dst = cv2.remap(rgb_img, rgb_mapx, rgb_mapy, cv2.INTER_LINEAR)
+    rgb_undistort_path = rgb_path[:-4] + '_stereo_undistorted.jpg'
+##    print "rgb_undistort_path: " + str(rgb_undistort_path)
+##    cv2.rectangle(dst, validPixROI1[:2], validPixROI1[2:],(0, 0, 255),30)
+    dst = dst[validPixROI1[1]:validPixROI1[3], validPixROI1[0]:validPixROI1[2]]
+    cv2.imwrite(rgb_undistort_path, dst)
 
-_undistort_path = _path[:-4] + '_stereo_undistorted_3_15_light.jpg'
-print "_undistort_path: " + str(_undistort_path)
-cv2.imwrite(_undistort_path, _dst)
+    ir_img = cv2.imread(ir_path)
+    dst = cv2.remap(ir_img, ir_mapx, ir_mapy, cv2.INTER_LINEAR)
+    ir_undistort_path = ir_path[:-4] + '_stereo_undistorted.jpg'
+##    print "ir_undistort_path: " + str(ir_undistort_path)
+##    cv2.rectangle(dst, validPixROI2[:2], validPixROI2[2:],(0, 0, 255),30)
+    dst = dst[validPixROI2[1]:validPixROI2[3], validPixROI2[0]:validPixROI2[2]]
+    cv2.imwrite(ir_undistort_path, dst)
+
+    # mono output
+
+####    h, w = rgb_img.shape[:2]
+####    newcameramtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w,h), 1, (w,h))
+####    print "newcameramtx: " + str(newcameramtx)
+####    print "roi: " + str(roi)
+####
+####    # undistort mono
+####    _mapx, _mapy = cv2.initUndistortRectifyMap(mtx, dist, None, newcameramtx, (w,h), cv2.CV_32FC1) # 5
+####    _path = rgb_path
+####    _img = cv2.imread(_path)
+####    _dst = cv2.remap(_img, _mapx, _mapy, cv2.INTER_LINEAR)
+####
+####    _undistort_path = _path[:-4] + '_mono_undistorted.jpg'
+####    cv2.imwrite(_undistort_path, _dst)
 
 
 

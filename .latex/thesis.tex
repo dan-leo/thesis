@@ -7,6 +7,8 @@
 \title{Insert title here}
 \author{Daniel Robinson\\18361137}
 
+\pagenumbering{roman}
+
 \begin{document}
 % \maketitle
     \begin{titlepage}
@@ -40,23 +42,38 @@
         \end{center}
 \end{titlepage}
 
+\setcounter{secnumdepth}{-2}% default for "report" is 2
+
 \newpage
-\section*{Acknowledgements}
-\section*{Declaration of own work}
+\chapter{Declaration of own work}
 
 I, the undersigned, hereby declare that the work contained in this report is my own original work
-unless indicated otherwise.\\\\
+unless indicated otherwise.
+
+\vspace{2.5cm}   
+
+Signature: \hrulefill
+
+\hspace*{0mm}\phantom{Signature: }Daniel Robinson
+
+\hspace*{0mm}\phantom{Signature: }BEng Electrical \& Electronic
+
+\vspace{1cm}   
+
+Date:\space\space\space\space\space\hrulefill
+
+\chapter{Abstract}
+
+This report presents the design and analysis necessary for an autonomous system to acquire beneficial agricultural data within a desired environment. Various implementations are compared, before a novel design is presented. An aerial drone is designed and built using predominantly local supplies. Images are acquired and processed.\\
 
 \noindent
-Signature: \underline{ }\underline{ }\underline{ } Date: \underline{ }\underline{ }\underline{ }
+(Still to be expanded on).
 
-\section*{Abstract}
+\chapter{Uitreksel}
 
-This report presents the design and analysis necessary for an autonomous system to acquire beneficial agricultural data within a desired environment. Various implementations are compared, before a novel design is presented. An aerial drone is designed and built using predominantly local supplies. Images are acquired and processed.
+(Still to be expanded on).
 
-\section*{Uitreksel}
-
-\section*{Acknowledgements}
+\chapter{Acknowledgements}
 
 I would like to thank the following people for their support:
 \begin{itemize}
@@ -66,310 +83,55 @@ I would like to thank the following people for their support:
     \item Dr C van Daalen, for his guidance and support throughout the course of this project.
 \end{itemize}
 
-
+%\frontmatter
+\cleardoublepage
 \tableofcontents
+
+\clearpage
+\label{listoffigures}
+\addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
+
+\clearpage
+\addcontentsline{toc}{chapter}{\listtablename}
+\label{listoftables}
 \listoftables
-\section*{List of Symbols}
-\section*{List of Abbreviations}
-\section*{Matrix Notation}
 
-\newpage
-
-%\begin{abstract}
-%Your abstract.
-%\end{abstract}
-
-\section{Introduction}
-
-There's currently a water shortage crisis in South Africa, and in other parts of the world, potentially due to global warming. One of the sectors that it affects is agriculture. Farmers may be using less water on their crops, or load sharing. There's also the case of human error, where incorrect amounts of water or fertilizer (for example) is used. Lastly, plant disease is also a problem.\\
-
-\noindent
-To mitigate such problems, farmers would physically observe or sample their produce from the ground. It can be a time consuming task, and if sensor data is used, a mass of hand-held readings can prove complex. Perhaps a simpler, large-scale method of observing such changes can be used.\\
-
-\noindent
-For some things in the world, to process large amounts of data, it is typically more efficient to use digital equipment than human brain-power. To observe an area in the digital world, one can observe signals from the electromagnetic spectrum.\\
-
-\noindent
-Although there exists suitable equipment today, it remains yet inaccessible due to the complexity and relatively high cost of equipment. Perhaps there can be designed a method to bridge this gap.
-
-\subsection{Purpose of the project}
-
-The project is conducted to investigate the core elements required to map vegetation via infrared analysis techniques, which can determine the impact of human and environmental factors such as diseases, erosion, not enough fertiliser and water shortage.\\
-
-\noindent
-In order to be deemed successful the project needs to investigate observable parameter(s) beneficial to agriculture within large areas.
-
-\subsection{Problem Statement}
-
-To monitor large areas in a short period of time, one needs height. Height can be achieved by the modern invention of flight. In more practical terms, we can use vehicles such as hot air balloons, airstats, planes, helicopters and the like.\\
-
-\noindent
-We can classify these vehicles into manned and unmanned aerial vehicles. Unmanned vehicles have significantly less safety precautions and regulations, cost less, and are less subject to wear and tear, meaning more flights.\\
-
-\noindent
-We also need to save and process the imagery. Digital equipment utilizing the relevant technologies will suffice. Combining such camera equipment and UAVs, we need a vehicle that will meet the objective.
-
-\noindent
-\subsubsection{In brief}
-\begin{itemize}
-    \item Develop an observation platform to map areas from height (NADIR)
-    \item Determine observation equipment
-    \item Process sampled data and draw conclusions
-    \item Develop control tests to verify / prove conclusions
-\end{itemize}
-
-\noindent
-The implementation of autonomous systems can be costly. 
-
-\subsubsection{Comparison between different types of UAVs}
-
-\begin{itemize}
-    \item \textbf{Plane}\\
-    Planes are fast, and perhaps too fast. Of course one will be able to optimise the resolution vs speed, but it's not the best
-    \item \textbf{Drone}\\
-    Drones on the other hand are inexpensive, and can take accurate high resolution images, with less risk to the camera equipment than a plan.
-\end{itemize}
-
-A drone is designed and built to demonstrate proof of concept of a more cost effective model.\\
-
-\noindent
-The project will consist of the following steps:
-\begin{itemize}
-    \item \textbf{Drone design and construction}
-    \item \textbf{Image Acquisition}
-    \item \textbf{Image Processing}
-    \item \textbf{System Integration}
-\end{itemize}
-
-\noindent
-Various drones, cameras, filters and processing techniques will be presented, as well as optimal choices depending on available resources.
-Once the drone is built, focus will be put onto image acquisition and calibration. Thereafter, imagery will be processed for NDVI values.
-
-\subsection{Assumptions}
-
-Various assumptions are made in order to realise the solution of the problem. Besides assumptions regarding the environment in which the system will operate, it will also provide a starting basis for design synthesis.
-
-\begin{itemize}
-    \item Predominantly farming sector
-    \item NDVI values will vary according to the age of a plant
-    \item Sunlight, or clouds will affect the values
-    \item Cameras should be easy to calibrate
-\end{itemize}
-
-\subsection{Implementation process}
-
-A basic overview of the system is illustrated in Figure \ref{fig:overview}. It should be noted that the drone design, build, image acquisition and processing are more complicated than shown in the diagram. These processes will be expanded on and explained in the relevant chapters.
-
-\begin{figure}[H]
+\chapter{List of Symbols}
+\begin{table}[H]
 \centering
-\includegraphics[scale=0.6]{images/thesis_overview.png}
-\caption{Block diagram overview}
-\label{fig:overview}
-\end{figure}
+\begin{tabular}{l|r|r}
+Symbol & Description & Units\\\hline\\
+$F$ & Fundamenal Matrix & 3x3\\
+$R$ & Rotation Matrix & 3x3\\
+$T$ & Translation Matrix & 3x3\\
+\end{tabular}
+\caption{\label{tab:symb}Table depicting list of symbols. (Will probably not have this caption)}
+\end{table}
 
-
-\section{System Architecture}
-
-\subsection{Hardware Architecture}
-\subsubsection{Raspberry Pi}
-
-Real-time kernel. CSI port.
-
-\subsubsection{Navio2}
-
-Extension.
-
-\subsection{Software Architecture}
-\subsubsection{Raspberry Pi}
-
-Linux.
-
-\subsubsection{Navio2}
-
-Direct access.
-
-\section{Drone Design and Construction}
-
-\begin{figure}[H]
-\begin{subfigure}{0.5\textwidth}
+\chapter{List of Abbreviations}
+\begin{table}[H]
 \centering
-\includegraphics[scale=0.1]{images/drone-build-frame.jpg}
-\caption{F450 frame.}
-% Reproduced from \cite{gopher}}
-\label{fig:frame}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-motors.jpg}
-\caption{Adding the 920kv motors.}
-\label{fig:motors}
-\end{subfigure}
-\caption{Frame and motors}
-\label{fig:frame_motors}
-\end{figure}
+\begin{tabular}{l|r}
+Abbreviation & Description \\\hline
+UAV & Unmanned Aerial Vehicle \\
+NDVI & Normalised Differential Vegetation Index\\
+\end{tabular}
+\caption{\label{tab:abbr}Table depicting list of abbreviations. (Will probably not have this caption)}
+\end{table}
 
-\noindent
-The frame is made out of a polycarbonate as in Figure \ref{fig:frame}.\\
+\chapter{Matrix Notation}
 
-\begin{figure}[H]
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-esc-3phaseunconnected.jpg}
-\caption{Adding the ESCs. Motors require 3-phase power}
-\label{fig:ESCs_uplugged}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-esc-3phaseconnected.jpg}
-\caption{Power leads plugged in and secured}
-\label{fig:ESCs_plugged}
-\end{subfigure}
-\caption{ESCs}
-\label{fig:ESC}
-\end{figure}
+(Still to be expanded on).
 
-\noindent
-The leads are easy to plug/unplug. Any two phase leads can be swapped to change motor direction as in Figure \ref{fig:ESC}.\\
+\setcounter{secnumdepth}{2}
 
-\begin{figure}[H]
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.25]{images/drone-build-3d-case-render.jpg}
-\caption{Case render}
-\label{fig:fcarpc1}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-3dcase.jpg}
-\caption{3D printed case for Raspberry Pi and Navio2.}
-\label{fcarpc2}
-\end{subfigure}
-\caption{Flight controller and Raspberry Pi case}
-\label{fig:fcarpc}
-\end{figure}
-
-\noindent
-A housing is needed to protect the exposed electronics from the elements as shown in Figure \ref{fig:fcarpc}. Also, dramatic airflow can affect the barometer readings. Thus, a 3D printed case was made.
-
-\begin{figure}[H]
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-3dcase-pi.jpg}
-\caption{Putting the Pi in the case.}
-\label{fig:insertion_pi}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-3dcase-pi-navio.jpg}
-\caption{Fitting the Navio2 flight controller on top.}
-\label{fig:insertion_navio}
-\end{subfigure}
-\caption{Inserting the sensitive electronics.}
-\label{fig:insertion}
-\end{figure}
-
-\noindent
-The Navio2 flight controller fits perfectly onto the Raspberry Pi's 40-pin header in Figure \ref{fig:insertion_navio}. It also uses every signal pin, except for one. The Navio2 communicates directly with the Broadcom CPU on the Pi, resulting in a multi-processor system. The greatest significance in this case is that flight variables can be monitored and controlled. It is non-trivial in standalone flight controllers, as the on-board firmware has to be modified with utmost care.
-
-\begin{figure}[H]
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-3dcase-gps.jpg}
-\caption{Connecting Ublox Neo-7 GPS antenna and 15-pin camera CSI ribbon cable.}
-\label{fig:stab_gps}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-3dplatform.jpg}
-\caption{Case and platform}
-\label{fig:stab_case_plat}
-\end{subfigure}
-\caption{Putting the case and platform together}
-\label{fig:stabilize_platform}
-\end{figure}
-
-\noindent
-The GPS antenna lead fits snugly onto an SMA connector in Figure \ref{fig:stab_gps}, and is exposed in such a way as to leave enough freedom for the cable to bend, but not wear as if it were rigidly attached.
-
-\begin{figure}[H]
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-feet.jpg}
-\caption{Added feet for platform.} 
-\label{fig:feet}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-damper-balls.jpg}
-\caption{Rubber vibration damper balls for platform.}
-\label{fig:balls}
-\end{subfigure}
-\caption{Isolating vibrations between flight controller and the rest of the drone}
-\label{fig:stabilize_platform}
-\end{figure}
-
-\noindent
-One of the biggest problems in a drone is the vibrations emanating from the motors, travelling along the frame and affecting the flight controller. If not isolated from the flight controller, they induce a disturbance to the PID loop since the accuracy of the gyroscope, accelerometer and barometer readings are affected. In some cases, disturbed more than the PID loop can reasonably determine the current state of the drone.\\
-
-\noindent
-Thus, damper balls can be used to isolate vibrations significantly from the flight controller.
-
-\begin{figure}[H]
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-case-ondrone.jpg}
-\caption{Attaching 3D printed case and platform to drone.}
-\label{fig:attach_case_drone}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-433.jpg}
-\caption{Adding 433MHz telemtery to drone.}
-\label{fig:attach_433}
-\end{subfigure}
-\caption{Isolating vibrations between flight controller and the rest of the drone}
-\label{fig:attach_case_433}
-\end{figure}
-
-\noindent
-Finally, the 3D printed enclosure is attached to the drone in Figure \ref{fig:attach_case_drone}. Also, the drone can communicate via wifi as its medium of wireless telemetry; but the interference from other devices in the crowded 2.4 GHz ISM band drastically reduces range -- especially from the handheld remote controller. That, and the dongles I had available seemed to work only for about 10 m.\\
-
-\noindent
-Thus, I connected a 433 MHz 100mW transceiver that communicates at 56400 baud to the GCS as in Figure \ref{fig:attach_433}. Real-time telemtery to a ground station is useful for pre-flight checks, in-flight monitoring and control, and missions.
-
-\begin{figure}[H]
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-signal-wires.jpg}
-\caption{Wiring up the signal wires}
-\label{fig:attach_sbus}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-props.jpg}
-\caption{Adding the 9.5'x4.5' propellers}
-\label{fig:attach_props}
-\end{subfigure}
-\caption{Ready to fly}
-\label{fig:attach_signal_props}
-\end{figure}
-
-The drone communicates with the handheld remote controller via S-BUS, which is a universal standard. The beauty of it is that it communicates with one signal wire as in Figure \ref{fig:attach_sbus}. Previous implementations one may have had to use pulse position modulation (PPM), where each channel requires a wire. Even though this may sound simple, it does increase PCB size, complexity and cost in the end.\\
-
-\noindent
-One the other hand, each electronic speed controller (ESC) gets a signal wire and power input.
-
-\noindent
-The propellers have a pitch of 4.5', which is basically a measure of the 'bite', or distance it travels through the air on one revolution.
-
-\section{Image Acquisition}
-\section{Image Processing}
-\section{System Integration and Testing}
-
-quick discussion, issues
-
-testing, + results, + analysis
+\include{chapter1}
+\include{chapter2}
+\include{chapter3}
+\include{chapter4}
+\include{chapter5}
+\include{chapter6}
 
 
 
@@ -444,14 +206,16 @@ testing, + results, + analysis
 
 % We hope you find Overleaf useful, and please let us know if you have any feedback using the help menu above --- or use the contact form at \url{https://www.overleaf.com/contact}!
 
-\section{Appendix}
+\begin{appendices}
 
-\subsection{Bill of Materials}
+\chapter{Bill of Materials}
 
 \begin{itemize}
-	\item F450 frame
-	\item Motors
+	\item F450 frame \cite{greenwade93}
+	\item Motors \cite{gopher}
 \end{itemize}
+
+\end{appendices}
 
 \newpage
 \bibliographystyle{plain}

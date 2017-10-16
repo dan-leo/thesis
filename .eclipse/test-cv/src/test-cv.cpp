@@ -10,6 +10,7 @@ void MyEllipse( Mat img, double angle );
 void MyFilledCircle( Mat img, Point center );
 void MyPolygon( Mat img );
 void MyLine( Mat img, Point start, Point end );
+InputArrayOfArrays objpoints;
 int main( void ){
 	using namespace std;
 	std::cout << "Hello World!" << std::endl;

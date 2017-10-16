@@ -8,6 +8,7 @@
 \author{Daniel Robinson\\18361137}
 
 \pagenumbering{roman}
+\setlength\parindent{0pt}
 
 \begin{document}
 % \maketitle
@@ -116,6 +117,11 @@ $T$ & Translation Matrix & 3x3\\
 Abbreviation & Description \\\hline
 UAV & Unmanned Aerial Vehicle \\
 NDVI & Normalised Differential Vegetation Index\\
+IR & Infra Red\\
+PAR & Photosynthetically Active Radiation\\
+PCB & Printed Circuit Board\\
+CSI & Camera Serial Interface\\
+SBUS & Serial Bus ?\\
 \end{tabular}
 \caption{\label{tab:abbr}Table depicting list of abbreviations. (Will probably not have this caption)}
 \end{table}
@@ -127,7 +133,9 @@ NDVI & Normalised Differential Vegetation Index\\
 \setcounter{secnumdepth}{2}
 
 \include{chapter1}
+\label{chapter:intro}
 \include{chapter2}
+\label{chapter:sysarch}
 \include{chapter3}
 \include{chapter4}
 \include{chapter5}

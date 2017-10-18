@@ -1,9 +1,19 @@
-\chapter{Image Acquisition and calibration}
+\chapter{Image Acquisition and Calibration}
 
-As mentioned in the system architecture, images need to be taken simultaneously. There also needs to be two cameras due to the way the cameras are constructed, with a Bayer matrix for each pixel. At the time of inception, one could either isolate an infrared channel, or view fully RGB with separate cameras. Attempts to have both on a single camera were ineffective[].\\
+As mentioned in the system architecture, images need to be taken simultaneously. There also needs to be two cameras due to the way the cameras are constructed, with a Bayer matrix for each pixel. At the time of inception, one could only isolate NIR from RGB using separate cameras. Attempts to have both on a single camera were ineffective (explain why).\\
 
 \noindent
 The
+
+\section{Review of concepts}
+
+\subsection{Intrinsic Parameters}
+
+\subsubsection{Bayer matrix}
+
+\subsection{Extrinsic Parameters}
+
+\subsubsection{Jello effect}
 
 \section{Filters}
 
@@ -35,7 +45,7 @@ Thus, a DC brushless motorised gimbal will not be necessary.
 
 \section{Simultaneous triggering}
 
-TCP triggering, scheduled triggering.
+Initially TCP triggering was used, but the overhead and asynchronous nature meant that it was never consistently triggered at the same time. Instead, the clocks are sychronised using NTP, and attempt to trigger every second, on the second. The latter solution works quite well, with an occassional few milliseconds difference in stereo captures.
 
 \section{Calibration}
 

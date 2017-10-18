@@ -1,11 +1,81 @@
 \chapter{Drone Design and Construction}
 
+A drone is designed and constructed. The goal is to be cost-effective and to source local supplies.
+
+\section{Drone}
+
+\subsection{Mechanical subsystem design}
+
+The drone will be medium sized, with a payload of 1kg.
+
+\subsubsection{Frame}
+
+There are many materials and configurations for a drone. The configurations include 3, 4, 6, 8 arms or more, with single or contra-rotating propellers on each arm\footnote{Two propellers aligned vertically and spinning opposite to each other for upwards thrust}. \\
+
+Aerial cinematography requires a stiff but less brittle frame to provide a smooth and stable flight. They also need to be large enough to hold the cameras needed for this professional activity. Lastly, the frames should be supportive of tall landing gear \cite{frame}. Due to the larger overall mass, the frame's natural frequency is low, meaning that it provides the same stability as a hand-held weighted gimbal in cinematography. For our application, we'll be using lightweight cameras, which weigh 3 grams each, which means our drone can be lighter.\\
+
+Recreational usage may use 'mini multicopter frames' for flying indoors and outdoors \cite{frame}. They're extremely light, but do not have enough space for other peripherals\footnote{GPS, Raspberry Pis etcetra}.\\
+
+Sports drones are light and fast, but they require high discharge batteries which are not cost effective for our application. Besides, they do not have enough space.\\
+
+A combination of these configurations means that a medium sized quadcopter\footnote{Four propellers} will be suitable. It is not too light or too heavy, and has room for other peripherals.
+
+Materials include carbon-fibre, aluminium and fibreglass and synthetic polymers. The differences between them are not major, except that aluminium is heavier, requires larger motors and induces more vibrations. Carbon-fibre contributes to radio interference\cite{frame}, but is the lightest.
+
+The closest competition before the F450-V2 quadcopter frame was chosen was the ZMR250 Carbon Mini Quad FPV Frame as in Figure \ref{fig:zmr}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{images/zmr250.jpeg}
+\caption{ZMR250 Carbon Mini Quad FPV Frame\\
+Reproduced from \cite{frobot}}
+\label{fig:zmr}
+\end{figure}
+
+Both frames have roughly the same price\footnote{500 ZAR}.\\
+
+The ZMR250 has a carbon fibre body making it extremely light (145g), but fell into the class of `mini multicopter` as mentioned earlier. There was not enough space for the other peripherals as well.\\
+
+Therefore due to its local availability and accommodating space, the F450-V2 frame was chosen as in Figure \ref{fig:frame}.
+
+\subsubsection{Landing Gear}
+
+Four lengths of 10mm pine dowels approximately 15mm long were used. They totalled about 10 ZAR. The frame has 5cm legs, but accomodation has to be made for the nadir cameras.
+
+\subsubsection{Motors}
+
+The motors are rated at 920 KV\footnote{KV is a measure of the revolutions per minute when 1 Volt is applied with no load attached to the motor}. This is relatively low compared to the more common racing motors with around 2000 KV (which the ZMR250 frame would use). KV is related to the power output and torque level of a motor. This is determined by the number of turns on the armature and the strength of the magnets.
+
+\subsection{Electrical subsystem design}
+\subsubsection{Batteries}
+
+Multiple 3S1P batteries will be used, since the price cost-point was the cheapest (explain).
+
+\subsubsection{Dual power redundancy}
+
+
+
+\subsubsection{Electronic speed controllers}
+
+
+
+\subsection{Communication subsystem design}
+
+2.4 GHz, and 433 MHz is used.
+
+\subsection{Sensor subsystem design}
+
+Barometer, etc, redundancy.
+
+\subsection{Build process and commentary}
+
+At first, the frame is put together. This gives one a good idea of the actual size from the beginning.
+
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}
 \centering
 \includegraphics[scale=0.1]{images/drone-build-frame.jpg}
-\caption{F450 frame.}
-% Reproduced from \cite{gopher}}
+\caption{F450-V2 frame.}
 \label{fig:frame}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
@@ -19,7 +89,7 @@
 \end{figure}
 
 \noindent
-The frame is made out of a polycarbonate as in Figure \ref{fig:frame}.\\
+The frame is made out of a nylon polymer as in Figure \ref{fig:frame}.\\
 
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}
@@ -174,8 +244,26 @@ The propellers have a pitch of 4.5', which is basically a measure of the 'bite',
 
 \section{Ground Control Station}
 
-Laptop, 433 MHz.
+The drone communicates with the GCS in Figure (picture of the GCS) using 433 MHz transceivers.
 
-\section{Handheld transceiver}
+Show specs. Why? Pre-flight checks, setting waypoints.
 
-Full-duplex transceiver returns battery and signal strength information, with the capability of sending other sensor data via serial.
+(add a picture of the GCS).
+
+The software used is the open source Mission Planner platform.
+
+(insert MP picture).
+
+\section{Remote controller}
+
+Full-duplex remote controller returns battery and signal strength information, with the capability of sending other sensor data via SBUS.
+
+(insert picture of remote controller).
+
+Insert specs.
+
+Set up steps.
+
+\section{Testing}
+
+Adjusting PID values.

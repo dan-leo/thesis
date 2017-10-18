@@ -66,7 +66,7 @@ The rationale behind the NDVI is that one can exploit the strong differences in 
 
 A filter is needed to isolate the NIR channel. If a custom filter is used on a camera with the NIR filter removed, it is possible to isolate a NIR channel without visible light leakage on one or more colour channels. Variants include the Wratten 25A Red Long Pass filter, the Wratten 87 NIR All Pass filter and the Rosco 2008 Blue filter, which allow red and NIR light, only NIR light, and blue and NIR light respectively.\\
 
-The Rosco 2008 Blue filter will be used, for most of the project, as well as the 600nm Dichroic Glass Longpass filter from Edmund Scientific, with limited access.
+The Rosco 2008 Blue filter will be used, for most of the project, as well as the 600nm Dichroic Glass Longpass filter and 500nm Dichroic Glass Bandpass filter from Edmund Scientific, with limited access.
 
 \subsection{Cameras}
 
@@ -82,15 +82,13 @@ Also, the cameras are to be dampened to prevent a jello-effect due to the rollin
 
 \subsection{On-board processing}
 
-This will be handled by two Raspberry Pis. Both will be used to take photos through each of their single CSI ports.
+This will be handled by two Raspberry Pis. Both will be used to take photos through each of their single CSI ports. The Raspberry Pis will communicate with each other via direct ethernet connection. Twisted-pair is not necessary since the driver automatically swaps the RX and TX lines.
 
-CSI port. Full access to camera and flight controller.
-
-Initially, one raspberry pi was to be used with a camera multiplexer, but it didn't work, and therefore two raspberry pis were used. Just as well, as the flight controller uses all but 1 pin.
+Initially, one Raspberry Pi was to be used with a camera multiplexer, but it didn't work, and therefore two raspberry pis were used. Just as well, as the flight controller uses all but 1 GPIO pin.
 
 \subsection{Flight controller}
 
-Flight controller is needed to stabilize the airborne vehicle, and set mission waypoints. The Raspberry Pi, Navio2, camera symbiosis was good since all three together are quite configurable, compared to other solutions.
+Flight controller is needed to stabilize the airborne vehicle, and set mission waypoints. The Raspberry Pi, Navio2, and camera symbiosis was good since all three together are quite configurable even during flight, compared to other solutions which require hands-on intervention.
 
 \subsection{Drone}
 
@@ -98,7 +96,7 @@ A quadcopter was designed and built to handle all the equipment.
 
 \subsection{Ground Control Station}
 
-A 433 MHz linkup with a GCS is necessary for pre-flight checks, and monitoring/controlling the status of the vehicle during flight.
+An RF linkup (via an ISM band) with a GCS is necessary for pre-flight checks, and monitoring/controlling the status of the vehicle during flight.
 
 \section{Software Architecture}
 
@@ -106,10 +104,9 @@ A 433 MHz linkup with a GCS is necessary for pre-flight checks, and monitoring/c
 
 A real-time kernel will be used for the Ardupilot Firmware used on the flight controller Raspberry Pi.
 
-
 \subsection{Simultaneous camera triggering}
 
-Linux. Initially TCP triggering was used, but the overhead and asynchronous nature meant that it was never consistently triggered at the same time. Instead, the clocks are sychronised using NTP, and attempt to trigger every second, on the second. The latter solution works quite well, with an occassional few milliseconds difference in stereo captures.
+A few solutions will be investigated, including TCP/UDP packets and 'on the second' triggering.
 
 \subsection{Calibration}
 

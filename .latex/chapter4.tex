@@ -1,19 +1,35 @@
 \chapter{Image Acquisition and Calibration}
 
-As mentioned in the system architecture, images need to be taken simultaneously. There also needs to be two cameras due to the way the cameras are constructed, with a Bayer matrix for each pixel. At the time of inception, one could only isolate NIR from RGB using separate cameras. Attempts to have both on a single camera were ineffective (explain why).\\
+As mentioned in the system architecture, images need to be taken simultaneously. There also needs to be two cameras due to the way the cameras are constructed, with a Bayer matrix (See intrinsic parameters) for each pixel. At the time of inception, one could only isolate NIR from RGB using separate cameras. Attempts to have both on a single camera were ineffective (explain why).\\
 
 \noindent
 The
 
 \section{Review of concepts}
 
+These concepts are crucial to understand the reasoning behind certain decisions.
+
 \subsection{Intrinsic Parameters}
+
+focal length
+
+\subsection{Distortion}
+
+(picture of distortion)
 
 \subsubsection{Bayer matrix}
 
 \subsection{Extrinsic Parameters}
 
+translation, rotation, sun, glare
+
+\subsection{Camera Calibration}
+
+(picture of undistortion).
+
 \subsubsection{Jello effect}
+
+ripple
 
 \section{Filters}
 
@@ -23,7 +39,7 @@ The blue Rosco 2008 filter is used as in Figure \ref{fig:blue_filter}, and passe
 \begin{subfigure}{0.5\textwidth}
 \centering
 \includegraphics[scale=0.45]{images/blue_filter.jpg}
-\caption{Blue Rosco 2008 filter.\\ Reproduced from \cite{blue_filter}}
+\caption{Blue Rosco 2008 filter \cite{blue_filter}}
 \label{fig:blue_filter}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
@@ -32,8 +48,7 @@ The blue Rosco 2008 filter is used as in Figure \ref{fig:blue_filter}, and passe
 \caption{Blue filter transmission curve.}
 \label{fig:blue_curve}
 \end{subfigure}
-\caption{Blue filter characteristics.\\
-Reproduced from \cite{blue_curve}}
+\caption{Blue filter characteristics \cite{blue_curve}}
 \label{fig:blue_character}
 \end{figure}
 
@@ -49,4 +64,10 @@ Initially TCP triggering was used, but the overhead and asynchronous nature mean
 
 \section{Calibration}
 
-Stereorectification
+\subsection{Calibration Technique}
+
+\subsection{Measured Results}
+
+\section{Stereo-rectification}
+
+\subsection{Measured Results}

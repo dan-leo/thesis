@@ -9,14 +9,13 @@ Infrared light extends from the nominal red edge of the visible spectrum at 700 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.35]{images/ir_spectrum.png}
-\caption{Wavelengths of light\\
-Reproduced from \cite{ir_spectrum}}
+\caption{Wavelengths of light \cite{ir_spectrum}}
 \label{fig:ir_spectrum}
 \end{figure}
 
 \section{NDVI}
 
-The normalized difference vegetation index (NDVI) is a simple graphical indicator that can be used to analyze remote sensing measurements, typically but not necessarily from a space platform, and assess whether the target being observed contains live green vegetation or not\cite{ndvi_wiki} as in Figure \ref{fig:ndvi_british}.
+The normalized difference vegetation index (NDVI) is a simple graphical indicator that can be used to analyze remote sensing measurements, typically but not necessarily from a space platform\footnote{Aerial footage will always be higher resolution, with each pixel capturing $cm^2$ as opposed to $m^2$}, and assess whether the target being observed contains live green vegetation or not\cite{ndvi_wiki} as in Figure \ref{fig:ndvi_british}.
 
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}
@@ -29,8 +28,7 @@ The normalized difference vegetation index (NDVI) is a simple graphical indicato
 \includegraphics[scale=0.25]{images/NDVI_102003.png}
 \caption{October 2003}
 \end{subfigure}
-\caption{Average NDVI over the British Isles\\
-Reproduced from \cite{ndvi_wiki}}
+\caption{Average NDVI over the British Isles \cite{ndvi_wiki}}
 \label{fig:ndvi_british}
 \end{figure}
 
@@ -47,8 +45,7 @@ where red and NIR stand for the spectral reflectance measurements acquired in th
 \centering
 \includegraphics[scale=0.5]{images/chlorophyll.jpg}
 \centering
-\caption{PAR and absorption spectrum\\
-Reproduced from \cite{ndvi_wiki}}
+\caption{PAR and absorption spectrum \cite{ndvi_wiki}}
 \label{fig:chlorophyll}
 \end{figure}
 
@@ -70,7 +67,7 @@ The Rosco 2008 Blue filter will be used, for most of the project, as well as the
 
 \subsection{Cameras}
 
-Two cameras are required. It is seemingly impossible to capture pure NIR and pure red on separate channels unless the intrinsic bayer matrix is manufactured to allow for it, however, then it would not be cost effective (citation needed).\\
+Two cameras are required. It is seemingly impossible to capture pure NIR and pure red on separate channels unless the intrinsic bayer matrix (see chapter 4 on intrinsic parameters) is manufactured to allow for it, however, then it would not be cost effective (citation needed).\\
 
 The Sony IMX219 series cameras will be used. They integrate with the Raspberry Pi using a single 15-pin CSI connection.
 
@@ -106,15 +103,15 @@ A real-time kernel will be used for the Ardupilot Firmware used on the flight co
 
 \subsection{Simultaneous camera triggering}
 
-A few solutions will be investigated, including TCP/UDP packets and 'on the second' triggering.
+A few solutions will be investigated, including the use of TCP/UDP packets and 'on the second' triggering.
 
 \subsection{Calibration}
 
-Stereocalibration using chess board images was used.
+Stereo-calibration using 16x16 square chess board images were used.
 
 \subsection{Stereorectification}
 
-The images were undistorted according to the simultaneous chess board images it was calibrated at.
+The images were undistorted (see chapter 4 on intrinsic parameters) according to the simultaneous chess board images it was calibrated at.
 
 \subsection{SIFT and NDVI}
 

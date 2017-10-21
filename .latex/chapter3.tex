@@ -1,6 +1,6 @@
 \chapter{Drone Design and Construction}
 
-A drone is designed and constructed. The goal is to be cost-effective and to source local supplies.
+A drone is designed and constructed. The goal is to be cost-effective and to source local supplies. It should be note that pre-built drones like the DJI Phantom and Inspire cost significantly more\footnote{Roughly 100\% to 200\% more}.
 
 \section{Drone}
 
@@ -27,8 +27,7 @@ The closest competition before the F450-V2 quadcopter frame was chosen was the Z
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.35]{images/zmr250.jpeg}
-\caption{ZMR250 Carbon Mini Quad FPV Frame\\
-Reproduced from \cite{frobot}}
+\caption{ZMR250 Carbon Mini Quad FPV Frame \cite{frobot}}
 \label{fig:zmr}
 \end{figure}
 
@@ -46,17 +45,29 @@ Four lengths of 10mm pine dowels approximately 15mm long were used. They totalle
 
 The motors are rated at 920 KV\footnote{KV is a measure of the revolutions per minute when 1 Volt is applied with no load attached to the motor}. This is relatively low compared to the more common racing motors with around 2000 KV (which the ZMR250 frame would use). KV is related to the power output and torque level of a motor. This is determined by the number of turns on the armature and the strength of the magnets.
 
+\subsubsection{Protective enclosure}
+
+The flight controller requires a protective enclosure. A case\cite{3d_case} was 3D printed for the Raspberry Pi as in Figure \ref{fig:fcarpc2}.
+
 \subsection{Electrical subsystem design}
 \subsubsection{Batteries}
 
-Multiple 3S1P batteries will be used, since the price cost-point was the cheapest (explain).
+Multiple 3S1P batteries will be used, since the price cost-point was the cheapest (explain). (insert picture)
 
 \subsubsection{Dual power redundancy}
 
+The flight controller takes in two power source inputs for dual redundancy as in Figure \ref{fig:dual_redundancy}. One of the batteries powers the motors during flight. This also allows the electronics to remain on when swapping out the flight battery.
 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{images/dual_redundancy.png}
+\caption{Illustrating dual power redundancy}
+\label{fig:dual_redundancy}
+\end{figure}
 
 \subsubsection{Electronic speed controllers}
 
+The 3-phase motors require speed control. This is achieved by ESCs. Maximum power draw from the motors is
 
 
 \subsection{Communication subsystem design}
@@ -122,7 +133,7 @@ The leads are easy to plug/unplug. Any two phase leads can be swapped to change 
 \centering
 \includegraphics[scale=0.1]{images/drone-build-3dcase.jpg}
 \caption{3D printed case for Raspberry Pi and Navio2.}
-\label{fcarpc2}
+\label{fig:fcarpc2}
 \end{subfigure}
 \caption{Flight controller and Raspberry Pi case}
 \label{fig:fcarpc}

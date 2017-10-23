@@ -1,6 +1,8 @@
 import numpy as np
 import dill, glob, tqdm
 
+np.set_printoptions(suppress=True)
+
 root_dir = 'C:/Users/d7rob/thesis/distorted'
 root_dir = 'L:/Backups/thesis/longridge'
 

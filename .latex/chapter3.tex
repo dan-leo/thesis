@@ -18,7 +18,7 @@ Aerial cinematography requires a stiff but less brittle frame to provide a smoot
 
 Recreational usage may use 'mini multicopter frames' for flying indoors and outdoors \cite{frame}. They're extremely light, but do not have enough space for other peripherals\footnote{GPS, Raspberry Pis etcetra}.\\
 
-Sports drones are light and fast, but they require high discharge batteries which are not cost effective for our application. Besides, they do not have enough space.\\
+Sports drones are light and fast, but they require high discharge batteries which are not cost effective for our application. Besides, they also do not have enough space.\\
 
 A combination of these configurations means that a medium sized quadcopter\footnote{Four propellers} will be suitable. It is not too light or too heavy, and has room for other peripherals.
 
@@ -49,7 +49,24 @@ The motors are rated at 920 KV\footnote{KV is a measure of the revolutions per m
 
 \subsubsection{Protective enclosure}
 
-The flight controller requires a protective enclosure. A case\cite{3d_case} was 3D printed for the Raspberry Pi as in Figure \ref{fig:fcarpc2}.
+A housing is needed to protect the exposed electronics from the elements. Also, dramatic airflow can affect the barometer readings. A case\cite{3d_case} was 3D printed for the Navio2 and Raspberry Pi as in Figure \ref{fig:fcarpc2}.
+
+\begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.25]{images/drone-build-3d-case-render.jpg}
+\caption{Case render}
+\label{fig:fcarpc1}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.1]{images/drone-build-3dcase.jpg}
+\caption{3D printed case for Raspberry Pi and Navio2.}
+\label{fig:fcarpc2}
+\end{subfigure}
+\caption{Flight controller and Raspberry Pi case}
+\label{fig:fcarpc}
+\end{figure}
 
 \subsection{Electrical subsystem design}
 \subsubsection{Batteries}
@@ -71,10 +88,14 @@ The flight controller takes in two power source inputs for dual redundancy as in
 
 The 3-phase motors require speed control. This is achieved by ESCs. Maximum power draw from the motors is
 
-\subsection{Electronic subsystem design}
+\subsection{Control subsystem design}
 
 \subsubsection{Flight controller}
 Flight controller is needed to stabilize the airborne vehicle, and set mission waypoints. The Raspberry Pi, Navio2, and camera symbiosis was good since all three together are quite configurable even during flight, compared to other solutions which require hands-on intervention.
+
+\subsubsection{Flight modes}
+
+GPS, Altitude hold, auto, mission etc.
 
 \subsection{Communication subsystem design}
 
@@ -105,7 +126,7 @@ At first, the frame is put together. This gives one a good idea of the actual si
 \label{fig:frame_motors}
 \end{figure}
 
-The frame is made out of a nylon polymer as in Figure \ref{fig:frame}.\\
+The nylon polymer frame as in Figure \ref{fig:frame} seems surprisingly robust.\\
 
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}
@@ -125,25 +146,6 @@ The frame is made out of a nylon polymer as in Figure \ref{fig:frame}.\\
 \end{figure}
 
 The leads are easy to plug/unplug. Any two phase leads can be swapped to change motor direction as in Figure \ref{fig:ESC}.\\
-
-\begin{figure}[H]
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.25]{images/drone-build-3d-case-render.jpg}
-\caption{Case render}
-\label{fig:fcarpc1}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[scale=0.1]{images/drone-build-3dcase.jpg}
-\caption{3D printed case for Raspberry Pi and Navio2.}
-\label{fig:fcarpc2}
-\end{subfigure}
-\caption{Flight controller and Raspberry Pi case}
-\label{fig:fcarpc}
-\end{figure}
-
-A housing is needed to protect the exposed electronics from the elements as shown in Figure \ref{fig:fcarpc}. Also, dramatic airflow can affect the barometer readings. Thus, a 3D printed case was made.
 
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}

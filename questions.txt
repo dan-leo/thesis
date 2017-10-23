@@ -1,0 +1,129 @@
+
+
+how to add in a literature study / concept review?
+
+should concepts be before or after architecture in chpt 2?
+
+The pinhole camera model?
+
+
+
+
+?, write answer
+
+intro
+	problem, context
+	briefly, overview of implementation/ solution as I designed it eventually
+		two cameras, filters, 
+		don't discuss how -- in rest of report
+		just what it is / what it looks like
+			components in the introduction
+	explain the big picture
+	1. actual system with different components
+		photo with different components
+		valuable, but not necessary
+	2. scenario
+		application
+		land, drone, arrows, labels to two cameras, two images of environment
+		clear clear picture -- NB
+	3. overview explanation of the process
+		flow diagram
+		how the different components / processes link to the answer
+	how the system ended up being
+	System Architecture
+		how design system with all components
+
+Literature study
+	how have others solved the problem?
+	what techniques are available that would help solve the problem, or parts of it.
+		concepts
+	evaluation -- what did I learn
+		discuss as well as evaluate
+		red vs blue filter
+		don't mix what otehrs have done with my descision
+			your design should be separate from the literature review
+	what did I learn to help me design the solution
+
+
+
+System Integration
+	
+
+don't break up sections
+
+don't have 20 headings on one pages
+
+flow and structure
+
+too much structure will revent fow
+
+what is the point of the next chapter?
+	going more in depth into the overview
+
+
+ndvi is a discussion of the technique, 
+
+
+# construction process and integration
+
+Structure for each chapter
+	componetnt(s) of the solution {hardware, software, algorithm, process}
+		problem
+		literature review
+		solution design
+		implementation and testing
+		results and analysis
+			for the different components, don't show exhaustive tests on each
+		conclusion
+			did solution solve the problem?
+			convince
+
+testing
+	over-arching question
+		how well does the system work
+		each test must answer the OA question and suport
+		don't do redundant test
+		only have 40 pages, so only discuss to an appropriate amount of detail
+
+
+sys integration and testing
+	first explain how everything went together
+	not in depth
+	what I did and how I did it,
+	go towards the question of how well did it work
+
+	componetnts
+		how did I design my tests?
+		what were the results of the tests
+		process / analyse the results in an appropraite way such that it wuold lead to the conclusion
+			2 classes
+				quantitvie analysis
+					attach numver
+				qualitive analysis
+					show certain asppectso f the solution
+					illustrate how it works in specific scenarios
+					NDVI might have calibratiob plate, should give certain index valuable, comapred calc value with what it should be
+					secondly, show results qualitiviely whether results work well or not, which is hard to show with numbers
+					shadow or sun, same values?
+						hard to attach numbers
+						idea is to zoom in or isolate certain effects so that I can make conclusions on how well it works
+						under which range of conditions does it work well
+						does it work well in both sunligh and shade
+						multiple different sub-questions
+
+
+conclusion
+	direct result of sys integration
+	completely convinced
+	mirrors problem statement
+		sovle this problem
+		did my solution solve thius problem?
+
+
+abstract
+	one or two results
+	what is the prject about, and is it worth reading?
+	most of them one only reads the abstract
+
+
+conclusion

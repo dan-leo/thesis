@@ -52,12 +52,38 @@ The NDVI is similar to a mere ratio of infrared light to visible light, yet sinc
 
 The rationale behind the NDVI is that one can exploit the strong differences in plant reflectance to determine their spatial distribution.\\
 
-NDVIs have been around for many years. 
+The launch of the Sputnik 1 by the Soviet Union in 1957 sparked an interest in meteorological satellites to improve weather forecasting. NDVIs, introduced in the early seventies by the ERTS\footnote{Earth Resources Technology Satellite, or Landsat 1}, remain popular today. \\
 
-Satellites
+Today, for example, one can expect to pay about \$1600 per fortnightly 0.5m resolution photo from the Pléiades satellite constellation\footnote{Very-high-resolution optical earth-imaging satellites via Satellite Imaging Corporation}. There are other sensors with similar pricing, including the WorldView, GeoEye, Kompsat, Quickbird, Gaofen etc.\\Aerobotics, based in Cape Town have quite a cost effective solution, with weekly footage at 500 ZAR per month, however at a low resolution of 10m per pixel. They also charge 80 ZAR per hectare for drone surveys, and 20 ZAR per hectare\footnote{Worldwide average 59.4 Ha\cite{farm_size}, South Africa between 427 - 5799 Ha \cite{farm_size_sa}} if one uploads one's own data. Solutions like these show that it could be beneficial for a farmer to have their very own automated solution.\\
 
-That company in CT.
+Since the proliferation of UAVs, there has been an increased effort to find more cost effective solutions to commercial applications, not excluding NDVI analysis. Hypothetically, if an inexperienced farmer were to perform NDVIs of their land by themselves, there does exist online platforms to process the imagery. However, imagery may not necessarily be calibrated, and distortions in the lens may create an inaccurate result. Also, the upfront costs of the hardware required may be too much. Typical drones like the Phantom series cost around \$1000-2000. \\Cameras and pricing include:
+\begin{itemize}
+	\item Parrot Sequoia, 5 cameras, \$3500 \cite{sequoia}
+	\item Mapir Survey2, single camera, \$500 \cite{mapir}
+	\item AgroCam Pro, dual cameras, \$575 \cite{agrocam}
+\end{itemize}
 
+There are other vegetation indices such as the Enhanced vegetation index in equation \ref{eq:evi},
 
-Since the proliferation of UAVs, there has been an increased effort to find more cost effective solutions to commercial applications, not excluding NDVI analysis.
-There has been much action in recent years 
+\begin{equation}\label{eq:evi}
+EVI=G\times {\frac  {(NIR-RED)}{(NIR+C1\times RED-C2\times Blue+L)}}
+\end{equation}
+
+where NIR, blue and red refer to atmospherically corrected Raleigh and ozone absorption surface reflectances, L refers to background adjustment in canopies that address non-linear, differential NIR, and the coefficients C1, C2 uses the blue band to correct for aerosol influences in the red band. The EVI, as opposed to the more chlorophyll sensitive NDVI, is more responsive to structural canopy variations, including LAI (leaf index area), physiognomy\footnote{External appearance, and growth forms of dominant taxa} and architecture \cite{evi}. Since it has more of a satellite application, this exists outside the scope of the project.\\
+
+Another example is the Normalized difference water index as in equation \ref{eq:ndwi},
+
+\begin{equation}\label{eq:ndwi}
+{\displaystyle {\mbox{NDWI}}={\frac {(Xnir-Xswir)}{(Xnir+Xswir)}}}\quad or\quad {\displaystyle {\mbox{NDWI}}={\frac {(Xgreen-Xnir)}{(Xgreen+Xnir)}}}
+\end{equation}
+
+where short-wave infrared (SWIR\footnote{Water absorption increases significantly at 1450 nm, within SWIR wavelength 1.4-3 µm}) wavelengths are used to monitor changes in water content of leaves, and green and NIR wavelengths monitor changes realted to water content in water bodies. The former is useful for vegetation, and the latter is useful to detect flooding or changes in water level \cite{ndwi}. SWIR cameras are expensive, however (cite source).\\
+
+Although there exist other vegetation indices, it should be inductive that they can be proven, if in this project the NDVI is successful.\\
+
+For NDVIs, it should be noted that there are many who motivate that a cheap conversion of a normal digital camera (by replacing the NIR filter with a blue or red filter) will show satisfactory results. Professionals (cite source) will generally advise one  to avoid such methods since one can never remove the cross-channel interference (see section \ref{sec:intrinsic}, unless one has dual cameras.\\
+
+The project focuses on a dual/stereo camera setup, to minimize cross-channel interference. However, several problems arise such as distortion, differences in focal length, rotation and translation between the cameras, and so forth.\\
+
+There exist techniques to solve these problems, with an initial step to calibrate the cameras using corresponding points in a 3D plane (cite). Then, images are stereo-rectified (cite) and undistorted (cite). The common area may still differ in focal length, and for this reason, stereo correspondences and SIFTing (cite) is used to align the images as best as possible. Only now can an NDVI be calculated for each matching pixel.
+

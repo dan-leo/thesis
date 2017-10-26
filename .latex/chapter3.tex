@@ -1,6 +1,6 @@
 \chapter{Drone Design and Construction}
 
-A drone is designed and constructed. The goal is to be cost-effective and to source local supplies. It should be note that pre-built drones like the DJI Phantom and Inspire cost significantly more\footnote{Roughly 100\% to 200\% more}.
+A drone is designed and constructed. The goal is to be cost-effective and to source local supplies. It should be noted that pre-built drones like the DJI Phantom and Inspire cost significantly more\footnote{Easily 100\% to 200\% more}.
 
 \section{Drone}
 
@@ -8,21 +8,21 @@ A quadcopter was designed and built to handle all the equipment.
 
 \subsection{Mechanical subsystem design}
 
-The drone will be medium sized, with a payload of 1kg.
+The drone will be medium sized, with a payload of 1kg. (note: add a few more details).
 
 \subsubsection{Frame}
 
 There are many materials and configurations for a drone. The configurations include 3, 4, 6, 8 arms or more, with single or contra-rotating propellers on each arm\footnote{Two propellers aligned vertically and spinning opposite to each other for upwards thrust}. \\
 
-Aerial cinematography requires a stiff but less brittle frame to provide a smooth and stable flight. They also need to be large enough to hold the cameras needed for this professional activity. Lastly, the frames should be supportive of tall landing gear \cite{frame}. Due to the larger overall mass, the frame's natural frequency is low, meaning that it provides the same stability as a hand-held weighted gimbal in cinematography. For our application, we'll be using lightweight cameras, which weigh 3 grams each, which means our drone can be lighter.\\
+In aerial cinematography, it would require a stiff but less brittle frame to provide a smooth and stable flight. They also need to be large enough to hold the cameras needed for this professional activity. Lastly, the frames should be supportive of tall landing gear \cite{frame}. Due to the larger overall mass, the frame's natural frequency is low, meaning that it provides the same stability as a hand-held weighted gimbal in cinematography. For our application, we'll be using lightweight cameras, which weigh 3 grams each, which means our drone can be lighter.\\
 
 Recreational usage may use 'mini multicopter frames' for flying indoors and outdoors \cite{frame}. They're extremely light, but do not have enough space for other peripherals\footnote{GPS, Raspberry Pis etcetra}.\\
 
 Sports drones are light and fast, but they require high discharge batteries which are not cost effective for our application. Besides, they also do not have enough space.\\
 
-A combination of these configurations means that a medium sized quadcopter\footnote{Four propellers} will be suitable. It is not too light or too heavy, and has room for other peripherals.
+A combination of these configurations means that a medium sized quadcopter\footnote{Four propellers} will be suitable. It is not too light or too heavy, and has room for other peripherals.\\
 
-Materials include carbon-fibre, aluminium and fibreglass and synthetic polymers. The differences between them are not major, except that aluminium is heavier, requires larger motors and induces more vibrations. Carbon-fibre contributes to radio interference\cite{frame}, but is the lightest.
+Materials include carbon-fibre, aluminium and fibreglass and synthetic polymers. The differences between them are not major, except that aluminium is heavier, requires larger motors and induces more vibrations. Carbon-fibre contributes to radio interference\cite{frame}, but is the lightest.\\
 
 The closest competition before the F450-V2 quadcopter frame was chosen was the ZMR250 Carbon Mini Quad FPV Frame as in Figure \ref{fig:zmr}.
 
@@ -45,11 +45,13 @@ Four lengths of 10mm pine dowels approximately 15mm long were used. They totalle
 
 \subsubsection{Motors}
 
-The motors are rated at 920 KV\footnote{KV is a measure of the revolutions per minute when 1 Volt is applied with no load attached to the motor}. This is relatively low compared to the more common racing motors with around 2000 KV (which the ZMR250 frame would use). KV is related to the power output and torque level of a motor. This is determined by the number of turns on the armature and the strength of the magnets.
+The motors are rated at 920 KV\footnote{KV is a measure of the revolutions per minute when 1 Volt is applied with no load attached to the motor}. This is relatively low compared to the more common racing motors with around 2000 KV (which the ZMR250 frame would use). KV is related to the power output and torque level of a motor. This is determined by the number of turns on the armature and the strength of the magnets.\\
+
+(note: add more)
 
 \subsubsection{Protective enclosure}
 
-A housing is needed to protect the exposed electronics from the elements. Also, dramatic airflow can affect the barometer readings. A case\cite{3d_case} was 3D printed for the Navio2 and Raspberry Pi as in Figure \ref{fig:fcarpc2}.
+A housing is needed to protect the exposed electronics from the elements. Also, dramatic airflow can affect the barometer readings. A case \cite{3d_case} was 3D printed for the Navio2 and Raspberry Pi as in Figure \ref{fig:fcarpc2}.
 
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}
@@ -86,7 +88,11 @@ The flight controller takes in two power source inputs for dual redundancy as in
 
 \subsubsection{Electronic speed controllers}
 
-The 3-phase motors require speed control. This is achieved by ESCs. Maximum power draw from the motors is
+The 3-phase motors require speed control. This is achieved by ESCs. Maximum power draw from the motors is 16A. 20A rated ESCs are used.
+
+\subsection{Processor subsystem design}
+
+The Navio2 flight controller fits perfectly onto the Raspberry Pi's 40-pin header in Figure \ref{fig:insertion_navio}. It also uses every signal pin, except for one. The Navio2 communicates directly with the Broadcom CPU on the Pi, resulting in a multi-processor system. The greatest significance in this case is that flight variables can be monitored and controlled. It is non-trivial in standalone flight controllers, as the on-board firmware has to be modified with utmost care.
 
 \subsection{Control subsystem design}
 
@@ -99,7 +105,11 @@ GPS, Altitude hold, auto, mission etc.
 
 \subsection{Communication subsystem design}
 
-2.4 GHz, and 433 MHz is used.
+Also, the drone can communicate via wifi as its medium of wireless telemetry; but the interference from other devices in the crowded 2.4 GHz ISM band drastically reduces range -- especially from the handheld remote controller. That, and the wifi dongles that were available seemed to work only for about 10 m.\\
+
+Thus, 433 MHz 100mW transceivers were connected between the GCS and the drone as in Figure \ref{fig:attach_433}, at a 56400 baudrate. Real-time telemtery to a ground station is useful for pre-flight checks, in-flight monitoring and control, and missions.\\
+
+For development purposes, wifi is used extensively to SSH into the Raspberry Pis and to analyse photos using SAMBA. It should be noted that due to the conflict with the remote controller, it is not possible to view photos in-flight. Nevertheless, there are many cases where the wifi disconnects, and it was required to have a script running to reconnect the wifi whenever it goes down (see code in appendix \ref{code:wifiup}).
 
 \subsection{Sensor subsystem design}
 
@@ -126,8 +136,8 @@ At first, the frame is put together. This gives one a good idea of the actual si
 \label{fig:frame_motors}
 \end{figure}
 
-The nylon polymer frame as in Figure \ref{fig:frame} seems surprisingly robust.\\
-
+The nylon polymer frame as in Figure \ref{fig:frame} seems surprisingly robust, especially considering that the centre is PCB based.\\
+s
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}
 \centering
@@ -163,8 +173,6 @@ The leads are easy to plug/unplug. Any two phase leads can be swapped to change 
 \caption{Inserting the sensitive electronics.}
 \label{fig:insertion}
 \end{figure}
-
-The Navio2 flight controller fits perfectly onto the Raspberry Pi's 40-pin header in Figure \ref{fig:insertion_navio}. It also uses every signal pin, except for one. The Navio2 communicates directly with the Broadcom CPU on the Pi, resulting in a multi-processor system. The greatest significance in this case is that flight variables can be monitored and controlled. It is non-trivial in standalone flight controllers, as the on-board firmware has to be modified with utmost care.
 
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}
@@ -223,10 +231,6 @@ Thus, damper balls can be used to isolate vibrations significantly from the flig
 \label{fig:attach_case_433}
 \end{figure}
 
-Finally, the 3D printed enclosure is attached to the drone in Figure \ref{fig:attach_case_drone}. Also, the drone can communicate via wifi as its medium of wireless telemetry; but the interference from other devices in the crowded 2.4 GHz ISM band drastically reduces range -- especially from the handheld remote controller. That, and the dongles I had available seemed to work only for about 10 m.\\
-
-Thus, I connected a 433 MHz 100mW transceiver that communicates at 56400 baud to the GCS as in Figure \ref{fig:attach_433}. Real-time telemtery to a ground station is useful for pre-flight checks, in-flight monitoring and control, and missions.
-
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}
 \centering
@@ -276,12 +280,16 @@ Set up steps.
 
 \section{Software}
 
-This will be handled by two Raspberry Pis. Both will be used to take photos through each of their single CSI ports. The Raspberry Pis will communicate with each other via direct ethernet connection. Twisted-pair is not necessary since the driver automatically swaps the RX and TX lines.
+This will be handled by two Raspberry Pis. Both will be used to take photos through each of their single CSI ports. The Raspberry Pis will communicate with each other via direct ethernet connection. Twisted-pair is not necessary since the driver automatically swaps the RX and TX lines.\\
 
-Initially, one Raspberry Pi was to be used with a camera multiplexer, but it didn't work, and therefore two raspberry pis were used. Just as well, as the flight controller uses all but 1 GPIO pin.
+Initially, one Raspberry Pi was to be used with a camera multiplexer, but it didn't work, and therefore two raspberry pis were used. Just as well, as the flight controller uses all but 1 GPIO pin.\\
 
-A real-time kernel will be used for the Ardupilot Firmware used on the flight controller Raspberry Pi.
+A real-time kernel will be used for the Ardupilot Firmware used on the flight controller Raspberry Pi.\\
 
 \section{Testing}
 
-Adjusting PID values.
+Adjusting PID values.\\
+
+(Put in that case where one foot broke and induced an asynchronous frequency in a certain movement).\\
+
+Relevant flight log data.

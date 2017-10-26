@@ -101,7 +101,19 @@ initDist = np.array([[0]*5])
 print "initCameraMatrix1: " + str(initCameraMatrix1)
 print "initCameraMatrix2: " + str(initCameraMatrix2)
     
-retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(rgb.objpoints, rgb.imgpoints, ir.imgpoints, initCameraMatrix1, initDist, initCameraMatrix2, initDist, rgb.resolution, flags, criteria)
+##retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(rgb.objpoints, rgb.imgpoints, ir.imgpoints, initCameraMatrix1, initDist, initCameraMatrix2, initDist, rgb.resolution, flags, criteria)
+
+retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(rgb.objpoints, \
+                                                                                                 rgb.imgpoints, \
+                                                                                                 ir.imgpoints, \
+                                                                                                 rgb.resolution,
+                                                                                                 initCameraMatrix1, \
+                                                                                                 initDist, \
+                                                                                                 initCameraMatrix2, \
+                                                                                                 initDist, \
+                                                                                                 None, None, None, None, \
+                                                                                                 criteria, \
+                                                                                                 flags)
 
 print "stereoCalibrate retval: " + str(retval)
 print "cameraMatrix1: " + str(cameraMatrix1)
@@ -118,7 +130,9 @@ print ''
 flags = cv2.CALIB_ZERO_DISPARITY
 ##flags = None
 
-R1, R2, P1, P2, Q, validPixROI1, validPixROI2 = cv2.stereoRectify(cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, rgb.resolution, R, T, flags, 1, rgb.resolution)
+##R1, R2, P1, P2, Q, validPixROI1, validPixROI2 = cv2.stereoRectify(cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, rgb.resolution, R, T, flags, 1, rgb.resolution)
+
+R1, R2, P1, P2, Q, validPixROI1, validPixROI2 = cv2.stereoRectify(cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, rgb.resolution, R, T, None, None, None, None, None, flags, 1, rgb.resolution)
 
 print "R1: " + str(R1)
 print "R2: " + str(R2)

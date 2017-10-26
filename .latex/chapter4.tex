@@ -1,6 +1,6 @@
 \chapter{Image Acquisition and Calibration}
 
-Since cross-talk between channels cannot be eliminated completely, there needs to be two cameras due to the way the cameras are constructed with a Bayer matrix for each pixel (see section \ref{sec:intrinsic}). Attempts to have both on a single camera are ineffective (explain why).\\
+Since cross-talk between channels cannot be eliminated completely, there needs to be two cameras due to the Bayer matrix colour array (see section \ref{sec:intrinsic}). Attempts to have both on a single camera are ineffective (explain why).\\
 
 The following concepts are crucial to understand the reasoning behind certain decisions.\\
 
@@ -22,7 +22,7 @@ There is also distortion, as in Figure \ref{fig:distortion_examples}.
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{images/distortion_examples.png}
-\caption{Distortion examples. OpenCV \cite{calib3d}}
+\caption{Distortion examples \cite{calib3d}}
 \label{fig:distortion_examples}
 \end{figure}
 
@@ -36,32 +36,12 @@ This can be modelled by the pinhole camera model as in section \ref{sec:pinhole}
 %
 %ripple
 
-\section{Pinhole Camera Model}
-\label{sec:pinhole}
-
-The cameras can be approximated as pin-hole camera models with parameters. Estimating the parameters is known as 'camera resectioning'. Light enters camera through focal point $Fc$, and falls onto the sensor, as depicted in Figure \ref{fig:camera_geometry}. $f$ is the focal length, which is the distance between the image sensor and lens. The symmetry of the model means that the correct orientation is shown at the image plane.
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.35]{images/camera_geometry.png}
-\caption{Geometry of a single camera}
-\label{fig:camera_geometry}
-\end{figure}
-
-
-
-\subsection{Intrinsic Parameters}
-\label{sec:intrinsic}
-
-\subsection{Extrinsic Parameters}
-
-translation, rotation, sun, glare
 
 \section{Filters}
 
-A filter is needed to isolate the NIR channel. If a custom filter is used on a camera with the NIR filter removed, it is possible to isolate a NIR channel without visible light leakage on one or more colour channels. Variants include the Wratten 25A Red Long Pass filter, the Wratten 87 NIR All Pass filter and the Rosco 2008 Blue filter, which allow red and NIR light, only NIR light, and blue and NIR light respectively.\\
+A filter is needed to isolate the NIR channel. If a custom filter is used on a camera with the NIR filter removed, it is possible to isolate a NIR channel without visible light leakage. A few of the variants include the Wratten 25A Red Long Pass filter, the Wratten 87 NIR All Pass filter and the Rosco 2008 Blue filter, which allow red and NIR light, only NIR light, and blue and NIR light respectively.\\
 
-The Rosco 2008 Blue filter will be used, for most of the project, as well as the 600nm Dichroic Glass Longpass filter and 500nm Dichroic Glass Bandpass filter from Edmund Scientific, with limited access.
+The Rosco 2008 Blue filter will be used, for most of the project, as well as the 600nm Dichroic Glass Longpass filter and 500nm Dichroic Glass Bandpass filter from Edmund Scientific, with limited access.\\
 
 The blue Rosco 2008 filter is used as in Figure \ref{fig:blue_filter}, and passes only NIR within the green and red channels, as shown in Figure \ref{fig:blue_curve}.
 
@@ -82,41 +62,290 @@ The blue Rosco 2008 filter is used as in Figure \ref{fig:blue_filter}, and passe
 \label{fig:blue_character}
 \end{figure}
 
-\section{Cameras}
+%\begin{figure}[H]
+%\centering
+%	
+%\subfloat[Blue Rosco 2008 filter \cite{blue_filter}]
+%	\includegraphics[scale=0.45, width=0.5\textwidth]{images/blue_filter.jpg}
+%	\label{fig:blue_filter2}
+%
+%	
+%\subfloat[Blue filter transmission curve.]
+%	\includegraphics[scale=0.42]{images/superblueinfraredfiltercurve.png}
+%	\label{fig:blue_curve2}
+%
+%\caption{Blue filter characteristics \cite{blue_curve}}
+%\label{fig:blue_characte2r}
+%\end{figure}
+%
+%\section{Cameras}
 
-Two cameras are required. It is seemingly impossible to capture pure NIR and pure red on separate channels unless the intrinsic bayer matrix (see chapter 4 on intrinsic parameters) is manufactured to allow for it, however, then it would not be cost effective (citation needed).\\
+Two cameras are required. It is seemingly impossible to capture pure NIR and pure red on separate channels unless the intrinsic bayer matrix is manufactured to allow for it, however, then it would not be cost effective (citation needed).\\
 
-The Sony IMX219 series cameras will be used. They integrate with the Raspberry Pi using a single 15-pin CSI connection.
+The Sony IMX219 series cameras will be used. They integrate with the Raspberry Pi using single 15-pin CSI connections.
+
+\section{Exposure}
+
+It is important that the correct white-balance settings are chosen so as not to allow extremeties such as in Figure \ref{fig:exposure} to occur.
+
+\begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{images/under-exposed.jpg}
+\caption{Under exposed}
+\label{fig:under_exposed}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{images/over-exposed.jpg}
+\caption{Over exposed}
+\label{fig:over_exposed}
+\end{subfigure}
+\caption{Incorrect exposure settings}
+\label{fig:exposure}
+\end{figure}
+
+A calibration plate (see section x) should resolve drift in NDVI values caused by clouds or sunshine (glare might be more of an issue).
 
 \section{Camera mount}
 
-The cameras will be fixed relative to each other using a PCB substrate so that no rotational or translational drift can occur.
+The motors cause high-frequency vibrations, and if not removed, it can cause what is known as the Jello-effect as in Figure \ref{fig:jello_effect}.
 
-Also, the cameras are to be dampened to prevent a jello-effect due to the rolling shutter cameras. Global shutter cameras are more expensive.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.27]{images/ripple.jpg}
+\caption{Jello-effect visible before dampening}
+\label{fig:jello_effect}
+\end{figure}
 
-Ripple / jello
+The cameras will be fixed relative to each other using a PCB substrate so that no rotational or translational drift can occur as in Figure \ref{fig:cam_mount}.\\
 
-Thus, a DC brushless motorised gimbal will not be necessary.
+Also, the cameras are to be dampened as in Figure \ref{fig:dampener} to prevent a jello-effect due to the rolling shutter cameras. Global shutter cameras are more expensive (cite).
+
+\begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.3]{images/dampener.jpg}
+\caption{Dampening for the cameras}
+\label{fig:dampener}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.3]{images/fixed_orientation.jpg}
+\caption{Fixed orientation for cameras}
+\label{fig:fixed_orientation}
+\end{subfigure}
+\caption{Camera mount}
+\label{fig:cam_mount}
+\end{figure}
+
+Although a DC brushless motorised gimbal would aid in nadir orientation, increasing the overlap between images should account for when the cameras are not pointing directly downwards.
 
 \section{Simultaneous triggering}
 
-A few solutions will be investigated, including the use of TCP/UDP packets and 'on the second' triggering.
+Initially, an IVmech Camaera multiplexer was used as in Figure \ref{fig:ivmech}. Unfortunately, it didn't work. Upon debugging using a logic analyser, the $CAM\_GPIO$ and $CAM1\_DN$ pins were not multiplexed as they should have been.
 
-Initially TCP triggering was used, but the overhead and asynchronous nature meant that it was never consistently triggered at the same time. Instead, the clocks are sychronised using NTP, and attempt to trigger every second, on the second. The latter solution works quite well, with an occassional few milliseconds difference in stereo captures.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.25]{images/ivmech.jpg}
+\caption{IVmech camera multiplexer}
+\label{fig:ivmech}
+\end{figure}
 
-\section{Calibration}
+With the dual raspberry pi setup, TCP triggering was used as in code appendix \ref{code:tcp_trigger}, but the overhead and asynchronous nature meant that it was never consistently triggered at the same time. Instead, the clocks are sychronised using NTP, and attempt to trigger every second, on the second. It attempts to, because sometimes the GPU runs garbage collection on its memory to make way for new images. Except for the garbage collection period (which takes a few seconds), the latter solution works quite well, with an occassional few milliseconds difference in stereo captures. This is accounted for in Chapter \ref{sec:image_processing} using feature matching and homography.
+
+\section{The Camera Model}
+\subsection{Camera Geometry}
+\label{sec:pinhole}
+
+It is important to be able to model the cameras in a mathematical form so that variances can be accounted for in each unique camera.\\
+
+The cameras can be approximated as pin-hole camera models with parameters as in section \ref{sec:pinhole}. Estimating the parameters is known as 'camera resectioning'. Light enters camera through focal point $Fc$, and falls onto the sensor, as depicted in Figure \ref{fig:camera_geometry}. $f$ is the focal length, which is the distance between the image sensor and lens. The symmetry of the model means that the correct orientation is shown at the image plane.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{images/camera_geometry.png}
+\caption{Geometry of a single camera}
+\label{fig:camera_geometry}
+\end{figure}
+
+The field of view is restricted by sensor size and focal length, and depends on the distance (or height) of the camera from the subject. Since a stereo setup is used, the field of view overlaps, but not from the same focal point as shown in Figure \ref{fig:stereo_overlap}. The idea would be to superimpose the two image planes one top of each other.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.45]{images/stero_overlap.jpg}
+\caption{Stereo vision overlap}
+\label{fig:stereo_overlap}
+\end{figure}
+
+%various coordinate systems?\\
+%Cartesian?\\
+%right-hand rule?\\
+%multiple-cameras used, therefore epiline geometery?\\
+%relationship between coordinate systems, camera, image plane, system environment.\\\\
+%
+%width Xc\\
+%height Yc\\
+%depth Zc\\
+%Focal point Fc set at origin\\
+%P exists within R\^3\\\\
+%
+%image plane provides two coordinate systems, the u-v coordinate system, and the x-y coordinates.\\
+%H, W\\
+%position of the image plane in conjunction to the cam geometry\\\\
+%
+%the point at which the principle axis Zc penetrates the image plane is referred to as the principle point and denoted as (Cx, Cy). The principle point is set as the origin of the x-y coordinate system. The point P is bounded within the image plane as so:\\
+%Pu, Pv, Px, Py, W, H\\\\
+%
+%The 3d env defining fields = object space. show origin space relative to other spaces. Focal poitn Fc is aligned\\
+%with origin of obj space such that\\
+%Zc == Z\\
+%obj plane is parallel to the image plane and describes the range of possible X-Y positions of the object at a set distance.\\
+%The distance between the focal point and the object plane is workign distance,\\
+%denoted as Zd. and can be used to determione the feild of view.\\\\
+%
+%\subsection{The Camera Model}
+%
+%camerai is an optical instrument used to capture and store visual info.\\
+%the cam model is a mathematical representation of the internal camera geometry\\
+%and can be extended to define the position of the camera within the object space.\\
+%the camera model is an essential tool used to construct the relation between the camera, image plane and obj space.\\\\
+%
+%Calibration depends on the info given by the camera model to effectively rectify differences in the stereo setup.\\
+%This chapter therefore investigates the construction of the camera model, alogn with the coresponding paramters, to establish how the 3-d object space will be portrayed ion the 2d sapce.\\
+%
+%The camera model is composed from variuos parameters which are initially unkown The process of identifying or calculating these unkonw params is known as camera calibration.
+
+
+\subsection{Intrinsic Parameters}
+\label{sec:intrinsic}
+
+The internal camera geometry describes the relation between the camera and the image plane. This relation is determined by the focal length, principle point and possible axis misalignment. These defining parameters are referred to as the intrinsic parameters and are measured in pixels.\\
+
+The intrinsic parameters are often represented as a matrix known as the camera matrix. The camera matrix $M_c$ for each camera is defined as:
+
+\begin{equation}\label{eq:cm}
+M_c^{(j)}\,=\,\begin{bmatrix}
+{f_x^{(j)}} & {s} & {c_x^{(j)}}\\
+{0} & {f_y^{(j)}} & {c_y^{(j)}}\\
+{0} & {0} & {1}
+\end{bmatrix},\quad j = 1,\, 2
+\end{equation}
+
+where:\\
+$f$ is the focal length\\
+$s$ is the skew,\\
+and $Cx, Cy$ is the x and y coordinate of the principle point.
+
+\subsection{Extrinsic Parameters}
+
+The extrinsic parameters describe the correspondence between the two camera coordinate systems. The extrinsic parameters include rotation matrix $R$ and translation matrix $T$ to describe how the one coordinate system will map to the other.\\
+
+These intrinsic and extrinsic parameters are used to construct the pin hole camera model.
+
+\subsection{Pinhole Camera model}
+\label{sec:pinhole}
+
+The pinhole camera model describes the ideal transformation between a point within the object space and the representation of that point in the image plane. 
+
+%Section 2.3 (cam geometry) provides the description of the pinhole camera concept. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{images/pinhole_model.JPG}
+\caption{Pinhole camera model \cite{calib3d}}
+\label{fig:pinhole_model}	
+\end{figure}
+
+The point P is found in figure \ref{fig:pinhole_model} and is defined within the 3d object space as:
+
+\begin{equation}\label{eq:principleP}
+P =  \begin{bmatrix}{X}\\{Y}\\{Z}\end{bmatrix}
+\end{equation}
+
+The extrinsic parameters are used to describe P in terms of the (x, y, z) coordinate system illustrated in blue in figure.
+
+\begin{equation}\label{eq:principleP_transformation}
+\begin{bmatrix}{x}\\{y}\\{z}\end{bmatrix} = R  \begin{bmatrix}{X}\\{Y}\\{Z}\end{bmatrix}\,+\,T\\
+\end{equation}
+
+where:\\
+$R$ is the rotational matrix\\
+$T$ is the translational vector\\
+
+If the extrinsic parameters are known, then:
+
+\begin{align*}
+R = I, and\\
+T = 0
+\end{align*}
+
+and equation \ref{eq:principleP_transformation} is altered as follows 
+
+\begin{equation}\label{altered}
+\begin{bmatrix}{x}\\{y}\\{z}\end{bmatrix} =  \begin{bmatrix}{X}\\{Y}\\{Z}\end{bmatrix}
+\end{equation}\\
+
+If the distance $z$ is equal to the focal length $f$, the x-y will represent the 2-D image plane. The representation of P remains unchanged if the the coordinates are multiplied by a common factor. This multiplication conceptually shifts the x-y plane along the principle axis. The representation of point $P$ in equation \ref{altered} is consequently modified as follows:
+
+\begin{equation}x' = x/z,\quad and \end{equation}
+\begin{equation}y' = y/z \end{equation}
+
+under the condition that \begin{align*} z \neq 0 \end{align*}
+
+The image plane will therefore represent $P$ in terms of the $u-v$ coordinate system, defined in figure x as 
+
+\begin{equation}\label{eq:uv1}u = f_x*x'' + c_x \\ \end{equation}
+\begin{equation}\label{eq:uv2}v = f_y*y'' + c_y \end{equation}
+
+where:\\
+$(c_x, c_y)$ is the principle point, and\\
+$f$ is the focal length.\\
+
+Equation \ref{eq:uv1} and \ref{eq:uv2} can also be written as:
+
+\begin{equation}
+\begin{bmatrix}u\\v\\l\end{bmatrix} =  
+\begin{bmatrix}
+f & 0 & C_x\\
+0 & f & C_y\\
+0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix}x'\\y'\\1\end{bmatrix}
+\end{equation}
+
+The derivation of the camera matrix $M_c$ in equation \ref{eq:cm} is effectively as performed above. The pinhole camera model assumes ideal alignment and therefore no skew is present within the model. This concludes the construction of the camera model.
+
+\section{Camera Stereo-calibration}
+
+Camera calibration can now be performed to identify the unknown parameters within the camera model.
+
+\subsection{Calibration technique}
+\label{sec:cal_technique}
+
+The calibration technique provided by OpenCV was used to identify the unknown parameters. The tutorial adopts the corner detection calibration method described below.\\
+
+The corner detection calibration method is a common calibration technique due to the simplicity of the calibration process.  A chessboard is used as a reference point for the calibration even if the dimensions are unknown, it can be assume that the squares exist on a 2-D plane in a 3-D space. Multiple images containing various orientations of the chessboard are used to detect the size and orientation of the squares. These measurements are then used to determine the unknown parameters. Figure \ref{fig:rgb_input_chess} and \ref{fig:ir_input_chess} shows how the chessboard is observed by the camera for multiple orientations. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.505]{images/rgb_chess_set.JPG}
+\caption{RGB input chess images}
+\label{fig:rgb_input_chess}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/ir_chess_set.JPG}
+\caption{NIR input chess images}
+\label{fig:ir_input_chess}
+\end{figure}
 
 Stereo-calibration using 16x16 square chess board images were used.\\
 
 Equations\\
 
-\begin{equation}\label{eq:cm}
-M_c^{(j)}\,=\,\begin{bmatrix}
-{f_x^{(j)}} & {0} & {c_x^{(j)}}\\
-{0} & {f_y^{(j)}} & {c_y^{(j)}}\\
-{0} & {0} & {1}
-\end{bmatrix},\quad j = 1,\, 2
-\end{equation}
+(note: still to be expanded upon)\\
 
 \begin{equation}\label{eq:dist}
 dist\,=\,\begin{bmatrix}
@@ -150,17 +379,14 @@ P1 = \begin{bmatrix} f & 0 & cx_1 & 0 \\ 0 & f & cy & 0 \\ 0 & 0 & 1 & 0 \end{bm
 P2 = \begin{bmatrix} f & 0 & cx_2 & T_x*f \\ 0 & f & cy & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix}
 \end{equation}
 
-\begin{equation}\label{eq:3}
-\begin{bmatrix}{x}\\{y}\\{z}\end{bmatrix} = R  \begin{bmatrix}{X}\\{Y}\\{Z}\end{bmatrix}\,+\,t\\ \end{equation}
-\begin{equation}x' = x/z \\ \end{equation}
-\begin{equation}y' = y/z \\ \end{equation}
+%\begin{equation}\label{eq:3}
 \begin{equation}x'' = x'  \frac{1 + k_1 r^2 + k_2 r^4 + k_3 r^6}{1 + k_4 r^2 + k_5 r^4 + k_6 r^6} + 2 p_1 x' y' + p_2(r^2 + 2 x'^2)  \\ \end{equation}
 \begin{equation}y'' = y'  \frac{1 + k_1 r^2 + k_2 r^4 + k_3 r^6}{1 + k_4 r^2 + k_5 r^4 + k_6 r^6} + p_1 (r^2 + 2 y'^2) + 2 p_2 x' y'  \\
 \quad \text{where} \quad r^2 = x'^2 + y'^2  \\ \end{equation}
-\begin{equation}u = f_x*x'' + c_x \\ \end{equation}
-\begin{equation}v = f_y*y'' + c_y \end{equation}
 
-Results\\
+\subsection{Measured Results}
+
+(note: still to be expanded upon)
 
 \begin{equation}\label{eq::cm1}
 M_c^1 = \begin{bmatrix}
@@ -282,13 +508,39 @@ error_1 = 17.255\%
 error_2 = 14.647\%
 \end{equation}
 
-
-\subsection{Calibration Technique}
-
-\subsection{Measured Results}
-
 \section{Stereo-rectification}
 
 The images were undistorted (see chapter 4 on intrinsic parameters) according to the simultaneous chess board images it was calibrated at.
 
 \subsection{Measured Results}
+
+\section{Undistortion}
+\label{sec:undistortion}
+
+Undistortion of the images is required, as in Figure \ref{fig:distortion_examples}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.25]{images/incorrectly_undistorted.jpg}
+\caption{Undistortion when using 8x8 chessboard image set with images not close enough to the edges}
+\label{fig:incorrectly_undistorted}
+\end{figure}
+
+In Figure \ref{fig:undistorted_roi}, the 16x16 chess set was used for stereo-calibration.
+
+\begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{images/rgb_undistorted.jpg}
+\caption{RGB image}
+\label{fig:rgb_undistorted}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{images/ir_undistorted.jpg}
+\caption{Corresponding IR image}
+\label{fig:ir_undistorted}
+\end{subfigure}
+\caption{Correctly undistorted images with valid ROI outlined}
+\label{fig:undistorted_roi}
+\end{figure}

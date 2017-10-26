@@ -48,7 +48,7 @@ In Figure \ref{fig:chlorophyll}, typical photosynthetic action in the photosynth
 
 Leaf cells re-emit solar radiation in the near-infrared region because the photon energy at wavelengths longer than 700 nm is not large enough to synthesize organic molecules, even though it comprises approximately half of the total incoming solar energy. If it were absorbed, it would only result in damage and overheating of the plant.\\
 
-The NDVI is similar to a mere ratio of infrared light to visible light, yet since it is not normalised, one can have infinite values.\\
+The NDVI is similar to a mere ratio of infrared light to visible light, except the ratio is not normalised, therefore infinite values can exist.\\
 
 The rationale behind the NDVI is that one can exploit the strong differences in plant reflectance to determine their spatial distribution.\\
 
@@ -81,9 +81,9 @@ where short-wave infrared (SWIR\footnote{Water absorption increases significantl
 
 Although there exist other vegetation indices, it should be inductive that they can be proven, if in this project the NDVI is successful.\\
 
-For NDVIs, it should be noted that there are many who motivate that a cheap conversion of a normal digital camera (by replacing the NIR filter with a blue or red filter) will show satisfactory results. Professionals (cite source) will generally advise one  to avoid such methods since one can never remove the cross-channel interference (see section \ref{sec:intrinsic}, unless one has dual cameras.\\
+For NDVIs, it should be noted that there are many who motivate that a cheap conversion of a normal digital camera (by replacing the NIR filter with a blue or red filter) will show satisfactory results. Professionals (cite source) will generally advise one to avoid such methods since one can never remove the cross-channel interference (see section \ref{sec:intrinsic}, unless one has dual cameras.\\
 
 The project focuses on a dual/stereo camera setup, to minimize cross-channel interference. However, several problems arise such as distortion, differences in focal length, rotation and translation between the cameras, and so forth.\\
 
-There exist techniques to solve these problems, with an initial step to calibrate the cameras using corresponding points in a 3D plane (cite). Then, images are stereo-rectified (cite) and undistorted (cite). The common area may still differ in focal length, and for this reason, stereo correspondences and SIFTing (cite) is used to align the images as best as possible. Only now can an NDVI be calculated for each matching pixel.
+There exist techniques to solve these problems, with an initial step to calibrate the cameras using corresponding points in a 3D plane (cite). Then, images are stereo-rectified (cite) and undistorted (cite). The common area may still differ in focal length, motion (add more detail here) and for this reason, stereo matching (cite) is used to align the images as best as possible. Only then can an NDVI be calculated for each matching pixel.
 

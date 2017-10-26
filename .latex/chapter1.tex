@@ -2,35 +2,32 @@
 
 \pagenumbering{arabic}
 
-There is currently a water shortage crisis in South Africa, as well as in other parts of the world, potentially due to global warming. One of the sectors that it affects is agriculture. The water shortage puts added stress on farmers who may already be watering their crops non-uniformly; including the application of fertilizer and pesticides. Even plant disease contributes to the problem.\\
+There is currently a water shortage crisis in South Africa, as well as in other parts of the world, potentially due to global warming. One of the sectors that it affects is agriculture. The water shortage puts added stress on farmers who are effectively aiming for the greatest yield. Factors that lower yield quality include non-uniform distribution of water, fertilizer, pesticides and undetected plant disease.\\
 
-To mitigate such problems, farmers would typically use their expertise in observation from the ground. It can be a time consuming task, especially over areas of a few square kilometres. If static sensor data is used, the readings may be too sparse due to the exponential cost and complexity of multiple static sensors. These sensors require maintenance, post-processing and an estimated interpretation of its data. This does not exclude hand-held readings, which may only be able to point out some areas that need more attention. Perhaps a simpler, large-scale method of observing such changes at once can be used.\\
-
-The human mind is an exceedingly powerful tool to analyse great complexities around the world. Computers may not be as creative, but they boast vast processing power and numerical solving (cite source). Offloading computations and automation better suited for computers from human thought leaves the mind free to do tasks better suited for itself.\\
-
-To observe an area in the digital world, one can observe signals from the electromagnetic spectrum. Although there exists suitable equipment today, it remains yet inaccessible due to the complexity and relatively high cost of equipment. (cite an example) This project looks at a way to bridge this gap somewhat.
+To mitigate such problems, farmers would typically use their expertise in observation from the ground. It can be a time consuming task, especially over areas of a few square kilometres. If ground-based sensor data is used, the readings may be too sparse due to the cost and complexity of multiple static sensors, and even more so for hand-held readings. Perhaps a simpler, large-scale method of observing such changes at once can be used.
 
 \section{Purpose of the project}
 
-The project is conducted to investigate the core elements required to map vegetation via infrared analysis techniques, which can thus potentially determine the impact of human and environmental factors such as diseases, erosion, variances in fertiliser and water application.\\
+The purpose of the project is to investigate infra-red mapping of vegetation, which can thus potentially determine the impact of human and environmental factors such as diseases, erosion, variances in fertiliser and water application.\\
 
-In order to be deemed successful the project needs to investigate observable parameter(s) beneficial to agriculture within large areas.
+If the data can be beneficial to farmers, and more cost-effectively, then it can be seen that the project is a success.
 
 \section{Problem Statement}\
 
-To analyse large-scale agricultural areas and produce meaningful data, imagery is typically collected and mathematical algorithms are performed on the data. There are a number of algorithms, with a popular one being the Normalised Differential Vegetation Indice, or NDVI for short. This particular one will be the focus of the project. If successful, it opens up the possibility of investigating other useful indices, perhaps even for the mining industry if this project continues.\\
+In brief, the problem addressed in the project is to develop a nadir\footnote{Downwards facing} infra-red observation platform to map agricultural areas from height.\\
 
-Cameras will be used to acquire data. Filters will be used to isolate bandwidths required by the vegetation indices.\\
+A popular algorithm for analysis is the normalized differential vegetation index, or NDVI for short. This particular one will be the focus of the project. If successful, it opens up the possibility of investigating other useful indices, perhaps even for the mining industry.\\
 
-To monitor large areas in a short period of time, one needs height, which can be achieved by the modern invention of flight. In more practical terms, we can use vehicles such as hot air balloons, airstats, planes, helicopters and the like. We can classify these vehicles into manned and unmanned aerial vehicles. Unmanned vehicles have significantly less safety precautions, regulations, cost, and are less subject to wear and tear, meaning more flights (cite).\\
+Cameras will be used to acquire data. Filters, using colour subtraction, will be used to isolate parts of the spectrum required by the vegetation index.\\
 
-In brief, the idea is to develop a nadir\footnote{Downwards facing} observation platform to map areas from height, to determine observation equipment, to process sampled data and draw conclusions, and to develop control tests to verify / prove conclusions\\
+To monitor large areas in a short period of time, one can use satellites or vehicles such as airstats, planes, hot air balloons and helicopters. The vehicles can be classified into manned and unmanned aerial vehicles. UAVs have significantly less safety precautions, regulations, cost, and are less subject to wear and tear, meaning more flights (cite).\\
 
-The implementation of autonomous systems can be costly. It also depends on what type of UAV is used. Unmanned aeroplanes  are fast. With enough height, the effects of motion blur tend to zero. On the other hand, they are significantly complex, and although it would be ambitious, it would be impractical for a project such as this. Aerostats\footnote{Lighter than air aircraft that gains its lift through the use of a buoyant gas} and hot air balloons\footnote{Unpowered aerostat which has no means of propulsion and is usually tethered} can stay up for long periods of time, but are impractical due to the limited uses, and difficulty in moving such a vehicle once in the air. Drones on the other hand are inexpensive, and can take accurate and versatile high resolution images, with less risk to the camera equipment than a plane.\\
 
-Thus, a drone is designed and built to demonstrate proof of concept of a more cost effective model compared to solutions that exist in the market today.\\
+The implementation of autonomous systems can be costly. It also depends on what type of UAV is used. Unmanned aeroplanes  are fast and can cover vast areas. With enough height, the effects of motion blur in imagery tend to zero. On the other hand, they are significantly complex to operate, and although it would be ambitious, it would be impractical for a project such as this. Aerostats\footnote{Lighter than air aircraft that gains its lift through the use of a buoyant gas} and hot air balloons\footnote{Unpowered aerostat which has no means of propulsion and is usually tethered} can stay up for long periods of time, but are impractical due to the limited uses, and difficulty in moving such a vehicle once in the air. Drones have a price point between aeroplanes and hot air balloons, but they can take accurate and versatile high resolution images, with less risk to the camera equipment than a plane.\\
 
-Various assumptions are made in order to realise the solution of the problem. Besides assumptions regarding the environment in which the system will operate, it will also provide a starting basis for design synthesis. NDVIs are calculated predominantly in the farming sector, the values vary according to the age of the plant, sunlight or clouds will affect the values, and the cameras will be simple to calibrate.
+Thus, a drone is designed and built to demonstrate proof of concept of a more cost effective model compared to other drone solutions that exist in the market today.\\
+
+For this project, it is assumed that NDVIs are calculated predominantly in the farming sector, and that the values will be relatively stable when affected by sunlight, cloud cover and other factors.
 
 \section{System Overview}
 
@@ -39,19 +36,38 @@ Figure \ref{fig:scenario} illustrates a typical scenario where the system is use
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.4]{images/drone_ndvi_scenario.png}
-\caption{Block diagram system overview}
+\caption{Illustration of the system as an overview}
 \label{fig:scenario}
 \end{figure}
 
-An implementation process of the system is illustrated in Figure \ref{fig:overview}. These processes will be expanded on and explained in the relevant chapters.
+A farmer would utilize the equipment for the purposes of capturing data. Specifically, the cameras on the drone will capture information about the farmer's crops, the remote controller is a failsafe to take over from autopilot, the GPS location georeferences each photo for the purpose of mapping, and the ground control station doubles as a mission planner and for the use of direct post-processing.\\
+
+An example NDVI result is shown in Figure \ref{fig:vineyard_leaves}. Notice the different effects of the sun and shadows on the leaves.
 
 \begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[scale=0.6]{images/thesis_overview.png}
-\caption{Block diagram implementation process}
-\label{fig:overview}
+\includegraphics[scale=0.17]{images/rgb_leaves.jpg}
+\caption{RGB image}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{images/ndvi_leaves.jpg}
+\caption{Processed NDVI image}
+\end{subfigure}
+\caption{Closeup of vineyard leaves}
+\label{fig:vineyard_leaves}
 \end{figure}
 
-Various drones, cameras, filters and processing techniques will be presented, as well as optimal choices depending on available resources.\\
+%An implementation process of the system is illustrated in Figure \ref{fig:overview}. These processes will be expanded on and explained in the relevant chapters.
+%
+%\begin{figure}[H]
+%\centering
+%\includegraphics[scale=0.6]{images/thesis_overview.png}
+%\caption{Implementation process}
+%\label{fig:overview}
+%\end{figure}
+%
+%Various drones, cameras, filters and processing techniques will be presented, as well as optimal choices depending on available resources.\\
 
 A literature study will be investigated in Chapter 2, with drone design and construction in Chapter 3. Image acquisition and calibration will be handled in Chapter 4, and image processing in Chapter 5. Lastly, system integration and testing will be discussed in Chapter 6.

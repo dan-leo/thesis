@@ -28,11 +28,11 @@ for fname in images:
 ##    flags = cv2.CALIB_CB_FAST_CHECK
     ##flags = None
     # 7, 6
-    ret, corners = cv2.findChessboardCorners(gray, (15,15), flags)
+##    ret, corners = cv2.findChessboardCorners(gray, (15,15), flags)
+    ret, corners = cv2.findChessboardCorners(gray, (15,15), None, flags)
 
     print np.shape(corners), ret
 
     if ret == True:
-        cv2.imwrite((str(fname[:-4]) + '_has_15x15_corners.jpg'), img)
-    
-
+        pass
+##        cv2.imwrite((str(fname[:-4]) + '_has_15x15_corners.jpg'), img)

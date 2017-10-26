@@ -44,7 +44,9 @@ for fname in tqdm(images):
             cv2.CALIB_CB_NORMALIZE_IMAGE + \
             cv2.CALIB_CB_FILTER_QUADS + \
             cv2.CALIB_CB_FAST_CHECK
-    ret, corners = cv2.findChessboardCorners(gray, (_x,_y), flags)
+##    ret, corners = cv2.findChessboardCorners(gray, (_x,_y), flags)
+
+    ret, corners = cv2.findChessboardCorners(gray, (_x,_y), None, flags)
     # If found, add object points, image points (after refining them)
     if ret == True:
         objpoints.append(objp)

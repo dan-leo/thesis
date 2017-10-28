@@ -2,7 +2,7 @@
 \label{sec:image_processing}
 SIFT, mapping, geotagging, alignment,\\
 
-Once the images are undistorted as in section \ref{sec:undistortion}, the images can be aligned using stereo-correspondence before an NDVI is performed.
+Once the images are undistorted as in Section \ref{sec:undistortion}, the images can be aligned using stereo-correspondence before an NDVI is performed.\\
 
 A scale-invariant-feature-transform is applied to the images to align them using an affine transform. An NDVI calculation is applied to the matched images, with a floating point output image. A LUT colourmap is applied to visibly distinguish different areas and their meanings in the final image.
 
@@ -27,7 +27,7 @@ There are also different types of feature matching.
 	\item FLANN (Fast Library for Approximate Nearest Neighbors) based matcher
 \end{itemize}
 
-Harris Corner detection is useful for the chessboard calibration technique as in section \ref{sec:cal_technique}. Shi-Tomasi improved the scoring function of Harris, but it is more appropriate for tracking. SIFT provides keypoints and descriptors. It also does not depend on the scale of a corner, unlike in Figure \ref{fig:sift_scale}. SURF is good at dealing with blurring and rotation, but not at handling viewpoint and illumination change as in SURF. FAST is better from a realtime, limited resource application point of view. Although it is several times faster than the other detectors, it is not robust against high levels of noise, and depends on a threshold. BRIEF is a quicker feature descriptor with lower memory usage, but feature detection such as SIFT, SURF is still needed. ORB is a good alternative to SIFT and SURF in performance, and is not patented.\\
+Harris Corner detection is useful for the chessboard calibration technique as in Section \ref{sec:cal_technique}. Shi-Tomasi improved the scoring function of Harris, but it is more appropriate for tracking. SIFT provides keypoints and descriptors. It also does not depend on the scale of a corner, unlike in Figure \ref{fig:sift_scale}. SURF is good at dealing with blurring and rotation, but not at handling viewpoint and illumination change as in SURF. FAST is better from a realtime, limited resource application point of view. Although it is several times faster than the other detectors, it is not robust against high levels of noise, and depends on a threshold. BRIEF is a quicker feature descriptor with lower memory usage, but feature detection such as SIFT, SURF is still needed. ORB is a good alternative to SIFT and SURF in performance, and is not patented.\\
 
 \begin{figure}[H]
 \centering
@@ -37,7 +37,13 @@ Harris Corner detection is useful for the chessboard calibration technique as in
 \end{figure}
 
 \subsection{Feature matching}
-Brute-force feature matching calculates the distance between a descriptor in the first set and all the features in the second set, returning the closest one.
+
+SIFT returns correspondence points between the stereo images.\\
+
+
+It will then use brute-force feature matching, which calculates for each descriptor in the first image, the distance between it and all the features in the second image, returning the closest one. If the second closest corresponding point is within a threshold normalized distance of 0.8, according to Louw, it is discarded. The remaining candidates are filtered by geometric consensus.\\
+
+Once the corresponding features are found, an affine transform matrix is found. For example,
 
 %SURF is faster than SIFT, since it approximates the Laplacian of Gaussian with Box Filter instead of Difference of Gaussian.
 
@@ -57,6 +63,7 @@ A few images are stitched together to show proof-of-concept as in Figure \ref{fi
 \end{figure}
 
 \section{Calibration Plate}
+\label{sec:cal_plate}
 
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}

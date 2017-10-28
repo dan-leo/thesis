@@ -1,8 +1,12 @@
 \chapter{Image Acquisition and Calibration}
 
-Since cross-talk between channels cannot be eliminated completely, there needs to be two cameras due to the Bayer matrix colour array (see section \ref{sec:intrinsic}). Attempts to have both on a single camera are ineffective (explain why).\\
+Images need to be acquired before they can be calibrated.\\
 
-The following concepts are crucial to understand the reasoning behind certain decisions.\\
+Since cross-talk between channels cannot be eliminated completely, there needs to be two cameras due to the Bayer matrix colour array. Attempts to use a single camera is not as effective as a dual-camera setup as explained in Section \ref{sec:filters}.\\
+
+The idea is also to use cost-effective technology, and thus the 8 MP Sony IMX219 series cameras will be used since they integrate easily with the Raspberry Pi using single 15-pin CSI connections.\\
+
+%The following concepts are crucial to understand the reasoning behind certain decisions.\\
 
 In consumer cameras, the filter pattern is arranged in an RGGB format as in Figure \ref{fig:bayer}, to mimic the physiology of the eye. Demosiacing is performed to interpolate the neighbouring pixel colours for every pixel.
 
@@ -13,11 +17,27 @@ In consumer cameras, the filter pattern is arranged in an RGGB format as in Figu
 \label{fig:bayer}
 \end{figure}
 
-The colour filters do allow infra-red light in as well, which is why consumer cameras generally have a NIR longpass filter in place to isolate RGB colours.\\
+The colour filters do allow infra-red light in as well, which is why consumer cameras generally have a NIR longpass filter in place to isolate RGB colours. Even then it cannot block strong sources of NIR light from hitting the sensor as in Figure \ref{fig:ir_escape}.
+
+\begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.2]{images/fire_ir.jpg}
+\caption{NIR light escaping from a fire}
+\label{fig:fire_ir}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.219]{images/ir_led.jpg}
+\caption{A single NIR LED.}
+\end{subfigure}
+\caption{In this case, a cellphone camera picking up NIR light.}
+\label{fig:ir_escape}
+\end{figure}
 
 Due to variances in focal length, and slight manufacturing disparities, there is some rotation and translation in real lenses.\\
 
-There is also distortion, as in Figure \ref{fig:distortion_examples}.
+There is also distortion, as in Figure \ref{fig:distortion_examples}, which will be dealt with from Section \ref{sec:cam_model} onwards.
 
 \begin{figure}[H]
 \centering
@@ -26,7 +46,7 @@ There is also distortion, as in Figure \ref{fig:distortion_examples}.
 \label{fig:distortion_examples}
 \end{figure}
 
-This can be modelled by the pinhole camera model as in section \ref{sec:pinhole}.
+This can be modelled by the pinhole camera model as in Section \ref{sec:pinhole}.
 
 %\subsection{Camera Calibration}
 %
@@ -38,12 +58,15 @@ This can be modelled by the pinhole camera model as in section \ref{sec:pinhole}
 
 
 \section{Filters}
+\label{sec:filters}
 
-A filter is needed to isolate the NIR channel. If a custom filter is used on a camera with the NIR filter removed, it is possible to isolate a NIR channel without visible light leakage. A few of the variants include the Wratten 25A Red Long Pass filter, the Wratten 87 NIR All Pass filter and the Rosco 2008 Blue filter, which allow red and NIR light, only NIR light, and blue and NIR light respectively.\\
+One of the big questions asked is whether two cameras are needed? Can one not just use a filter on a single camera? The differences between a single and dual camera setup is shown in Appendix \ref{app:filter_comparison}. The comparison uses blue, green, red and no filter. Perhaps the biggest difference that one can notice is that the fence, swing and other objects are `green' and healthy in the single setup, which shows that, indeed, the NIR light is not completely separated from the visible light. Also, due to the colour LUT, green, yellow, orange, and red show a respectively greater ratio of infrared light to visible light. And yes, this red colour (or strong infrared to visible light ratio) is more visible in the dual camera setup. The dual camera setup also shows a greater variance, and it can be deduced that it has a greater chance of actually determining healthy plants from otherwise. Lastly, all three filters show good separation from infrared light, and thus the blue filter was used due to simplicity (the material is a type of film, not glass).\\
 
-The Rosco 2008 Blue filter will be used, for most of the project, as well as the 600nm Dichroic Glass Longpass filter and 500nm Dichroic Glass Bandpass filter from Edmund Scientific, with limited access.\\
+%A filter is needed to isolate the NIR channel. If a custom filter is used on a camera with the NIR filter removed, it is possible to isolate a NIR channel without visible light leakage. A few of the variants include the Wratten 25A Red Long Pass filter, the Wratten 87 NIR All Pass filter and the Rosco 2008 Blue filter, which allow red and NIR light, only NIR light, and blue and NIR light respectively.\\
 
-The blue Rosco 2008 filter is used as in Figure \ref{fig:blue_filter}, and passes only NIR within the green and red channels, as shown in Figure \ref{fig:blue_curve}.
+The blue filter is a Rosco 2008, the red filter is a 600nm Dichroic Glass Longpass filter and the green filter is a 500nm Dichroic Glass Bandpass filter from Edmund Scientific.\\
+
+The blue filter in Figure \ref{fig:blue_filter} passes only NIR light within the green and red channels, as shown in Figure \ref{fig:blue_curve}.
 
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}
@@ -80,9 +103,7 @@ The blue Rosco 2008 filter is used as in Figure \ref{fig:blue_filter}, and passe
 %
 %\section{Cameras}
 
-Two cameras are required. It is seemingly impossible to capture pure NIR and pure red on separate channels unless the intrinsic bayer matrix is manufactured to allow for it, however, then it would not be cost effective (citation needed).\\
-
-The Sony IMX219 series cameras will be used. They integrate with the Raspberry Pi using single 15-pin CSI connections.
+%It is seemingly impossible to capture pure NIR and pure red on separate channels unless the intrinsic bayer matrix is manufactured to allow for it, however, then it would not be cost effective (citation needed).\\
 
 \section{Exposure}
 
@@ -105,11 +126,11 @@ It is important that the correct white-balance settings are chosen so as not to 
 \label{fig:exposure}
 \end{figure}
 
-A calibration plate (see section x) should resolve drift in NDVI values caused by clouds or sunshine (glare might be more of an issue).
+A calibration plate as in Section \ref{sec:cal_plate} should resolve drift in NDVI values caused by clouds or sunshine, although glare might be more of an issue.
 
 \section{Camera mount}
 
-The motors cause high-frequency vibrations, and if not removed, it can cause what is known as the Jello-effect as in Figure \ref{fig:jello_effect}.
+The motors cause high-frequency vibrations, and if not removed, it can cause what is known as the Jello-effect as in Figure \ref{fig:jello_effect}. It is also as a result of the cameras use a rolling shutter and not a global/mechanical shutter, which is more expensive.
 
 \begin{figure}[H]
 \centering
@@ -118,9 +139,18 @@ The motors cause high-frequency vibrations, and if not removed, it can cause wha
 \label{fig:jello_effect}
 \end{figure}
 
-The cameras will be fixed relative to each other using a PCB substrate so that no rotational or translational drift can occur as in Figure \ref{fig:cam_mount}.\\
+To fix the Jello-effect, an attempt was made as in Figure \ref{fig:moon_gel} by using Moongel. Moongel is used by drummers, on cymbols and drumheads to diminish overtones, and has damping properties. It showed good damping in lateral directions, but much less vertically, thus overall it did not make much difference.
 
-Also, the cameras are to be dampened as in Figure \ref{fig:dampener} to prevent a jello-effect due to the rolling shutter cameras. Global shutter cameras are more expensive (cite).
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.27]{images/moon_gel.jpg}
+\caption{Moongel platform}
+\label{fig:moon_gel}
+\end{figure}
+
+Another attempt was made using cable-ties as in Figure \ref{fig:dampener} which allowed damping in any direction. This proved to be effective.\\
+
+The cameras are fixed relative to each other using a PCB substrate so that no rotational or translational drift can occur as in Figure \ref{fig:cam_mount}.\\
 
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}
@@ -143,7 +173,7 @@ Although a DC brushless motorised gimbal would aid in nadir orientation, increas
 
 \section{Simultaneous triggering}
 
-Initially, an IVmech Camaera multiplexer was used as in Figure \ref{fig:ivmech}. Unfortunately, it didn't work. Upon debugging using a logic analyser, the $CAM\_GPIO$ and $CAM1\_DN$ pins were not multiplexed as they should have been.
+Initially, an IVmech Camera multiplexer was used as in Figure \ref{fig:ivmech}. Unfortunately, it didn't work. Upon debugging using a logic analyser, the $CAM\_GPIO$ and $CAM1\_DN$ pins were not multiplexed as they should have been.
 
 \begin{figure}[H]
 \centering
@@ -155,12 +185,13 @@ Initially, an IVmech Camaera multiplexer was used as in Figure \ref{fig:ivmech}.
 With the dual raspberry pi setup, TCP triggering was used as in code appendix \ref{code:tcp_trigger}, but the overhead and asynchronous nature meant that it was never consistently triggered at the same time. Instead, the clocks are sychronised using NTP, and attempt to trigger every second, on the second. It attempts to, because sometimes the GPU runs garbage collection on its memory to make way for new images. Except for the garbage collection period (which takes a few seconds), the latter solution works quite well, with an occassional few milliseconds difference in stereo captures. This is accounted for in Chapter \ref{sec:image_processing} using feature matching and homography.
 
 \section{The Camera Model}
+\label{sec:cam_model}
 \subsection{Camera Geometry}
-\label{sec:pinhole}
+\label{sec:cam_geometry}
 
-It is important to be able to model the cameras in a mathematical form so that variances can be accounted for in each unique camera.\\
+It is important to be able to model the cameras in a mathematical form so that unique variances can be accounted for in each camera.\\
 
-The cameras can be approximated as pin-hole camera models with parameters as in section \ref{sec:pinhole}. Estimating the parameters is known as 'camera resectioning'. Light enters camera through focal point $Fc$, and falls onto the sensor, as depicted in Figure \ref{fig:camera_geometry}. $f$ is the focal length, which is the distance between the image sensor and lens. The symmetry of the model means that the correct orientation is shown at the image plane.
+The cameras can be approximated as pin-hole camera models with parameters, as in Section \ref{sec:pinhole}. Estimating the parameters is known as 'camera resectioning'. Light enters a camera through its focal point $Fc$, and falls onto the sensor, as depicted in Figure \ref{fig:camera_geometry}. $f$ is the focal length, which is the distance between the image sensor and lens. The symmetry of the model means that $f$ is also the distance between the lens and the image plane, and thus the correct orientation is shown at the image plane.
 
 \begin{figure}[H]
 \centering
@@ -280,7 +311,7 @@ R = I, and\\
 T = 0
 \end{align*}
 
-and equation \ref{eq:principleP_transformation} is altered as follows 
+and Equation \ref{eq:principleP_transformation} is altered as follows 
 
 \begin{equation}\label{altered}
 \begin{bmatrix}{x}\\{y}\\{z}\end{bmatrix} =  \begin{bmatrix}{X}\\{Y}\\{Z}\end{bmatrix}
@@ -517,7 +548,7 @@ The images were undistorted (see chapter 4 on intrinsic parameters) according to
 \section{Undistortion}
 \label{sec:undistortion}
 
-Undistortion of the images is required, as in Figure \ref{fig:distortion_examples}.
+Undistortion of the images is required, as in Figure \ref{fig:distortion_examples}. If the image set is too close to the centre, then an incorrect undistortion occurs as in Figure \ref{fig:incorrectly_undistorted}.
 
 \begin{figure}[H]
 \centering
@@ -526,7 +557,7 @@ Undistortion of the images is required, as in Figure \ref{fig:distortion_example
 \label{fig:incorrectly_undistorted}
 \end{figure}
 
-In Figure \ref{fig:undistorted_roi}, the 16x16 chess set was used for stereo-calibration.
+In Figure \ref{fig:undistorted_roi}, the 16x16 chess set (Figure \ref{fig:rgb_input_chess} and \ref{fig:ir_input_chess}) was used for stereo-calibration.
 
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}

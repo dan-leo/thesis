@@ -1,8 +1,8 @@
 \chapter{Literature Study}
 
-The literature study includes current knowledge about the subect, is evaluated, and consists of fundamental concepts to note.\\
+The literature study introduces the reader to a few fundamental concepts, and similar implementations to give context to the project. It also briefly evaluates cost effectiveness.\\
 
-Infrared light extends from the nominal red edge of the visible spectrum at 700 nanometers (430 THz) to 1 mm (300 GHz) \cite{ir_wiki}. The infrared light to be used for NDVI analysis is between 700 and 1000 nm due to silicon response \cite{ir_wiki}, and is known as near infrared light (NIR).
+Infrared light extends from the nominal `red edge' of the visible spectrum at 700 nanometers (430 THz) to 1 mm (300 GHz) \cite{ir_wiki}. Due to the silicon response, the image sensor in consumer cameras can capture infra-red light up to 1000 nanometers \cite{ir_wiki} as in Figure \ref{fig:ir_spectrum} (excluding ultraviolet light). Also, there is a certain phenomenon which occurs within this region. Chlorophyll becomes transparent, and allows each vegetation cell to act as an elementary corner reflector. This accounts for a rapid change in reflectance, depending on the health of the plant, and is utilized in vegetation indices, such as the NDVI \cite{red_edge}.
 
 \begin{figure}[H]
 \centering
@@ -11,24 +11,25 @@ Infrared light extends from the nominal red edge of the visible spectrum at 700 
 \label{fig:ir_spectrum}
 \end{figure}
 
-The normalized difference vegetation index (NDVI), which forms the base of this project, is a simple graphical indicator that can be used to analyze remote sensing measurements, typically but not necessarily from a space platform\footnote{Aerial footage will always be higher resolution, with each pixel capturing $cm^2$ as opposed to $m^2$}, and assess whether the target being observed contains live green vegetation or not\cite{ndvi_wiki} as in Figure \ref{fig:ndvi_british}.
+
+The normalized difference vegetation index (NDVI), is a simple graphical indicator that can be used to analyze remote sensing measurements, typically from a space platform\footnote{Aerial footage will always be higher resolution, with each pixel capturing under a few $cm^2$ as opposed to under a few $m^2$, and is useful for more in-depth analysis}, and assess whether the target being observed contains live green vegetation or not\cite{ndvi_wiki} as in Figure \ref{fig:ndvi_british}. The higher the values are, the more photosynthetically active the plants are, and in the following two pictures, the colour map ranges from black ($-1.0$) to dark green ($1.0$).
 
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}
 \centering
 \includegraphics[scale=0.25]{images/NDVI_062003.png}
-\caption{June 2003}
+\caption{Summer in June 2003}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \centering
 \includegraphics[scale=0.25]{images/NDVI_102003.png}
-\caption{October 2003}
+\caption{Autumn in October 2003}
 \end{subfigure}
 \caption{Average NDVI over the British Isles \cite{ndvi_wiki}}
 \label{fig:ndvi_british}
 \end{figure}
 
-The NDVI is calculated using the following formula for each pixel:\\
+The NDVI is calculated using the following formula for each pixel:
 
 \begin{equation}\label{eq:ndvi}
 {\displaystyle{\mbox{NDVI}}={\frac {({\mbox{NIR}}-{\mbox{Red}})}{({\mbox{NIR}}+{\mbox{Red}})}}}, \in [-1.0, 1.0]
@@ -63,7 +64,7 @@ Since the proliferation of UAVs, there has been an increased effort to find more
 	\item AgroCam Pro, dual cameras, \$575 \cite{agrocam}
 \end{itemize}
 
-There are other vegetation indices such as the Enhanced vegetation index in equation \ref{eq:evi},
+There are other vegetation indices such as the Enhanced vegetation index in Equation \ref{eq:evi},
 
 \begin{equation}\label{eq:evi}
 EVI=G\times {\frac  {(NIR-RED)}{(NIR+C1\times RED-C2\times Blue+L)}}
@@ -71,7 +72,7 @@ EVI=G\times {\frac  {(NIR-RED)}{(NIR+C1\times RED-C2\times Blue+L)}}
 
 where NIR, blue and red refer to atmospherically corrected Raleigh and ozone absorption surface reflectances, L refers to background adjustment in canopies that address non-linear, differential NIR, and the coefficients C1, C2 uses the blue band to correct for aerosol influences in the red band. The EVI, as opposed to the more chlorophyll sensitive NDVI, is more responsive to structural canopy variations, including LAI (leaf index area), physiognomy\footnote{External appearance, and growth forms of dominant taxa} and architecture \cite{evi}. Since it has more of a satellite application, this exists outside the scope of the project.\\
 
-Another example is the Normalized difference water index as in equation \ref{eq:ndwi},
+Another example is the Normalized difference water index as in Equation \ref{eq:ndwi},
 
 \begin{equation}\label{eq:ndwi}
 {\displaystyle {\mbox{NDWI}}={\frac {(Xnir-Xswir)}{(Xnir+Xswir)}}}\quad or\quad {\displaystyle {\mbox{NDWI}}={\frac {(Xgreen-Xnir)}{(Xgreen+Xnir)}}}
@@ -81,7 +82,7 @@ where short-wave infrared (SWIR\footnote{Water absorption increases significantl
 
 Although there exist other vegetation indices, it should be inductive that they can be proven, if in this project the NDVI is successful.\\
 
-For NDVIs, it should be noted that there are many who motivate that a cheap conversion of a normal digital camera (by replacing the NIR filter with a blue or red filter) will show satisfactory results. Professionals (cite source) will generally advise one to avoid such methods since one can never remove the cross-channel interference (see section \ref{sec:intrinsic}, unless one has dual cameras.\\
+For NDVIs, it should be noted that there are many who motivate that a cheap conversion of a normal digital camera (by replacing the NIR filter with a blue or red filter) will show satisfactory results. Professionals (cite source) will generally advise one to avoid such methods since one can never remove the cross-channel interference (see Section \ref{sec:intrinsic}, unless one has dual cameras.\\
 
 The project focuses on a dual/stereo camera setup, to minimize cross-channel interference. However, several problems arise such as distortion, differences in focal length, rotation and translation between the cameras, and so forth.\\
 

@@ -4,8 +4,6 @@ A drone is designed and constructed. The goal is to be cost-effective and to sou
 
 \section{Drone}
 
-A quadcopter was designed and built to handle all the equipment.
-
 \subsection{Mechanical subsystem design}
 
 The drone will be medium sized, with a payload of 1kg. (note: add a few more details).
@@ -14,17 +12,39 @@ The drone will be medium sized, with a payload of 1kg. (note: add a few more det
 
 There are many materials and configurations for a drone. The configurations include 3, 4, 6, 8 arms or more, with single or contra-rotating propellers on each arm\footnote{Two propellers aligned vertically and spinning opposite to each other for upwards thrust}. \\
 
-In aerial cinematography, it would require a stiff but less brittle frame to provide a smooth and stable flight. They also need to be large enough to hold the cameras needed for this professional activity. Lastly, the frames should be supportive of tall landing gear \cite{frame}. Due to the larger overall mass, the frame's natural frequency is low, meaning that it provides the same stability as a hand-held weighted gimbal in cinematography. For our application, we'll be using lightweight cameras, which weigh 3 grams each, which means our drone can be lighter.\\
+In aerial cinematography, it would require a stiff but less brittle frame as in Figure \ref{fig:hex} to provide a smooth and stable flight. They also need to be large enough to hold the cameras needed for this professional activity. Lastly, the frames should be supportive of tall landing gear \cite{frame}. Due to the larger overall mass, the frame's natural frequency is low, meaning that it provides the same stability as a hand-held weighted gimbal in cinematography. For our application, we'll be using lightweight cameras, which weigh 3 grams each, which means our drone can be lighter.\\
 
-Recreational usage may use 'mini multicopter frames' for flying indoors and outdoors \cite{frame}. They're extremely light, but do not have enough space for other peripherals\footnote{GPS, Raspberry Pis etcetra}.\\
+\begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.11]{images/hex3.jpg}
+\caption{Hex multirotor on ground}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.3]{images/hex2.jpg}
+\caption{Hex multirotor in-flight}
+\end{subfigure}
+\caption{Large cinematography multirotor}
+\label{fig:hex}
+\end{figure}
 
-Sports drones are light and fast, but they require high discharge batteries which are not cost effective for our application. Besides, they also do not have enough space.\\
+Recreational usage may use 'mini multicopter frames' for flying indoors and outdoors \cite{frame} as in Figure \ref{fig:small_quad}. They're extremely light, but do not have enough space or power for other peripherals\footnote{GPS, Raspberry Pis etcetra}.\\
 
-A combination of these configurations means that a medium sized quadcopter\footnote{Four propellers} will be suitable. It is not too light or too heavy, and has room for other peripherals.\\
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.12]{images/small_quad.jpg}
+\caption{Small recreational quadcopter}
+\label{fig:small_quad}
+\end{figure}
+
+Sports drones are light and fast, but they require high discharge batteries which are not cost effective for our application. Besides, they also do not have enough space and the motors have a high `KV' rating (2000+ KV), which means that they are meant for high-speed and not high-torque.\\
+
+A combination of these configurations means that a medium sized quadcopter\footnote{Four propellers} will be suitable. It is not too light or too heavy, and has room and power for other peripherals.\\
 
 Materials include carbon-fibre, aluminium and fibreglass and synthetic polymers. The differences between them are not major, except that aluminium is heavier, requires larger motors and induces more vibrations. Carbon-fibre contributes to radio interference\cite{frame}, but is the lightest.\\
 
-The closest competition before the F450-V2 quadcopter frame was chosen was the ZMR250 Carbon Mini Quad FPV Frame as in Figure \ref{fig:zmr}.
+The closest local-supplier competition before the F450-V2 quadcopter frame was chosen was the ZMR250 Carbon Mini Quad FPV Frame as in Figure \ref{fig:zmr}.
 
 \begin{figure}[H]
 \centering
@@ -33,11 +53,7 @@ The closest competition before the F450-V2 quadcopter frame was chosen was the Z
 \label{fig:zmr}
 \end{figure}
 
-Both frames have roughly the same price\footnote{500 ZAR}.\\
-
-The ZMR250 has a carbon fibre body making it extremely light (145g), but fell into the class of `mini multicopter` as mentioned earlier. There was not enough space for the other peripherals as well.\\
-
-Therefore due to its local availability and accommodating space, the F450-V2 frame was chosen as in Figure \ref{fig:frame}.
+Both frames have roughly the same price\footnote{500 ZAR}. The ZMR250 has a carbon fibre body making it extremely light (145g), but fell into the class of `mini multicopter` as mentioned earlier. Therefore due to its local availability and accommodating space, the F450-V2 frame was chosen as in Figure \ref{fig:frame}.
 
 \subsubsection{Landing Gear}
 
@@ -45,7 +61,7 @@ Four lengths of 10mm pine dowels approximately 15mm long were used. They totalle
 
 \subsubsection{Motors}
 
-The motors are rated at 920 KV\footnote{KV is a measure of the revolutions per minute when 1 Volt is applied with no load attached to the motor}. This is relatively low compared to the more common racing motors with around 2000 KV (which the ZMR250 frame would use). KV is related to the power output and torque level of a motor. This is determined by the number of turns on the armature and the strength of the magnets.\\
+The motors are rated at 920 KV\footnote{KV is a measure of the revolutions per minute when 1 Volt is applied with no load attached to the motor}. This is relatively low compared to the more common racing motors with around 2000 KV or more (which the ZMR250 frame would use). KV is related to the power output and torque level of a motor. This is determined by the number of turns on the armature and the strength of the magnets.\\
 
 (note: add more)
 
@@ -104,12 +120,26 @@ Flight controller is needed to stabilize the airborne vehicle, and set mission w
 GPS, Altitude hold, auto, mission etc.
 
 \subsection{Communication subsystem design}
+\label{sec:comms}
 
-Also, the drone can communicate via wifi as its medium of wireless telemetry; but the interference from other devices in the crowded 2.4 GHz ISM band drastically reduces range -- especially from the handheld remote controller. That, and the wifi dongles that were available seemed to work only for about 10 m.\\
+(add picture showing all the wireless technologies)\\
+
+The drone can communicate via wifi as its medium of wireless telemetry; but the interference from other devices in the crowded 2.4 GHz ISM band drastically reduces range -- especially from the handheld remote controller. That, and the wifi dongles that were available seemed to work only for about 10 m.\\
 
 Thus, 433 MHz 100mW transceivers were connected between the GCS and the drone as in Figure \ref{fig:attach_433}, at a 56400 baudrate. Real-time telemtery to a ground station is useful for pre-flight checks, in-flight monitoring and control, and missions.\\
 
-For development purposes, wifi is used extensively to SSH into the Raspberry Pis and to analyse photos using SAMBA. It should be noted that due to the conflict with the remote controller, it is not possible to view photos in-flight. Nevertheless, there are many cases where the wifi disconnects, and it was required to have a script running to reconnect the wifi whenever it goes down (see code in appendix \ref{code:wifiup}).
+For development purposes, wifi is used extensively to SSH into the Raspberry Pis and to analyse photos using SAMBA. It should be noted that due to the conflict with the remote controller, it is not possible to view photos in-flight. Nevertheless, there are many cases where the wifi disconnects, and it was required to have a script running to reconnect the wifi whenever it goes down (see code in appendix \ref{code:wifiup}).\\
+
+The flight controller controls the ESCs via PWM signals as in Figure \ref{fig:pwm}. Likewise, the remote controller (as in Section \ref{sec:remote_controller}) also sends the PWM values of each channel, yet via SBus (a single-wire form of uart communication). SBus supports up to 18-channels.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{images/pwm.jpg}
+\caption{Min (yellow) and max (blue) duty cycle of PWM}
+\label{fig:pwm}
+\end{figure}
+
+The PWM has a wavelength of 18 ms, and a duty cycle between 1 ms and 2 ms.
 
 \subsection{Sensor subsystem design}
 
@@ -137,7 +167,7 @@ At first, the frame is put together. This gives one a good idea of the actual si
 \end{figure}
 
 The nylon polymer frame as in Figure \ref{fig:frame} seems surprisingly robust, especially considering that the centre is PCB based.\\
-s
+
 \begin{figure}[H]
 \begin{subfigure}{0.5\textwidth}
 \centering
@@ -256,9 +286,9 @@ The propellers have a pitch of 4.5', which is basically a measure of the 'bite',
 
 \section{Ground Control Station}
 
-An RF linkup (via an ISM band) with a GCS is necessary for pre-flight checks, and monitoring/controlling the status of the vehicle during flight.
+The GCS is necessary for pre-flight checks, and monitoring/controlling the status of the vehicle during flight.
 
-The drone communicates with the GCS in Figure (picture of the GCS) using 433 MHz transceivers.
+The drone communicates with the GCS in Figure (picture of the GCS) using 433 MHz transceivers as in Figure \ref{fig:attach_433}.
 
 Show specs. Why? Pre-flight checks, setting waypoints.
 
@@ -266,17 +296,86 @@ Show specs. Why? Pre-flight checks, setting waypoints.
 
 The software used is the open source Mission Planner platform.
 
-(insert MP picture).
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{images/mp.jpg}
+\caption{Mission planner}
+\label{fig:mission_planner}
+\end{figure}
 
 \section{Remote controller}
+\label{sec:remote_controller}
 
-Full-duplex remote controller returns battery and signal strength information, with the capability of sending other sensor data via SBUS.
+The remote controller is used to manually control the drone. It is also used to monitor the battery and signal strength.\\
 
-(insert picture of remote controller).
+\begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.255]{images/taranis.png}
+\caption{Taranis Q X7 remote controller}
+\label{fig:remote_controller}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.15]{images/frsky_transceiver.jpg}
+\caption{FrSky X4R transceiver}
+\label{fig:balls}
+\end{subfigure}
+\caption{Remote controller and on-board transceiver}
+\label{fig:frsky_transceiver}
+\end{figure}
 
-Insert specs.
+The full-duplex remote controller outputs at 100mW. The FrSky X4R transceiver has two antennae, and also outputs at 100 mW.\\
 
-Set up steps.
+At first, the Taranis remote controller is bound to the FrSky X4R transceiver aboard the drone in Figure \ref{fig:frsky_transceiver}. This is done by holding in the `F\/S' button on the transceiver while powering it on, and entering bind mode on the remote controller.
+
+\begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.13]{images/lcd/flight_mode_but_1.jpg}
+\caption{Linearised flight mode switch 1 input}
+\label{fig:taranis_fm_but1}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.13]{images/lcd/flight_mode_but_2.jpg}
+\caption{Linearised flight mode switch 2 input}
+\label{fig:taranis_fm_but2}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.13]{images/lcd/mixer.jpg}
+\caption{Mixer muxes input channels to output}
+\label{fig:taranis_mux}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.13]{images/lcd/telemetry.jpg}
+\caption{Remote sensor feedback}
+\label{fig:taranis_telemetry}
+\end{subfigure}
+\caption{Some important settings for the remote controller}
+\label{fig:taranis_lcd}
+\end{figure}
+
+The two 3-way flight mode input switches as indicated in Figure \ref{fig:taranis_arm} are multiplexed into channel 5 as in Figure \ref{fig:taranis_mux}. As indicated in Figure \ref{fig:taranis_fm_but1} and \ref{fig:taranis_fm_but2}, the two switches required a peculiar linearisation such that when they are multiplexed, there exist 6 PWM positions within the duty cycle range. \begin{equation}PWM\ flight\ mode\ output\ values\ \in [1165, 1295, 1425, 1555, 1685, 1815]\ ms\end{equation}
+This allows the PWM outputs to exist within the ranges as indicated in Figure \ref{fig:flight_modes}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/flight_modes.JPG}
+\caption{Flight modes}
+\label{fig:flight_modes}
+\end{figure}
+
+To arm the drone for takeoff, move the left controller stick to the bottom right for 2 seconds, as in Figure \ref{fig:taranis_arm}. Also, lift the safety `Cut motors' switch.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.17]{images/taranis_arm.jpg}
+\caption{Arming the drone (red arrow)}
+\label{fig:taranis_arm}
+\end{figure}
 
 \section{Software}
 

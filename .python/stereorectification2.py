@@ -3,8 +3,9 @@ import dill, glob, tqdm
 
 np.set_printoptions(suppress=True)
 
-root_dir = 'C:/Users/d7rob/thesis/distorted'
-root_dir = 'L:/Backups/thesis/longridge'
+##root_dir = 'C:/Users/d7rob/thesis/distorted'
+##root_dir = 'L:/Backups/thesis/longridge'
+root_dir = 'C:/Users/d7rob/thesis/home_lab_window_3/_noir'
 
 _rgb_name = "/rgb"
 _ir_name = "/ir"
@@ -157,7 +158,7 @@ for rgb_path, ir_path in tqdm(zipped_images):
 ##    print "rgb_undistort_path: " + str(rgb_undistort_path)
 ##    cv2.rectangle(dst, validPixROI1[:2], validPixROI1[2:],(0, 0, 255),30)
     dst = dst[validPixROI1[1]:validPixROI1[3], validPixROI1[0]:validPixROI1[2]]
-    ##$ cv2.imwrite(rgb_undistort_path, dst)
+    cv2.imwrite(rgb_undistort_path, dst)
 
     ir_img = cv2.imread(ir_path)
     dst = cv2.remap(ir_img, ir_mapx, ir_mapy, cv2.INTER_LINEAR)
@@ -165,7 +166,7 @@ for rgb_path, ir_path in tqdm(zipped_images):
 ##    print "ir_undistort_path: " + str(ir_undistort_path)
 ##    cv2.rectangle(dst, validPixROI2[:2], validPixROI2[2:],(0, 0, 255),30)
     dst = dst[validPixROI2[1]:validPixROI2[3], validPixROI2[0]:validPixROI2[2]]
-    ##$ cv2.imwrite(ir_undistort_path, dst)
+    cv2.imwrite(ir_undistort_path, dst)
 
     # mono output
 

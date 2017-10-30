@@ -105,17 +105,17 @@ I would like to thank the following people for their support:
 %\label{listoftables}
 %\listoftables
 
-\chapter{List of Symbols}
-\begin{table}[H]
-\centering
-\begin{tabular}{l|r|r}
-Symbol & Description & Units\\\hline\\
-$F$ & Fundamenal Matrix & 3x3\\
-$R$ & Rotation Matrix & 3x3\\
-$T$ & Translation Matrix & 3x3\\
-\end{tabular}
-%\caption{\label{tab:symb}Table depicting list of symbols. (Will probably not have this caption)}
-\end{table}
+%\chapter{List of Symbols}
+%\begin{table}[H]
+%\centering
+%\begin{tabular}{l|r|r}
+%Symbol & Description & Units\\\hline\\
+%$F$ & Fundamenal Matrix & 3x3\\
+%$R$ & Rotation Matrix & 3x3\\
+%$T$ & Translation Matrix & 3x3\\
+%\end{tabular}
+%%\caption{\label{tab:symb}Table depicting list of symbols. (Will probably not have this caption)}
+%\end{table}
 
 \chapter{List of Abbreviations}
 \begin{table}[H]
@@ -128,12 +128,27 @@ IR & Infra Red\\
 PAR & Photosynthetically Active Radiation\\
 PCB & Printed Circuit Board\\
 CSI & Camera Serial Interface\\
-SBUS & Serial Bus ?\\
+SBUS & Serial Bus\\
 GPIO & General Purpose In Out\\
 LUT & Look Up Table\\
 FHSS & Frequency Hopping Spread Spectrum\\
 NLOS & Non Line of Sight\\
 SDR & Software Defined Radio\\
+GPS & Global Positioning System\\
+MME & Maps Made Easy\\
+RGB & Red Green Blue\\
+NIR & Near Infra Red\\
+ESC & Electronic Speed Controller\\
+PPM & Pulse Position Modulation\\
+ISM & Industrial Scientific Medical\\
+IMU & Inertial Measurement Unit\\
+SMA & SubMiniature version A\\
+GCS & Ground Control Station\\
+PWM & Pulse Width Modulation\\
+SDR & Software Defined Radio\\
+NTP & Network Time Protocol\\
+
+
 \end{tabular}
 %\caption{\label{tab:abbr}Table depicting list of abbreviations. (Will probably not have this caption)}
 \end{table}
@@ -157,7 +172,9 @@ SDR & Software Defined Radio\\
 
 Overall, the system seems capable. It is much cheaper than equivalent products on the market today, and would require some refining to be robust, and consistently useful for farmers.\\
 
-The drone design and construction, image acquisition, stereo rectification and calibration was a success, but the mapping and NDVI calibration will need some further investigation.
+The drone design and construction, image acquisition, stereo rectification and calibration was a success, but the mapping and NDVI calibration will need some further investigation.\\
+
+With further investigation, it can be determined whether farmers are applying water, fertilizer and pesticides uniformly, and the effects of other environmental factors.\\
 
 % In order for the data to be transmitted successfully, it needs to be in a format acceptable by the GCS. The data will be stored in a JSON packet created using a C++ library\cite{ajson}.
 

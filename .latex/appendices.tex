@@ -2,13 +2,14 @@
 
 More info can be found here: https://github.com/daniel-leonard-robinson/thesis
 
-\chapter{Bill of Materials}
-\label{app:bom}
-
-\begin{itemize}
-	\item F450 frame
-	\item Motors
-\end{itemize}
+%\chapter{Bill of Materials}
+%\label{app:bom}
+%
+%\begin{itemize}
+%	\item F450 frame
+%	\item Motors
+%	\item 
+%\end{itemize}
 
 \chapter{Moisture sensor}
 
@@ -25,10 +26,108 @@ The sensor measures the resistivity of the soil, and values range from about 5V 
 
 \chapter{Spectrum analyzer}
 
+A spectrum analyzer kit was built to investigate what can be found from diffraction and perhaps identifying spectral characteristics of cameras.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{images/collimeter.jpg}
+\caption{Acetate collimeter}
+\label{fig:coll}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{images/spectrum.jpg}
+\caption{Diffraction from light source}
+\label{fig:diffraction}
+\end{figure}
+
+Unfortunately it proved too flimsy, and that laboratory equipment would be better suited.
+
+
 \chapter{Filter comparison}
 \label{app:filter_comparison}
 
 See filters in Section \ref{sec:filters} for an in-depth discussion.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{filter/rgb.jpg}
+\caption{RGB image overlooking vegetation outside window}
+\label{fig:f_rgb}
+\end{figure}
+
+\begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.2]{filter/noir.jpg}
+\caption{No filter image}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{filter/blue_ir.jpg}
+\caption{Blue filter image}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{filter/green_ir.jpg}
+\caption{Green filter image}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{filter/red_ir.jpg}
+\caption{Red filter image}
+\end{subfigure}
+\caption{Filter images}
+\label{fig:filters}
+\end{figure}
+
+In Figure \ref{fig:filters_ndvis}, the $=$ sign denotes which channel the $NIR$ and $VIS$ of Equation \ref{eq:ndvi} uses.
+
+\begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{filter/noir_Color_Index.jpg}
+\caption{No filter NDVI (NIR=red, VIS=blue)}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{filter/noir_d_ndvi.jpg}
+\caption{No filter NDVI (NIR=red, VIS=red)}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{filter/blue_Color_Index.jpg}
+\caption{Blue filter NDVI (NIR=red, VIS=blue)}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{filter/blue_d_ndvi.jpg}
+\caption{Blue filter NDVI (NIR=red, VIS=red)}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{filter/green_Color_Index.jpg}
+\caption{Green filter NDVI (NIR=red, VIS=green)}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{filter/green_d_ndvi.jpg}
+\caption{Green filter NDVI (NIR=red, VIS=red)}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{filter/red_Color_Index.jpg}
+\caption{Red filter NDVI (NIR=blue, VIS=red)}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.17]{filter/red_d_ndvi.jpg}
+\caption{Red filter NDVI (NIR=blue, VIS=red)}
+\end{subfigure}
+\caption{NDVIs of single (left column) and stereo (right column) filter images}
+\label{fig:filters_ndvis}
+\end{figure}
 
 \chapter{NDVI Map}
 \label{app:ndvi_map}
@@ -199,13 +298,60 @@ error_1 = 17.255\%
 error_2 = 14.647\%
 \end{equation}
 
+\chapter{Project Planning}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+%\caption{My caption}
+\label{my-label}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{ll}
+\textbf{Task Description}             & \textbf{Duration}       \\
+Drone construction                    & 7-15 July 2017          \\
+First flight attempts                 & 15-17 July 2017         \\
+Official commencement of Project E448 & 17 July 2017            \\
+Drone calibration, software           & 18 July - 7 August 2017 \\
+Camera acquisition                    & 8 August - 3 Sept 2017  \\
+Camera calibration                    & 4 Sept - 16 Oct 2017    \\
+Flight with Chris on Longridge        & 29 Sept 2017            \\
+Image processing                      & 17 - 29 Oct 2017        \\
+Report writing                        & 11 Oct 2017             \\
+Hand in report                        & 30 Oct 2017            
+\end{tabular}%
+}
+\end{table}
+
+
+\chapter{Outcome Compliance}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[H]
+\centering
+%\caption{My caption}
+\label{my-label}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{ll}
+\textbf{Outcome} & \textbf{Criteria} \\
+ELO 1. Problem Solving & Chapter 3, 4, 5, 6, Appendices \\
+ELO 2. Application of scientific and engineering knowledge & Chapter 2, 3, 4, 5, 6, Appendices \\
+ELO 3. Engineering Design & Chapter 3, 4, 5, Appendices \\
+ELO 4. Investigations, experiments and data analysis & Chapter 2, 3, 4, 5, 6, Appendices \\
+\begin{tabular}[c]{@{}l@{}}ELO 5. Engineering methods, skills and tools, \\ including Information Technology\end{tabular} & Chapter 3, 4, 5, 6, Appendices \\
+ELO 6. Professional and technical communication & Chapter 1, 2, 3, 4, 5, 6 \\
+ELO 9. Independent Learning Ability & Chapter 2, 3, 4, 5, 6, Appendices
+\end{tabular}%
+}
+\end{table}
 
 
 \chapter{Code}
 
-Code block \ref{code:getmatrices} shows the method to get matrices.
+Code block \ref{code:getmatrices} shows the method to get camera matrices.
 
-\lstset{language=python,caption={Potential packet},label=code:getmatrices}
+\lstset{language=python,caption={Get matrices},label=code:getmatrices}
 \begin{lstlisting}
 import cv2 #, numpy, matplotlib
 import numpy as np
@@ -292,7 +438,7 @@ dill.dump_session(savefile)
 \newpage
 Code block \ref{code:sortcorners} shows the method to sort corner pics from unsuccessful ones.
 
-\lstset{language=python,caption={Potential packet},label=code:sortcorners}
+\lstset{language=python,caption={Sorting potential corner images},label=code:sortcorners}
 \begin{lstlisting}
 import glob, cv2
 import numpy as np
@@ -338,7 +484,7 @@ for fname in images:
 \newpage
 Code block \ref{code:stereorectification} shows the method to stereorectify.
 
-\lstset{language=python,caption={Potential packet},label=code:stereorectification}
+\lstset{language=python,caption={Stereorectification},label=code:stereorectification}
 \begin{lstlisting}
 import numpy as np
 import dill, glob, tqdm
@@ -530,7 +676,7 @@ for rgb_path, ir_path in tqdm(zipped_images):
 \newpage
 Code block \ref{code:duallistmaker} shows the method to create a dual list.
 
-\lstset{language=python,caption={Potential packet},label=code:duallistmaker}
+\lstset{language=python,caption={Dual list creator},label=code:duallistmaker}
 \begin{lstlisting}
 import glob
 
@@ -549,9 +695,9 @@ for x, y in zip(rgb_images, ir_images):
 \end{lstlisting}
 
 
-Code block \ref{code:tcp_trigger} shows the method to .
+Code block \ref{code:tcp_trigger} shows the method to trigger simultaneously via TCP.
 
-\lstset{language=python,caption={Potential packet},label=code:tcp_trigger}
+\lstset{language=python,caption={TCP triggering},label=code:tcp_trigger}
 \begin{lstlisting}
 import socket, os, threading
 from threading import Thread
@@ -638,7 +784,7 @@ except KeyboardInterrupt as e:
 
 Code block \ref{code:init_mav} shows the method to initialize mavlink.
 
-\lstset{language=bash,caption={Potential packet},label=code:init_mav}
+\lstset{language=bash,caption={Initialize mavlink},label=code:init_mav}
 \begin{lstlisting}
 #!/bin/bash
 
@@ -675,7 +821,7 @@ done
 
 Code block \ref{code:wifiup} shows the method to reconnect wifi.
 
-\lstset{language=bash,caption={Potential packet},label=code:wifiup}
+\lstset{language=bash,caption={Wifi reconnnection},label=code:wifiup}
 \begin{lstlisting}
 #!/bin/bash
 
@@ -693,7 +839,7 @@ done
 
 Code block \ref{code:rc_local} shows the method to boot scripts.
 
-\lstset{language=bash,caption={Potential packet},label=code:rc_local}
+\lstset{language=bash,caption={Scripts on-boot},label=code:rc_local}
 \begin{lstlisting}
 #!/bin/sh -e
 #
@@ -724,7 +870,7 @@ exit 0
 
 Code block \ref{code:interfaces} shows the method interfaces file.
 
-\lstset{language=bash,caption={Potential packet},label=code:interfaces}
+\lstset{language=bash,caption={Interfaces file},label=code:interfaces}
 \begin{lstlisting}
 # interfaces(5) file used by ifup(8) and ifdown(8)
 
@@ -758,7 +904,7 @@ iface default inet dhcp
 
 Code block \ref{code:arducopter} shows the method to connect arducopter.
 
-\lstset{language=bash,caption={Potential packet},label=code:arducopter}
+\lstset{language=bash,caption={Arducopter connections file},label=code:arducopter}
 \begin{lstlisting}
 # Default settings for ArduPilot for Linux.
 # The file is sourced by systemd from arducopter.service
@@ -985,9 +1131,9 @@ except Exception as e:
 
 \end{lstlisting}
 
-Code block \ref{code:pi_setup} shows the method to setup pi.
+Code block \ref{code:pi_setup} shows the methods to setup Raspberry Pi.
 
-\lstset{language=bash,caption={Potential packet},label=code:pi_setup}
+\lstset{language=bash,caption={Raspberry Pi setup},label=code:pi_setup}
 \begin{lstlisting}
 ###############################################################
 Enable hostname on windows

@@ -1,4 +1,5 @@
 \chapter{Image Acquisition and Calibration}
+\label{image_acq}
 
 Images need to be acquired before they can be calibrated.\\
 
@@ -192,7 +193,7 @@ With the dual raspberry pi setup, TCP triggering was used as in code appendix \r
 
 It is important to be able to model the cameras in a mathematical form so that unique variances can be accounted for in each camera.\\
 
-The cameras can be approximated as pin-hole camera models with parameters, as in Section \ref{sec:pinhole}. Estimating the parameters is known as 'camera resectioning'. Light enters a camera through its focal point $Fc$, and falls onto the sensor, as depicted in Figure \ref{fig:camera_geometry}. $f$ is the focal length, which is the distance between the image sensor and lens. The symmetry of the model means that $f$ is also the distance between the lens and the image plane, and thus the correct orientation is shown at the image plane.
+The cameras can be approximated as pin-hole camera models with parameters, as in Section \ref{sec:pinhole}. Estimating the parameters is known as 'camera resectioning'. Light enters cameras through a focal point $Fc$, and depicted in Figure \ref{fig:camera_geometry}, lands onto the sensor. With $f$ the focal length, which is the distance between the image sensor and lens, the symmetry of the model means that $f$ is the same between the lens and the image plane, and thus an upright orientation is shown at the image plane.
 
 \begin{figure}[H]
 \centering
@@ -201,7 +202,7 @@ The cameras can be approximated as pin-hole camera models with parameters, as in
 \label{fig:camera_geometry}
 \end{figure}
 
-The field of view is restricted by sensor size and focal length, and depends on the distance (or height) of the camera from the subject. Since a stereo setup is used, the field of view overlaps, but not from the same focal point as shown in Figure \ref{fig:stereo_overlap}. The idea would be to superimpose the two image planes one top of each other.
+The field of view is limited by sensor size and focal length, and depends on the distance (or height) of the camera from the subject. Since a stereo setup is used, the field of view overlaps, but not from the same focal point as shown in Figure \ref{fig:stereo_overlap}. The idea would be to superimpose the two image planes one top of each other.
 
 \begin{figure}[H]
 \centering
@@ -254,7 +255,7 @@ In stereo camears, this is also known as epipolar geometry, where an epipolar pl
 \subsection{Intrinsic Parameters}
 \label{sec:intrinsic}
 
-The internal camera geometry describes the relation between the camera and the image plane. This relation is determined by the focal length, principle point and possible axis misalignment. These defining parameters are referred to as the intrinsic parameters and are measured in pixels.\\
+The focal length, principle point, focal point etc are all part of the internal camera geometry which describes the relation between the camera and the image plane. These discrepancies form part of the intrinsic parameters.\\
 
 The intrinsic parameters are often represented as a matrix known as the camera matrix. The camera matrix $M_c$ for each camera is defined as:
 
@@ -269,13 +270,13 @@ M_c^{(j)}\,=\,\begin{bmatrix}
 where:\\
 $f$ is the focal length\\
 $s$ is the skew,\\
-and $Cx, Cy$ is the x and y coordinate of the principle point.
+and $Cx, Cy$ is the $(x,y)$ principle point coordinate.
 
 \subsection{Extrinsic Parameters}
 
-The extrinsic parameters describe the correspondence between the two camera coordinate systems. The extrinsic parameters include rotation matrix $R$ and translation matrix $T$ to describe how the one coordinate system will map to the other.\\
+The extrinsic parameters show the relationship between the two camera models. They include the rotation matrix $R$ and translation matrix $T$ to describe how one model maps to the other.\\
 
-These intrinsic and extrinsic parameters are used to construct the pin hole camera model.
+These parameters are used to construct the pin hole camera model.
 
 \subsection{Pinhole Camera model}
 \label{sec:pinhole}
@@ -291,13 +292,13 @@ The pinhole camera model describes the ideal transformation between a point with
 \label{fig:pinhole_model}	
 \end{figure}
 
-The point P is found in figure \ref{fig:pinhole_model} and is defined within the 3d object space as:
+The point P found in figure \ref{fig:pinhole_model} is defined within the 3D environment as:
 
 \begin{equation}\label{eq:principleP}
 P =  \begin{bmatrix}{X}\\{Y}\\{Z}\end{bmatrix}
 \end{equation}
 
-The extrinsic parameters are used to describe P in terms of the (x, y, z) coordinate system illustrated in blue in figure.
+The extrinsic parameters describe point P in terms of the (x, y, z) coordinate system in blue in Figure \ref{fig:pinhole_model}.
 
 \begin{equation}\label{eq:principleP_transformation}
 \begin{bmatrix}{x}\\{y}\\{z}\end{bmatrix} = R  \begin{bmatrix}{X}\\{Y}\\{Z}\end{bmatrix}\,+\,T\\
@@ -307,34 +308,36 @@ where:\\
 $R$ is the rotational matrix\\
 $T$ is the translational vector\\
 
-If the extrinsic parameters are known, then:
+If the extrinsic parameters are `available', then:
 
 \begin{align*}
 R = I, and\\
 T = 0
 \end{align*}
 
-and Equation \ref{eq:principleP_transformation} is altered as follows 
+and Equation \ref{eq:principleP_transformation} is modified as follows 
 
 \begin{equation}\label{altered}
 \begin{bmatrix}{x}\\{y}\\{z}\end{bmatrix} =  \begin{bmatrix}{X}\\{Y}\\{Z}\end{bmatrix}
 \end{equation}\\
 
-If the distance $z$ is equal to the focal length $f$, the x-y will represent the 2-D image plane. The representation of P remains unchanged if the the coordinates are multiplied by a common factor. This multiplication conceptually shifts the x-y plane along the principle axis. The representation of point $P$ in equation \ref{altered} is consequently modified as follows:
+If the distance $z$ is equal to the focal length $f$, the x-y system will represent the 2D image plane, which can be shifted along the principle axis. Point $P$ in equation \ref{altered} is consequently modified as follows:
+
+%The representation of P remains unchanged if the the coordinates are multiplied by a common factor. This multiplication conceptually shifts the x-y plane along the principle axis. The representation of p
 
 \begin{equation}x' = x/z,\quad and \end{equation}
 \begin{equation}y' = y/z \end{equation}
 
-under the condition that \begin{align*} z \neq 0 \end{align*}
+with the condition that \begin{align*} z \neq 0 \end{align*}
 
-The image plane will therefore represent $P$ in terms of the $u-v$ coordinate system, defined in figure x as 
+Point $P$ is now represented in terms of the $u-v$ coordinate system, defined in figure \ref{fig:pinhole_model} as 
 
 \begin{equation}\label{eq:uv1}u = f_x*x'' + c_x \\ \end{equation}
 \begin{equation}\label{eq:uv2}v = f_y*y'' + c_y \end{equation}
 
-where:\\
-$(c_x, c_y)$ is the principle point, and\\
-$f$ is the focal length.\\
+with:\\
+$(c_x, c_y)$ being the principle point\\
+$f$ being the focal length.\\
 
 Equation \ref{eq:uv1} and \ref{eq:uv2} can also be written as:
 
@@ -348,20 +351,16 @@ f & 0 & C_x\\
 \begin{bmatrix}x'\\y'\\1\end{bmatrix}
 \end{equation}
 
-The derivation of the camera matrix $M_c$ in equation \ref{eq:cm} is effectively as performed above. The pinhole camera model assumes ideal alignment and therefore no skew is present within the model. This concludes the construction of the camera model.
+The camera matrix $M_c$ in equation \ref{eq:cm} is now derived as above. Ideal alignment is assumed. This concludes the construction of the camera model.
 
 \section{Camera Stereo-calibration}
 \label{sec:cal_technique}
 
-Camera calibration can now be performed to identify the unknown parameters within the camera model.
-
-The calibration technique provided by OpenCV was used to identify the unknown parameters. The tutorial adopts the corner detection calibration method described below.\\
-
-The corner detection calibration method is a common calibration technique due to the simplicity of the calibration process.  A chessboard is used as a reference point for the calibration even if the dimensions are unknown, it can be assume that the squares exist on a 2-D plane in a 3-D space. Multiple images containing various orientations of the chessboard are used to detect the size and orientation of the squares. These measurements are then used to determine the unknown parameters. Figure \ref{fig:rgb_input_chess} and \ref{fig:ir_input_chess} shows how the chessboard is observed by the camera for multiple orientations.\\
+The unknown parameters within the camera model can now be found using OpenCV. Corner detection requires chessboard image sets to be used as a reference point for the calibration even if the dimensions are unknown, it can be assume that the squares exist on a 2D plane in a 3D space. It contains various orientations of the chessboard, such as edges, corners, diagonals and corners of the image. Figure \ref{fig:rgb_input_chess} and \ref{fig:ir_input_chess} shows the chessboard image sets for both cameras.\\
 
 Stereo-calibration using 16x16 square chess board images was used as in Appendix \ref{app:chess}.\\
 
-Intrinsic parameters such as the distortion coefficients in Equation \ref{eq:dist}, are known as the radial and tangential coefficients, respectively. They are found from calculating the corresponding corners in the chess image sets.
+Intrinsic parameters such as the distortion coefficients in Equation \ref{eq:dist}, are known as the radial and tangential coefficients, respectively. They are found from calculating the corresponding corners in the chess image sets \cite{calib3d}.
 
 \begin{equation}\label{eq:dist}
 dist\,=\,\begin{bmatrix}
@@ -369,25 +368,25 @@ k_1 & k_2 & p_1 & p_2 & k_3
 \end{bmatrix}
 \end{equation}
 
-Radial distortion can be solved as follows:
+Radial distortion can be solved as follows \cite{calib3d}:
 
 \begin{align*}
 x_{corrected} = x( 1 + k_1 r^2 + k_2 r^4 + k_3 r^6) \\
 y_{corrected} = y( 1 + k_1 r^2 + k_2 r^4 + k_3 r^6)
 \end{align*}
 
-Similarly, tangential distortion is solved as below. It occurs because the image taking lens is not aligned perfectly parallel to the imaging plane.
+Similarly, tangential distortion is solved as below. It occurs because the image taking lens is not aligned perfectly parallel to the imaging plane \cite{calib3d}.
 
 \begin{align*}
 x_{corrected} = x + [ 2p_1xy + p_2(r^2+2x^2)] \\
 y_{corrected} = y + [ p_1(r^2+ 2y^2)+ 2p_2xy]
 \end{align*}
 
-Since the poses of the chess boards relate to the first and second camera, it should be possible to superimpose the images on top of each other if we can find these extrinsic parameters. Given $R_1, T_1$, we only need to know the orientation and position of the second camera relative to the first one. Thus, we compute $R,\ T$ such that:
+Since the poses of the chess boards relate to the first and second camera, it should be possible to superimpose the images on top of each other if we can find these extrinsic parameters. Given $R_1, T_1$, we only need to know the orientation and position of the second camera relative to the first one \cite{calib3d}. Thus, we compute $R,\ T$ such that:
 
 \begin{align*}R_2=R*R_1\quad\quad T_2=R*T_1 + T \end{align*}
 
-The essential matrix is seen as the precursor to the fundamental matrix, and it can be used to determine both the relative position and orientation between the cameras and the 3D position of corresponding image points if the intrinsic parameters are known:
+The essential matrix is seen as the precursor to the fundamental matrix, and it can be used to determine both the relative position and orientation between the cameras and the 3D position of corresponding image points if the intrinsic parameters are known \cite{calib3d}:
 
 \begin{align*}
 E\,=\,\begin{bmatrix}

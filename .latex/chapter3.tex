@@ -1,12 +1,12 @@
 \chapter{Drone Design and Construction}
 
-A drone is designed and constructed. The goal is to be cost-effective and to source local supplies. It should be noted that pre-built drones like the DJI Phantom and Inspire cost significantly more\footnote{Easily 100\% to 200\% more}.
+A drone is designed and constructed. The goal is to be cost-effective and to source local supplies. It should be noted that pre-built drones like the DJI Phantom and Inspire cost significantly more\footnote{Easily 100\% to 200\% more}. See Appendix \ref{app:bom} for a Bill of Materials.
 
 \section{Drone}
 
 \subsection{Mechanical subsystem design}
 
-The drone will be medium sized, with a payload of 1kg. (note: add a few more details).
+The drone will be medium sized, with a payload of 500-1000g. It would be ideal to have a good thrust to weight ratio of 3:1.
 
 \subsubsection{Frame}
 
@@ -18,7 +18,7 @@ In aerial cinematography, it would require a stiff but less brittle frame as in 
 \begin{subfigure}{0.5\textwidth}
 \centering
 \includegraphics[scale=0.11]{images/hex3.jpg}
-\caption{Hex multirotor on ground}
+\caption{Hex multirotor landed}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \centering
@@ -38,11 +38,11 @@ Recreational usage may use 'mini multicopter frames' for flying indoors and outd
 \label{fig:small_quad}
 \end{figure}
 
-Sports drones are light and fast, but they require high discharge batteries which are not cost effective for our application. Besides, they also do not have enough space and the motors have a high `KV' rating (2000+ KV), which means that they are meant for high-speed and not high-torque.\\
+Sports drones are light and fast, but they require high discharge batteries. Like the quadcopter\footnote{Four propellers. Hex is 6, and `multirotors' have any number more than 2.} in Figure \ref{fig:small_quad} which has 2300 KV\footnote{KV is not kilo-volts. It is a measure of the revolutions per minute when 1 Volt is applied with no load attached to the motor} rated motors, sports/racing drones also have 2000+ KV ratings, but they will typically have thicker windings, which means it is capable of a higher wattage. One may be able to make enough room, but the batteries will not last very long.\\
 
-A combination of these configurations means that a medium sized quadcopter\footnote{Four propellers} will be suitable. It is not too light or too heavy, and has room and power for other peripherals.\\
+A combination of these configurations means that a medium sized quadcopter/drone will be suitable. It is not too light or too heavy, and has room and power for other peripherals.\\
 
-Materials include carbon-fibre, aluminium and fibreglass and synthetic polymers. The differences between them are not major, except that aluminium is heavier, requires larger motors and induces more vibrations. Carbon-fibre contributes to radio interference\cite{frame}, but is the lightest.\\
+Materials include carbon-fibre, aluminium, fibreglass and synthetic polymers. The differences between them are not major, except that aluminium is heavier, requires larger motors and induces more vibrations. Carbon-fibre contributes to radio interference\cite{frame}, but is the lightest.\\
 
 The closest local-supplier competition before the F450-V2 quadcopter frame was chosen was the ZMR250 Carbon Mini Quad FPV Frame as in Figure \ref{fig:zmr}.
 
@@ -53,7 +53,7 @@ The closest local-supplier competition before the F450-V2 quadcopter frame was c
 \label{fig:zmr}
 \end{figure}
 
-Both frames have roughly the same price\footnote{500 ZAR}. The ZMR250 has a carbon fibre body making it extremely light (145g), but fell into the class of `mini multicopter` as mentioned earlier. Therefore due to its local availability and accommodating space, the F450-V2 frame was chosen as in Figure \ref{fig:frame}.
+Both frames have roughly the same price\footnote{500 ZAR}. The ZMR250 has a carbon fibre body making it extremely light (145g), but fell into the class of `mini multicopter' as mentioned earlier. Therefore due to its local availability and accommodating space, the F450-V2 frame was chosen as in Figure \ref{fig:frame}.
 
 \subsubsection{Landing Gear}
 
@@ -61,9 +61,20 @@ Four lengths of 10mm pine dowels approximately 15mm long were used. They totalle
 
 \subsubsection{Motors}
 
-The motors are rated at 920 KV\footnote{KV is a measure of the revolutions per minute when 1 Volt is applied with no load attached to the motor}. This is relatively low compared to the more common racing motors with around 2000 KV or more (which the ZMR250 frame would use). KV is related to the power output and torque level of a motor. This is determined by the number of turns on the armature and the strength of the magnets.\\
+The motors are rated at 920 KV and 230 W. This is relatively low compared to the more common racing motors with around 2000 KV or more (which the ZMR250 frame would use). KV is related to the power output and torque level of a motor. This is determined by the number of turns on the armature and the strength of the magnets.\\
 
-(note: add more)
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{images/motor_specs.jpg}
+\caption{Motor and propeller combination specifications \cite{frobot}}
+\label{fig:mot_prop_specs}
+\end{figure}
+
+Besides the many other characteristics, at maximum throttle, and using 3 cell batteries, the thrust is determined to be 3252 g in Figure \ref{fig:mot_prop_specs}. This gives a thrust to weight ratio of 2.95, which is satisfactory.
+
+\subsubsection{Propellers}
+
+The propellers have a pitch of 4.5', which is basically a measure of the 'bite', or distance it travels through the air on one revolution.
 
 \subsubsection{Protective enclosure}
 
@@ -89,9 +100,21 @@ A housing is needed to protect the exposed electronics from the elements. Also, 
 \subsection{Electrical subsystem design}
 \subsubsection{Batteries}
 
-Multiple 3S1P batteries will be used, since the price cost-point was the cheapest (explain). (insert picture)
+Multiple 3S1P batteries will be used as in Figure \ref{fig:batteries}, since the price cost-point was the cheapest from Goblin Hobbies.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.17]{images/batteries.jpg}
+\caption{3SP1 GensAce Lithium batteries}
+\label{fig:batteries}
+\end{figure}
+
+They are charged using a balance-charger, which charges all three cells equally so that they all age the same. Otherwise cells may burst, or cause damage due to the discrepancies.\\
+
+With an average current draw of 20 A, each battery will only last 6.6 minutes, but long missions can be interrupted easily as noted in Section \ref{sec:dual_power}.
 
 \subsubsection{Dual power redundancy}
+\label{sec:dual_power}
 
 The flight controller takes in two power source inputs for dual redundancy as in Figure \ref{fig:dual_redundancy}. One of the batteries powers the motors during flight. This also allows the electronics to remain on when swapping out the flight battery.
 
@@ -104,25 +127,31 @@ The flight controller takes in two power source inputs for dual redundancy as in
 
 \subsubsection{Electronic speed controllers}
 
-The 3-phase motors require speed control. This is achieved by ESCs. Maximum power draw from the motors is 16A. 20A rated ESCs are used.
+The 3-phase motors require speed control. This is achieved by ESCs. Maximum power draw from the motors is 18A. 20A rated ESCs are used.
 
 \subsection{Processor subsystem design}
 
-The Navio2 flight controller fits perfectly onto the Raspberry Pi's 40-pin header in Figure \ref{fig:insertion_navio}. It also uses every signal pin, except for one. The Navio2 communicates directly with the Broadcom CPU on the Pi, resulting in a multi-processor system. The greatest significance in this case is that flight variables can be monitored and controlled. It is non-trivial in standalone flight controllers, as the on-board firmware has to be modified with utmost care.
+The Navio2 flight controller fits perfectly onto the Raspberry Pi's 40-pin header in Figure \ref{fig:insertion_navio}. It also uses every signal pin, except for one. The Navio2 communicates directly with the Broadcom CPU on the Pi, resulting in a multi-processor system. The greatest significance in this case is that flight variables can be monitored and controlled. It is non-trivial in standalone flight controllers, as the on-board firmware has to be modified with utmost care.\\
+
+The Navio2 has a co-processor to handle PPM/Sbus inputs and provides PWM output for the ESCs.
 
 \subsection{Control subsystem design}
 
 \subsubsection{Flight controller}
-Flight controller is needed to stabilize the airborne vehicle, and set mission waypoints. The Raspberry Pi, Navio2, and camera symbiosis was good since all three together are quite configurable even during flight, compared to other solutions which require hands-on intervention.
+Flight controller is needed to stabilize the airborne vehicle, and set mission waypoints. The Raspberry Pi, Navio2, and camera symbiosis was good since all three together are quite configurable even during flight, compared to other solutions which require hands-on intervention.\\
+
+The Navio2 was chosen specifically for its harmonious relationship with the Raspberry Pi.
 
 \subsubsection{Flight modes}
 
-GPS, Altitude hold, auto, mission etc.
+Loiter mode uses GPS to maintain altitude and location. Altitude hold only uses the barometer. Stabilize mode gives the pilot full control of the throttle, and can be used to quickly change height, albeit it is a bit dangerous. Auto mode is used to fly autonomously in missions. Return to launch (RTL) uses GPS and does as its namesake suggests. Brake mode is used to pause its current activity, and if moving quickly it will actively brake by tilting in the other direction to prevent drift. All these flight modes can be accessed in flight by the remote controller, except Auto mode which is activated using the GCS.
 
 \subsection{Communication subsystem design}
 \label{sec:comms}
 
-(add picture showing all the wireless technologies)\\
+The drone communicates with the handheld remote controller via S-BUS, which is a universal standard. The beauty of it is that it communicates with one signal wire as in Figure \ref{fig:attach_sbus}. Previous implementations one may have had to use pulse position modulation (PPM), where each channel requires a wire. Even though this may sound simple, it does increase PCB size, complexity and cost in the end. One the same note, each electronic speed controller (ESC) gets a signal wire and power input.
+
+%(add picture showing all the wireless technologies)\\
 
 The drone can communicate via wifi as its medium of wireless telemetry; but the interference from other devices in the crowded 2.4 GHz ISM band drastically reduces range -- especially from the handheld remote controller. That, and the wifi dongles that were available seemed to work only for about 10 m.\\
 
@@ -143,7 +172,14 @@ The PWM has a wavelength of 18 ms, and a duty cycle between 1 ms and 2 ms.
 
 \subsection{Sensor subsystem design}
 
-Barometer, etc, redundancy.
+The flight controller has dual IMUs for redundancy, a GNSS receiver and a high resolution barometer for 10cm altitude resolution.
+
+\begin{enumerate}
+\item MPU9250 9DOF IMU
+\item LSM9DS1 9DOF IMU
+\item MS5611 Barometer
+\item U-blox M8N Glonass/GPS/Beidou
+\end{enumerate}
 
 \subsection{Construction process and Integration}
 
@@ -278,21 +314,18 @@ Thus, damper balls can be used to isolate vibrations significantly from the flig
 \label{fig:attach_signal_props}
 \end{figure}
 
-The drone communicates with the handheld remote controller via S-BUS, which is a universal standard. The beauty of it is that it communicates with one signal wire as in Figure \ref{fig:attach_sbus}. Previous implementations one may have had to use pulse position modulation (PPM), where each channel requires a wire. Even though this may sound simple, it does increase PCB size, complexity and cost in the end.\\
-
-One the other hand, each electronic speed controller (ESC) gets a signal wire and power input.
-
-The propellers have a pitch of 4.5', which is basically a measure of the 'bite', or distance it travels through the air on one revolution.
-
 \section{Ground Control Station}
 
-The GCS is necessary for pre-flight checks, and monitoring/controlling the status of the vehicle during flight.
+The GCS is necessary for pre-flight checks, monitoring/controlling the status of the vehicle during flight, and setting waypoints.\\
 
-The drone communicates with the GCS in Figure (picture of the GCS) using 433 MHz transceivers as in Figure \ref{fig:attach_433}.
+The drone communicates with the GCS in Figure \ref{fig:gcs} using 433 MHz transceivers as in Figure \ref{fig:attach_433}.
 
-Show specs. Why? Pre-flight checks, setting waypoints.
-
-(add a picture of the GCS).
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.17]{images/gcs.jpg}
+\caption{Ground Control Station}
+\label{fig:gcs}
+\end{figure}
 
 The software used is the open source Mission Planner platform.
 
@@ -381,14 +414,59 @@ To arm the drone for takeoff, move the left controller stick to the bottom right
 
 This will be handled by two Raspberry Pis. Both will be used to take photos through each of their single CSI ports. The Raspberry Pis will communicate with each other via direct ethernet connection. Twisted-pair is not necessary since the driver automatically swaps the RX and TX lines.\\
 
-Initially, one Raspberry Pi was to be used with a camera multiplexer, but it didn't work, and therefore two raspberry pis were used. Just as well, as the flight controller uses all but 1 GPIO pin.\\
+Initially, one Raspberry Pi was to be used with a camera multiplexer as in Section \ref{sec:simultaneous_trig}, but it didn't work, and therefore two raspberry pis were used. Just as well, as the flight controller uses all but 1 GPIO pin.\\
 
-A real-time kernel will be used for the Ardupilot Firmware used on the flight controller Raspberry Pi.\\
+A real-time kernel will be used for the Ardupilot Firmware used on the `flight controller' Raspberry Pi, extended by a Navio2. \\
 
 \section{Testing}
 
-Adjusting PID values.\\
+There was a case where one foot holding vibration dampeners broke and induced an unstable asynchronous frequency when rolling in a certain direction as in Figure \ref{fig:leafy}.
 
-(Put in that case where one foot broke and induced an asynchronous frequency in a certain movement).\\
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.58]{images/pitch_alt.png}
+\caption{Oscillations in pitch and roll}
+\label{fig:leafy}
+\end{figure}
 
-Relevant flight log data.
+The PID values for pitch and roll rate were lowered by about 11\% to account for the frame size as in Figure \ref{fig:tuning}.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/tuning.PNG}
+\caption{Tuning PID values}
+\label{fig:tuning}
+\end{figure}
+
+%Relevant flight log data.\\
+
+An RTL2832U software defined radio (SDR) with a receive sensitivity of -140dBm was used to test the range of the 433 MHz transceivers.
+
+\begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.45]{images/range_test.PNG}
+\caption{FHSS channel hopping}
+\label{fig:range_test}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.8]{images/range_test_700m.PNG}
+\caption{700m NLOS before lost signal}
+\label{fig:range_test_700m}
+\end{subfigure}
+\caption{Range testing}
+\label{fig:range}
+\end{figure}
+
+Also, compass interference was measured against current draw as in Figure \ref{fig:interference} to lower the chance of errors.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{images/comp_mot_true_current.PNG}
+\caption{Measuring compass interference vs current draw.}
+\label{fig:interference}
+\end{figure}
+
+
+%Many other tests were performed on each component subsystem. For example, a current meter was used to verify the current constants for both power modules, and 

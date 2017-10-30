@@ -172,6 +172,7 @@ The cameras are fixed relative to each other using a PCB substrate so that no ro
 Although a DC brushless motorised gimbal would aid in nadir orientation, increasing the overlap between images should account for when the cameras are not pointing directly downwards.
 
 \section{Simultaneous triggering}
+\label{sec:simultaneous_trig}
 
 Initially, an IVmech Camera multiplexer was used as in Figure \ref{fig:ivmech}. Unfortunately, it didn't work. Upon debugging using a logic analyser, the $CAM\_GPIO$ and $CAM1\_DN$ pins were not multiplexed as they should have been.
 
@@ -208,6 +209,8 @@ The field of view is restricted by sensor size and focal length, and depends on 
 \caption{Stereo vision overlap}
 \label{fig:stereo_overlap}
 \end{figure}
+
+In stereo camears, this is also known as epipolar geometry, where an epipolar plane can be created from the intersection of the two image planes and a 3D point that both cameras are pointing at.
 
 %various coordinate systems?\\
 %Cartesian?\\
@@ -348,35 +351,17 @@ f & 0 & C_x\\
 The derivation of the camera matrix $M_c$ in equation \ref{eq:cm} is effectively as performed above. The pinhole camera model assumes ideal alignment and therefore no skew is present within the model. This concludes the construction of the camera model.
 
 \section{Camera Stereo-calibration}
+\label{sec:cal_technique}
 
 Camera calibration can now be performed to identify the unknown parameters within the camera model.
 
-\subsection{Calibration technique}
-\label{sec:cal_technique}
-
 The calibration technique provided by OpenCV was used to identify the unknown parameters. The tutorial adopts the corner detection calibration method described below.\\
 
-The corner detection calibration method is a common calibration technique due to the simplicity of the calibration process.  A chessboard is used as a reference point for the calibration even if the dimensions are unknown, it can be assume that the squares exist on a 2-D plane in a 3-D space. Multiple images containing various orientations of the chessboard are used to detect the size and orientation of the squares. These measurements are then used to determine the unknown parameters. Figure \ref{fig:rgb_input_chess} and \ref{fig:ir_input_chess} shows how the chessboard is observed by the camera for multiple orientations. 
+The corner detection calibration method is a common calibration technique due to the simplicity of the calibration process.  A chessboard is used as a reference point for the calibration even if the dimensions are unknown, it can be assume that the squares exist on a 2-D plane in a 3-D space. Multiple images containing various orientations of the chessboard are used to detect the size and orientation of the squares. These measurements are then used to determine the unknown parameters. Figure \ref{fig:rgb_input_chess} and \ref{fig:ir_input_chess} shows how the chessboard is observed by the camera for multiple orientations.\\
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.505]{images/rgb_chess_set.JPG}
-\caption{RGB input chess images}
-\label{fig:rgb_input_chess}
-\end{figure}
+Stereo-calibration using 16x16 square chess board images was used as in Appendix \ref{app:chess}.\\
 
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{images/ir_chess_set.JPG}
-\caption{NIR input chess images}
-\label{fig:ir_input_chess}
-\end{figure}
-
-Stereo-calibration using 16x16 square chess board images were used.\\
-
-Equations\\
-
-(note: still to be expanded upon)\\
+Intrinsic parameters such as the distortion coefficients in Equation \ref{eq:dist}, are known as the radial and tangential coefficients, respectively. They are found from calculating the corresponding corners in the chess image sets.
 
 \begin{equation}\label{eq:dist}
 dist\,=\,\begin{bmatrix}
@@ -384,166 +369,66 @@ k_1 & k_2 & p_1 & p_2 & k_3
 \end{bmatrix}
 \end{equation}
 
-\begin{equation}\label{eq:1} R_2=R*R_1T_2=R*T_1 + T \end{equation}
+Radial distortion can be solved as follows:
 
-\begin{equation}\label{eq:2}
+\begin{align*}
+x_{corrected} = x( 1 + k_1 r^2 + k_2 r^4 + k_3 r^6) \\
+y_{corrected} = y( 1 + k_1 r^2 + k_2 r^4 + k_3 r^6)
+\end{align*}
+
+Similarly, tangential distortion is solved as below. It occurs because the image taking lens is not aligned perfectly parallel to the imaging plane.
+
+\begin{align*}
+x_{corrected} = x + [ 2p_1xy + p_2(r^2+2x^2)] \\
+y_{corrected} = y + [ p_1(r^2+ 2y^2)+ 2p_2xy]
+\end{align*}
+
+Since the poses of the chess boards relate to the first and second camera, it should be possible to superimpose the images on top of each other if we can find these extrinsic parameters. Given $R_1, T_1$, we only need to know the orientation and position of the second camera relative to the first one. Thus, we compute $R,\ T$ such that:
+
+\begin{align*}R_2=R*R_1\quad\quad T_2=R*T_1 + T \end{align*}
+
+The essential matrix is seen as the precursor to the fundamental matrix, and it can be used to determine both the relative position and orientation between the cameras and the 3D position of corresponding image points if the intrinsic parameters are known:
+
+\begin{align*}
 E\,=\,\begin{bmatrix}
 {0} & {-T_2} & {T_1}\\
 {T_2} & {0} & {-T_0}\\
 {-T_1} & {T_0} & {0} 
 \end{bmatrix}\,*\,R
-\end{equation}
-
-\begin{align*}
-F = cameraMatrix_2^{-T}\cdot E\cdot cameraMatrix_1^{-1} 
 \end{align*}
 
+where $T_i$ are the components of the translation vector $T : T=[T_0, T_1, T_2]^T$.\\
+
+The fundamental matrix can be calculated as follows:
+
 \begin{align*}
-T : T=[T_0, T_1, T_2]^T  
+F = M_{c,2}^{-T}\cdot E\cdot M_{c,1}^{-1} 
 \end{align*}
 
-\begin{equation}\label{eq:P1}
-P1 = \begin{bmatrix} f & 0 & cx_1 & 0 \\ 0 & f & cy & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix}
-\end{equation}
-
-\begin{equation}\label{eq:P2}
-P2 = \begin{bmatrix} f & 0 & cx_2 & T_x*f \\ 0 & f & cy & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix}
-\end{equation}
-
-%\begin{equation}\label{eq:3}
-\begin{equation}x'' = x'  \frac{1 + k_1 r^2 + k_2 r^4 + k_3 r^6}{1 + k_4 r^2 + k_5 r^4 + k_6 r^6} + 2 p_1 x' y' + p_2(r^2 + 2 x'^2)  \\ \end{equation}
-\begin{equation}y'' = y'  \frac{1 + k_1 r^2 + k_2 r^4 + k_3 r^6}{1 + k_4 r^2 + k_5 r^4 + k_6 r^6} + p_1 (r^2 + 2 y'^2) + 2 p_2 x' y'  \\
-\quad \text{where} \quad r^2 = x'^2 + y'^2  \\ \end{equation}
-
-\subsection{Measured Results}
-
-(note: still to be expanded upon)
-
-\begin{equation}\label{eq::cm1}
-M_c^1 = \begin{bmatrix}
-2.523278 & 0 & 1.64 \\
-0 & 2.516529 & 1.232 \\
-0 & 0 & 0.001
-\end{bmatrix}\cdot10^3
-\end{equation}
-
-\begin{equation}\label{eq::cm2}
-M_c^2 = \begin{bmatrix}
-2.505381 & 0 & 1.64 \\
-0 & 2.505083 & 1.232 \\
-0 & 0 & 0.001
-\end{bmatrix}\cdot10^3
-\end{equation}
-
-\begin{equation}\label{eq::R}
-R = \begin{bmatrix}
-999.281 & -6.4992 & 37.35413 \\
-6.59547 & 999.97524 & -2.45456 \\
--37.33725 & 2.69917 & 999.29908
-\end{bmatrix}\cdot10^3
-\end{equation}
-
-\begin{equation}\label{eq::E}
-E = \begin{bmatrix}
--0.3150989 & 158.311619 & 35.973848 \\
--55.293721 & -6.403995 & -2757.525727 \\
--18.200605 & 2753.713987 & -8.117986
-\end{bmatrix}\cdot10^-3
-\end{equation}
-
-\begin{equation}\label{eq::F}
-F = \begin{bmatrix}
--2.54558709\cdot10^-6 & 1.28238104\cdot10^-3 & -0.842399343\\
--0.446754\cdot10^-3 & -51.880818\cdot10^-6 & -55.4216639\\
-0.1861918 & 53.846 & 1000
-\end{bmatrix}\cdot10^-3
-\end{equation}
-
-\begin{equation}\label{eq::R1}
-R_1 = \begin{bmatrix}
-0.99977728 & 0.00654886 & -0.02006268\\
-0.00657528 & 0.9999776 & -0.00125126\\
-0.02005403 & 0.0013829 & 0.99979794
-\end{bmatrix}
-\end{equation}
-
-\begin{equation}\label{eq::R2}
-R_2 = \begin{bmatrix}
-0.99826641 & 0.01319195 & -0.05735987\\
--0.01311635 & 0.99991254 & 0.00169423\\
-0.05737721 & -0.00093894 & 0.99835213
-\end{bmatrix}
-\end{equation}
-
-\begin{equation}\label{eq::P1}
-P_1 = \begin{bmatrix}
-2505.083324 & 0 & 1778.704819 & 0\\
-0 & 2505.083324 & 1231.092529  & 0\\
-0 & 0 & 1 & 0
-\end{bmatrix}
-\end{equation}
-
-\begin{equation}\label{eq::P2}
-P_2 = \begin{bmatrix}
-2505.083324 &    0.       & 1778.704819 & 6909.840227\\
- 0          & 2505.083324 & 1231.092529 &    0        \\
- 0          &    0        &    1        &    0         \\
-\end{bmatrix}
-\end{equation}
-
-\begin{equation}\label{eq::Q}
-Q\ =\ \begin{bmatrix}
-1 & 0 & 0 & -1.778705\cdot10^3\\
-0 & 1 & 0 & -1.231093\cdot10^3\\
-0 & 0 & 0 & 2.505083\cdot10^3\\
-0 & 0 & -0.362539 & 0
-\end{bmatrix}
-\end{equation}
-
-\begin{equation}\label{eq::T}
-T\ =\ \begin{bmatrix}
-2.75354568\\
-0.03638771\\
--0.15821732
-\end{bmatrix}
-\end{equation}
-
-\begin{equation}\label{eq::validpix1}
-valid\ Pix\ ROI_1\ =\ 
-\begin{bmatrix}
-x_1 & y_1\\
-x_2 & y_2
-\end{bmatrix}\ =
-\begin{bmatrix}
-88 & 6\\
-3192 & 2421
-\end{bmatrix}
-\end{equation}
-
-\begin{equation}\label{eq::validpix2}
-valid\ Pix\ ROI_2\ =\ 
-\begin{bmatrix}
-x_1 & y_1\\
-x_2 & y_2
-\end{bmatrix}\ =
-\begin{bmatrix}
-0 & 26\\
-3204 & 2378
-\end{bmatrix}
-\end{equation}
-
-\begin{equation}\label{eq::error1}
-error_1 = 17.255\%
-\end{equation}
-\begin{equation}\label{eq::error2}
-error_2 = 14.647\%
-\end{equation}
+Measured results exist in Appendix \ref{app:stereo_results}.
 
 \section{Stereo-rectification}
 
-The images were undistorted (see chapter 4 on intrinsic parameters) according to the simultaneous chess board images it was calibrated at.
+Taking the calculations from Section \ref{sec:cal_technique}, we can calculate the projections required to essentially make  both image planes the same.
 
-\subsection{Measured Results}
+\begin{align*}
+P1 = \begin{bmatrix} f & 0 & cx_1 & 0 \\ 0 & f & cy & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix}
+\end{align*}
+
+\begin{align*}
+P2 = \begin{bmatrix} f & 0 & cx_2 & T_x*f \\ 0 & f & cy & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix}
+\end{align*}
+
+where:\\
+$P1$ and $P2$ are the projection matrices,\\
+and $T_x$ is a horizontal shift between the two cameras.\\
+
+%%\begin{equation}\label{eq:3}
+%\begin{equation}x'' = x'  \frac{1 + k_1 r^2 + k_2 r^4 + k_3 r^6}{1 + k_4 r^2 + k_5 r^4 + k_6 r^6} + 2 p_1 x' y' + p_2(r^2 + 2 x'^2)  \\ \end{equation}
+%\begin{equation}y'' = y'  \frac{1 + k_1 r^2 + k_2 r^4 + k_3 r^6}{1 + k_4 r^2 + k_5 r^4 + k_6 r^6} + p_1 (r^2 + 2 y'^2) + 2 p_2 x' y'  \\
+%\quad \text{where} \quad r^2 = x'^2 + y'^2  \\ \end{equation}
+
+Measured results exist in Appendix \ref{app:stereo_results}.
 
 \section{Undistortion}
 \label{sec:undistortion}

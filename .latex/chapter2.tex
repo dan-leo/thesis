@@ -1,4 +1,5 @@
 \chapter{Literature Study}
+\label{sec:lit}
 
 The literature study introduces the reader to a few fundamental concepts, and similar implementations to give context to the project. It also briefly evaluates cost effectiveness.\\
 
@@ -35,17 +36,19 @@ The NDVI is calculated using the following formula for each pixel:
 {\displaystyle{\mbox{NDVI}}={\frac {({\mbox{NIR}}-{\mbox{Red}})}{({\mbox{NIR}}+{\mbox{Red}})}}}, \in [-1.0, 1.0]
 \end{equation}
 
-where red and NIR stand for the spectral reflectance measurements acquired in the red (visible) and near-infrared regions, respectively.
+where $RED$ and $NIR$ stand for the spectral reflectance\footnote{Fraction of incident electromagnetic power reflected at an interface} measurements acquired in the red (visible) and near-infrared regions, respectively. The $RED$ band exists between 600 - 700 nm, and the $NIR$ band from 700 - 1000 nm. The `red-edge` band exists between 680 - 730 nm, and refers to the region of rapid change in reflectance of vegetation.
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{images/chlorophyll.jpg}
 \centering
-\caption{PAR and absorption spectrum \cite{ndvi_wiki}}
+\caption{Photosynthesis and absorption rate of plants \cite{ndvi_wiki}}
 \label{fig:chlorophyll}
 \end{figure}
 
-In Figure \ref{fig:chlorophyll}, typical photosynthetic action in the photosynthetically active radiation (PAR) spectral region for live green plants is shown, beside absorption spectra for chlorophyll and carotenoids. Solar radiation is absorbed within this region as a source of energy. \\
+Plants absorb mostly red (600 - 700 nm) and blue (400 - 500 nm) light. They absorb less green (500 - 600 nm) light. And they do not absorb light past 700 nm. The photosynthetically active radiation (PAR) region denotes this range (400 - 700 nm) where plants absorb light and photosynthesise.
+
+In Figure \ref{fig:chlorophyll}, typical photosynthetic action in the (PAR) spectral region for live green plants is shown, beside absorption spectra for chlorophyll\footnote{Green pigment that absorbs light in blue and red bands.} and carotenoids\footnote{Organic pigments that absorb light energy mostly in blue band.}. Solar radiation is absorbed within this region as a source of energy. \\
 
 Leaf cells re-emit solar radiation in the near-infrared region because the photon energy at wavelengths longer than 700 nm is not large enough to synthesize organic molecules, even though it comprises approximately half of the total incoming solar energy. If it were absorbed, it would only result in damage and overheating of the plant.\\
 

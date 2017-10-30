@@ -65,14 +65,21 @@ Date:\space\space\space\space\space\hrulefill
 
 \chapter{Abstract}
 
-This report presents the design and analysis necessary for an autonomous system to acquire beneficial agricultural data within a desired environment. Various implementations are compared, before a novel design is presented. An aerial drone is designed and built using predominantly local supplies. Images are acquired and processed.\\
+This report presents the design and analysis necessary for an autonomous system to acquire beneficial agricultural data within a desired environment.\\
 
-\noindent
-(Still to be expanded on).
+Various implementations are compared, before a novel design is presented.\\
+
+An aerial drone is designed and built using predominantly local supplies. Images are acquired, calibrated, processed and mapped before an NDVI is performed. The system is quite capable and cost-effective compared to existing solutions. However, further investigation is required in mapping and NDVI calibration for consistency.
 
 \chapter{Uitreksel}
 
-(Still to be expanded on).
+Hierdie verslag toon die nodige ontwerp en ontleding aan om nuttige landbou data van 'n uitverkose omgewing deur middel van 'n selfbesturende sisteem te verkry.\\
+
+Verskye toepassings is met mekaar vergelyk voordat 'n unieke ontwerp aangebied is.\\
+
+'n Onbemande hommeltuig is ontwerp en gebou deur hoofsaaklik van plaaslike onderdele gebruik te maak. In die proses is foto's verkry, gekalibreer, verwerk en gekarteer voordat 'n genormaliseerde differensiële plantegroei indeks (GDPI) bereken is. Die stelsel is geskik en koste effektief in vergelyking met huidige komersiële oplossings.\\
+
+Vir konsekwensie word verdere ondersoek egter in kartering en kalibrasie van die GDPI verlang.
 
 \chapter{Acknowledgements}
 
@@ -81,7 +88,7 @@ I would like to thank the following people for their support:
     \item Louw Hopley, for giving birth to the idea.
     \item Alan Knott-Craig, for introducing me to Chris Antoniesson, for we went on a flight test together which returned very useful data.
     \item My family, who have been amused and for their unwavering love and support.
-    \item Dr C van Daalen, for his guidance and support throughout the course of this project.
+    \item Dr Corné van Daalen, for his guidance and support throughout the course of this project.
 \end{itemize}
 
 %\frontmatter
@@ -93,10 +100,10 @@ I would like to thank the following people for their support:
 \addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
 
-\clearpage
-\addcontentsline{toc}{chapter}{\listtablename}
-\label{listoftables}
-\listoftables
+%\clearpage
+%\addcontentsline{toc}{chapter}{\listtablename}
+%\label{listoftables}
+%\listoftables
 
 \chapter{List of Symbols}
 \begin{table}[H]
@@ -107,7 +114,7 @@ $F$ & Fundamenal Matrix & 3x3\\
 $R$ & Rotation Matrix & 3x3\\
 $T$ & Translation Matrix & 3x3\\
 \end{tabular}
-\caption{\label{tab:symb}Table depicting list of symbols. (Will probably not have this caption)}
+%\caption{\label{tab:symb}Table depicting list of symbols. (Will probably not have this caption)}
 \end{table}
 
 \chapter{List of Abbreviations}
@@ -123,13 +130,17 @@ PCB & Printed Circuit Board\\
 CSI & Camera Serial Interface\\
 SBUS & Serial Bus ?\\
 GPIO & General Purpose In Out\\
+LUT & Look Up Table\\
+FHSS & Frequency Hopping Spread Spectrum\\
+NLOS & Non Line of Sight\\
+SDR & Software Defined Radio\\
 \end{tabular}
-\caption{\label{tab:abbr}Table depicting list of abbreviations. (Will probably not have this caption)}
+%\caption{\label{tab:abbr}Table depicting list of abbreviations. (Will probably not have this caption)}
 \end{table}
 
-\chapter{Matrix Notation}
-
-(Still to be expanded on).
+%\chapter{Matrix Notation}
+%
+%(Still to be expanded on).
 
 \setcounter{secnumdepth}{2}
 
@@ -144,7 +155,9 @@ GPIO & General Purpose In Out\\
 
 \chapter{Conclusion}
 
-Works well or not? Why?
+Overall, the system seems capable. It is much cheaper than equivalent products on the market today, and would require some refining to be robust, and consistently useful for farmers.\\
+
+The drone design and construction, image acquisition, stereo rectification and calibration was a success, but the mapping and NDVI calibration will need some further investigation.
 
 % In order for the data to be transmitted successfully, it needs to be in a format acceptable by the GCS. The data will be stored in a JSON packet created using a C++ library\cite{ajson}.
 

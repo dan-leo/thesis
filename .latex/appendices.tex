@@ -3,6 +3,7 @@
 More info can be found here: https://github.com/daniel-leonard-robinson/thesis
 
 \chapter{Bill of Materials}
+\label{app:bom}
 
 \begin{itemize}
 	\item F450 frame
@@ -10,12 +11,195 @@ More info can be found here: https://github.com/daniel-leonard-robinson/thesis
 \end{itemize}
 
 \chapter{Moisture sensor}
+
+A cheap moisture sensor from China was investigated as in Figure \ref{fig:moisture_sensor}. It might be useful if it can be used for ground-truthing.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.17]{images/moisture_sensor.jpg}
+\caption{Moisture sensor}
+\label{fig:moisture_sensor}
+\end{figure}
+
+The sensor measures the resistivity of the soil, and values range from about 5V for an open circuit, and about 1V for different types of water (salty, brackish etc). A typical soil value would be about 1.5V for wet soil, and 4V for dry soil. Unfortunately, there was too much variance for the same type of soil, and it was determined that more accurate equipment is needed. It is also more expensive, but worth investigating.
+
 \chapter{Spectrum analyzer}
 
 \chapter{Filter comparison}
 \label{app:filter_comparison}
 
 See filters in Section \ref{sec:filters} for an in-depth discussion.
+
+\chapter{NDVI Map}
+\label{app:ndvi_map}
+
+A large map was produced. The young leaves could be discerned, and had values between 0.5-0.55. This is great news, because the Parrot Sequoia could not discern the leaves having an infra-red camera resolution of only 1.2 MP, as opposed to 8 MP in our application.\\
+
+Cloud processing was used. Final floating-point tiff image is 8842x8283 pixels, at 286 Mb. The processing used 24364 Mb of RAM.\\
+
+\begin{figure}[H]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.6]{images/map_rgb_large.png}
+\caption{RGB map}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.6]{images/map_ir_large.png}
+\caption{NIR map}
+\end{subfigure}
+\caption{Maps processed using MME \cite{mme}}
+\label{fig:app_maps}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{images/map_ndvi_large.png}
+\caption{NDVI performed using bUnwarpJ \cite{bunwarpj}}
+\label{fig:app_stitch_map}
+\end{figure}
+
+\chapter{Chessboard input set}
+\label{app:chess}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.505]{images/rgb_chess_set.JPG}
+\caption{RGB input chess images}
+\label{fig:rgb_input_chess}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/ir_chess_set.JPG}
+\caption{NIR input chess images}
+\label{fig:ir_input_chess}
+\end{figure}
+
+\chapter{Stereo calibration and rectification results}
+\label{app:stereo_results}
+
+\begin{equation}\label{eq::cm1}
+M_c^1 = \begin{bmatrix}
+2.523278 & 0 & 1.64 \\
+0 & 2.516529 & 1.232 \\
+0 & 0 & 0.001
+\end{bmatrix}\cdot10^3
+\end{equation}
+
+\begin{equation}\label{eq::cm2}
+M_c^2 = \begin{bmatrix}
+2.505381 & 0 & 1.64 \\
+0 & 2.505083 & 1.232 \\
+0 & 0 & 0.001
+\end{bmatrix}\cdot10^3
+\end{equation}
+
+\begin{equation}\label{eq::R}
+R = \begin{bmatrix}
+999.281 & -6.4992 & 37.35413 \\
+6.59547 & 999.97524 & -2.45456 \\
+-37.33725 & 2.69917 & 999.29908
+\end{bmatrix}\cdot10^3
+\end{equation}
+
+\begin{equation}\label{eq::E}
+E = \begin{bmatrix}
+-0.3150989 & 158.311619 & 35.973848 \\
+-55.293721 & -6.403995 & -2757.525727 \\
+-18.200605 & 2753.713987 & -8.117986
+\end{bmatrix}\cdot10^-3
+\end{equation}
+
+\begin{equation}\label{eq::F}
+F = \begin{bmatrix}
+-2.54558709\cdot10^-6 & 1.28238104\cdot10^-3 & -0.842399343\\
+-0.446754\cdot10^-3 & -51.880818\cdot10^-6 & -55.4216639\\
+0.1861918 & 53.846 & 1000
+\end{bmatrix}\cdot10^-3
+\end{equation}
+
+\begin{equation}\label{eq::R1}
+R_1 = \begin{bmatrix}
+0.99977728 & 0.00654886 & -0.02006268\\
+0.00657528 & 0.9999776 & -0.00125126\\
+0.02005403 & 0.0013829 & 0.99979794
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}\label{eq::R2}
+R_2 = \begin{bmatrix}
+0.99826641 & 0.01319195 & -0.05735987\\
+-0.01311635 & 0.99991254 & 0.00169423\\
+0.05737721 & -0.00093894 & 0.99835213
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}\label{eq::P1}
+P_1 = \begin{bmatrix}
+2505.083324 & 0 & 1778.704819 & 0\\
+0 & 2505.083324 & 1231.092529  & 0\\
+0 & 0 & 1 & 0
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}\label{eq::P2}
+P_2 = \begin{bmatrix}
+2505.083324 &    0.       & 1778.704819 & 6909.840227\\
+ 0          & 2505.083324 & 1231.092529 &    0        \\
+ 0          &    0        &    1        &    0         \\
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}\label{eq::Q}
+Q\ =\ \begin{bmatrix}
+1 & 0 & 0 & -1.778705\cdot10^3\\
+0 & 1 & 0 & -1.231093\cdot10^3\\
+0 & 0 & 0 & 2.505083\cdot10^3\\
+0 & 0 & -0.362539 & 0
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}\label{eq::T}
+T\ =\ \begin{bmatrix}
+2.75354568\\
+0.03638771\\
+-0.15821732
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}\label{eq::validpix1}
+valid\ Pix\ ROI_1\ =\ 
+\begin{bmatrix}
+x_1 & y_1\\
+x_2 & y_2
+\end{bmatrix}\ =
+\begin{bmatrix}
+88 & 6\\
+3192 & 2421
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}\label{eq::validpix2}
+valid\ Pix\ ROI_2\ =\ 
+\begin{bmatrix}
+x_1 & y_1\\
+x_2 & y_2
+\end{bmatrix}\ =
+\begin{bmatrix}
+0 & 26\\
+3204 & 2378
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}\label{eq::error1}
+error_1 = 17.255\%
+\end{equation}
+\begin{equation}\label{eq::error2}
+error_2 = 14.647\%
+\end{equation}
+
+
 
 \chapter{Code}
 

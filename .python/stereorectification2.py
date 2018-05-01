@@ -5,7 +5,8 @@ np.set_printoptions(suppress=True)
 
 ##root_dir = 'C:/Users/d7rob/thesis/distorted'
 ##root_dir = 'L:/Backups/thesis/longridge'
-root_dir = 'C:/Users/d7rob/thesis/home_lab_window_3/_noir'
+##root_dir = 'C:/Users/d7rob/thesis/home_lab_window_3/_noir'
+root_dir = 'L:/Backups/thesis/heldervue2'
 
 _rgb_name = "/rgb"
 _ir_name = "/ir"
